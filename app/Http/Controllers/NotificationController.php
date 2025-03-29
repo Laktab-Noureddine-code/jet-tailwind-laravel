@@ -1,0 +1,186 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Affectation;
+use App\Models\Imprimante;
+use App\Models\Materiel;
+use App\Models\Notification;
+use App\Models\Ordinateur;
+use App\Models\Telephone;
+use App\Models\Type;
+use App\Models\Utilisateur;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class NotificationController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+
+    public function index()
+    {
+
+        $notifications = Notification::with('recrutement')->orderBy('is_read')->get();
+        return view('notifications.index', compact('notifications'));
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function valider(Notification $notification)
+    {
+        // Récupérer le recrutement lié à cette notification
+        $recrutement = $notification->recrutement;
+
+        // Vérifier si le recrutement existe
+        if (!$recrutement) {
+            return redirect()->route('notifications.index')->with('error', 'Recrutement introuvable.');
+        }
+        $requiredFields = [
+            'nom' => $recrutement->nom,
+            'email' => $recrutement->email,
+            'fonction' => $recrutement->fonction,
+            'telephone' => $recrutement->telephone,
+            'date_affectation' => $notification->date_affectation,
+            'model' => $recrutement->model,
+            'num_serie' => $recrutement->num_serie,
+        ];
+
+        foreach ($requiredFields as $field => $value) {
+            if (empty($value)) {
+                return redirect()->route('notifications.index')
+                    ->with('error', "Le champ {$field} du recrutement est manquant.");
+            }
+        }
+        $validator = Validator::make([
+            'num_serie' => $recrutement->num_serie,
+        ], [
+            'num_serie' => 'required|unique:materiels,num_serie',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('notifications.index')
+                ->with('error', 'Le numéro de série est déjà utilisé.');
+        }
+
+        // Mettre à jour le statut du recrutement à "validé"
+        $recrutement->update(['status' => 'validé']);
+
+        // Créer ou récupérer l'utilisateur
+        $utilisateur = Utilisateur::firstOrCreate(
+            ['email' => $recrutement->email],
+            [
+                'nom' => $recrutement->nom,
+                'fonction' => $recrutement->fonction,
+                'telephone' => $recrutement->telephone,
+                'departement' => $recrutement->departement,
+            ]
+        );
+
+        // Créer le matériel
+        $materiel = Materiel::create([
+            'fabricant' => $recrutement->model,
+            'type' => $notification->type,
+            'num_serie' => $recrutement->num_serie,
+            'etat' => $notification->etat,
+        ]);
+
+        // Si le matériel est un téléphone, créer une entrée dans la table "telephones"
+        if ($notification->type == 'Telephone') {
+            Telephone::create([
+                'pin' => $recrutement->pin,
+                'puk' => $recrutement->puk,
+                'materiel_id' => $materiel->id,
+            ]);
+        }elseif($notification->type == 'PC Portable' || $notification->type == 'PC Bureau'){
+            Ordinateur::create([
+                'materiel_id' => $materiel->id,
+            ]);
+        }elseif($notification->type == 'Imprimante'){
+            Imprimante::create([
+                'materiel_id' => $materiel->id,
+            ]);
+        }
+
+        // Créer l'affectation
+        Affectation::create([
+            'materiel_id' => $materiel->id,
+            'utilisateur_id' => $utilisateur->id,
+            'date_affectation' => $notification->date_affectation,
+            'chantier' => $notification->chantier,
+            'statut' => 'AFFECTE',
+            'utilisateur1' => $notification->utilisateur
+        ]);
+
+        // Marquer la notification comme lue
+        $notification->update(['is_read' => true]);
+
+        return redirect()->route('notifications.index')->with('success', 'Recrutement validé et matériel affecté.');
+    }
+
+
+
+
+    public function edit(Notification $notification)
+    {
+        $typesMateriel = Type::select('type')->pluck('type');
+        return view('notifications.edit', compact('notification', 'typesMateriel'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Notification $notification)
+    {
+        // Validation des données
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'fonction' => 'required|string|max:255',
+            'type_contrat' => 'required',
+            'telephone' => 'required|string',
+            'fabricant' => 'required|string|max:255',
+            'num_serie' => 'required|unique:materiels,num_serie',
+            'type' => 'required|string',
+            'etat' => 'required|in:Neuf,Occassion',
+            'chantier' => 'max:255',
+            'utilisateur' => 'max:255',
+        ]);
+
+        // Mise à jour des informations du recrutement
+        $notification->recrutement->update([
+            'nom' => $request->nom,
+            'email' => $request->email,
+            'fonction' => $request->fonction,
+            'type_contrat' => $request->type_contrat,
+            'telephone' => $request->telephone,
+            'model' => $request->fabricant, // Correspond au modèle du matériel
+            'num_serie' => $request->num_serie,
+            'puk' => $request->puk,
+            'pin' => $request->pin,
+        ]);
+       
+
+        // Mise à jour des informations de la notification
+        $notification->update([
+            'type' => $request->type,
+            'etat' => $request->etat,
+            'date_affectation' => $request->date_affectation,
+            'chantier' => $request->chantier,
+        ]);
+
+        return redirect()->route('notifications.index')->with('success', 'Notification et recrutement mis à jour avec succès.');
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Notification $notification)
+    {
+        //
+    }
+}

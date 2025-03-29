@@ -1,0 +1,132 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+*{
+    box-sizing: border-box;
+}
+
+@layer components{
+    .links{
+        @apply block hover:underline hover:text-[#f4d103]  pr-3 pl-7 py-1 my-3 text-[14px] font-semibold
+    }
+    .header-title{
+        @apply text-[30px] font-bold pl-6
+    }
+    /** form style */
+    .form-container{
+        @apply max-w-[80%] min-h-[400px] mx-auto p-8 border rounded-sm border-gray-300 bg-white shadow-[0px_3px_8px_rgba(0,0,0,0.30)];
+    }
+    .form-input{
+        @apply border-1 w-full rounded-sm border-gray-400 font-normal py-1 px-2 min-h-[37px]
+    }
+    .form-label{
+        @apply font-semibold my-2 block
+    }
+    .form-btn{
+        @apply w-full px-4  py-[7px] rounded-sm shadow-lg my-3
+    }
+    .message{
+        @apply bg-green-500 px-3 py-1 my-3 rounded-lg text-white font-bold
+    }
+    .tr{
+        @apply border border-gray-200 text-[13px] bg-gray-700 text-white rounded-lg p-2 h-[42px] text-left
+    }
+    .error{
+        @apply text-sm text-red-500 font-normal
+    }
+    .type{
+        @apply rounded-lg border border-gray-300 p-5 shadow-lg hover:shadow-xl hover:scale-101 bg-white  transition-all
+    }
+    .type-icon{
+        @apply text-[50px] font-extralight
+    }
+    .type-link{
+        @apply flex items-center justify-between 
+    }
+    .type-info{
+        @apply text-lg font-semibold
+    }
+    .yellow-bg{
+        @apply bg-[#f4d103] hover:bg-[#f4c003] focus:ring-yellow-200
+    }
+    /* dashboard */
+    .over-view{
+        @apply flex items-center gap-4 p-3 w-full bg-white border-3 border-gray-300 
+        rounded-lg min-h-[50px] cursor-pointer  hover:shadow-md
+    }
+    .table{
+        @apply w-full border border-gray-400 bg-white
+    }
+    .submitBtn{
+        @apply mt-4 bg-gray-500 w-full font-bold px-4 py-2 rounded-lg text-white cursor-pointer hover:bg-gray-600
+    }
+
+}
+.drop-shadow-white {
+    filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.7));
+}
+
+td{
+    padding: 2px;
+    min-height: 40px;
+    max-height: 40px;
+}
+.type-info p{
+    font-size: 40px;
+    font-weight: 500;
+}
+
+.hi{
+    background-color: red;
+}
+
+
+/* radio statut */
+.radio-inputs {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 0.5rem;
+  background-color: #EEE;
+  box-sizing: border-box;
+  box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+  padding: 0.25rem;
+  width: 300px;
+  font-size: 14px;
+}
+
+.radio-inputs .radio {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.radio-inputs .radio input {
+  display: none;
+}
+
+.radio-inputs .radio .name {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: none;
+  padding: .5rem 0;
+  color: rgba(51, 65, 85, 1);
+  transition: all .15s ease-in-out;
+}
+
+.radio-inputs .radio input:checked + .name {
+  background-color: #fff;
+  font-weight: 600;
+}
