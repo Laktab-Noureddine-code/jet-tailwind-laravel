@@ -1,82 +1,91 @@
-<nav class="h-full">
-    <ul class="flex flex-col h-full justify-between">
-        @auth
-            @if (auth()->user()->role === 'admin')
-                <div>
+<nav class="flex-1">
+    <div class="px-3 py-2">
+        <p class="text-xs font-medium text-gray-400 px-3 mb-2">MAIN MENU</p>
+
+        <ul class="space-y-1">
+            @auth
+                @if (auth()->user()->role === 'admin')
                     <li>
                         <a href="{{ route('dashboard.index') }}"
-                            class="{{ request()->routeIs('dashboard*') ? 'links underline text-[#f4d103]' : 'links' }}">
-                            <i class="text-[16px] fa-solid fa-house mr-2"></i>Dashboard
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="{{ route('affectation.index') }}"
-                            class="{{ request()->routeIs('affectation*') ? 'links underline text-[#f4d103]' : 'links' }}">
-                            <i class="text-[16px] fa-solid fa-file mr-2"></i>Affectations
+                            class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('dashboard*') ? 'bg-[#FFD700]' : 'hover:bg-[#1a2c4e]' }}">
+                            <i class="fa-solid fa-house text-[16px] w-6"></i>
+                            <span>Dashboard</span>
                         </a>
                     </li>
                     <li>
-                    <li class="">
+                        <a href="{{ route('affectation.index') }}"
+                            class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('affectation*') ? 'bg-[#FFD700]' : 'hover:bg-[#1a2c4e]' }}">
+                            <i class="fa-solid fa-file text-[16px] w-6"></i>
+                            <span>Affectations</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('ordinateurs.index') }}"
-                            class="{{ request()->routeIs('ordinateurs*') ? 'links underline text-[#f4d103]' : 'links' }}">
-                            <i class="text-[16px] mr-2 fa-solid fa-laptop"></i>Ordinateurs
+                            class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('ordinateurs*') ? 'bg-[#FFD700]' : 'hover:bg-[#1a2c4e]' }}">
+                            <i class="fa-solid fa-laptop text-[16px] w-6"></i>
+                            <span>Ordinateurs</span>
                         </a>
                     </li>
-                    <li class="">
+                    <li>
                         <a href="{{ route('telephones.index') }}"
-                            class="{{ request()->routeIs('telephones*') ? 'links underline text-[#f4d103]' : 'links' }}">
-                            <i class="fa-solid fa-mobile-screen text-[16px] mr-2 "></i>Télephones
+                            class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('telephones*') ? 'bg-[#FFD700]' : 'hover:bg-[#1a2c4e]' }}">
+                            <i class="fa-solid fa-mobile-screen text-[16px] w-6"></i>
+                            <span>Télephones</span>
                         </a>
                     </li>
-                    <li class="">
+                    <li>
                         <a href="{{ route('imprimantes.index') }}"
-                            class="{{ request()->routeIs('imprimantes*') ? 'links underline text-[#f4d103]' : 'links' }}">
-                            <i class="text-[16px] mr-2 fa-solid fa-print"></i>Imprimantes
+                            class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('imprimantes*') ? 'bg-[#FFD700]' : 'hover:bg-[#1a2c4e]' }}">
+                            <i class="fa-solid fa-print text-[16px] w-6"></i>
+                            <span>Imprimantes</span>
                         </a>
                     </li>
-                    <li class="">
+                    <li>
                         <a href="{{ route('peripheriques.index') }}"
-                            class="{{ request()->routeIs('peripheriques*') ? 'links underline text-[#f4d103]' : 'links' }}">
-                            <i class="text-[16px] mr-2 fa-solid fa-computer-mouse"></i>Périphériques
+                            class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('peripheriques*') ? 'bg-[#FFD700]' : 'hover:bg-[#1a2c4e]' }}">
+                            <i class="fa-solid fa-computer-mouse text-[16px] w-6"></i>
+                            <span>Périphériques</span>
                         </a>
                     </li>
-                    </li>
-                    <li class="">
-                        <a href="{{ route('accounts.index') }}"
-                            class="{{ request()->routeIs('accounts*') ? 'links underline text-[#f4d103]' : 'links' }}">
-                            <i class="text-[16px] fa-solid fa-gear mr-2"></i>Paramétres
-                        </a>
-                    </li>
-                </div>
-                <div>
-                    <li class="">
-                        <a href="{{ route('notifications.index') }}"
-                            class="{{ request()->routeIs('notifications*') ? 'links underline text-[#f4d103]' : 'links' }}">
-                            <i class="text-[16px] fa-solid fa-bell mr-2"></i>Notifications 
-                        </a>
-                    </li>
-                    {{-- <li class="">
-                        <a href="{{ route('trash') }}"
-                            class="{{ request()->routeIs('trash*') ? 'links underline text-[#f4d103]' : 'links' }}">
-                            <i class="text-[16px] fa-solid fa-trash-can-arrow-up mr-2"></i>trash
-                        </a>
-                    </li> --}}
 
-                    <li class="">
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            <button class="cursor-pointer links">
-                                <i class="text-[16px] fa-solid fa-arrow-right-from-bracket"></i>
-                                logout
-                            </button>
-                        </form>
+                    <div class="mt-6">
+                        <p class="text-xs font-medium text-gray-400 px-3 mb-2">SETTINGS</p>
+                        <li>
+                            <a href="{{ route('accounts.index') }}"
+                                class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('accounts*') ? 'bg-[#FFD700]' : 'hover:bg-[#1a2c4e]' }}">
+                                <i class="fa-solid fa-gear text-[16px] w-6"></i>
+                                <span>Paramétres</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('notifications.index') }}"
+                                class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('notifications*') ? 'bg-[#FFD700]' : 'hover:bg-[#1a2c4e]' }}">
+                                <i class="fa-solid fa-bell text-[16px] w-6"></i>
+                                <span>Notifications</span>
+                            </a>
+                        </li>
+                    </div>
+
+                    <div class="mt-6">
+                        <li>
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <button class="w-full flex items-center px-3 py-2 text-white rounded-md hover:bg-[#1a2c4e]">
+                                    <i class="fa-solid fa-arrow-right-from-bracket text-[16px] w-6"></i>
+                                    <span>Logout</span>
+                                </button>
+                            </form>
+                        </li>
+                    </div>
+                @else
+                    <li>
+                        <a class="flex items-center px-3 py-2 text-white rounded-md hover:bg-[#1a2c4e]">
+                            <i class="fa-solid fa-user-plus text-[16px] w-6"></i>
+                            <span>Recrutement</span>
+                        </a>
                     </li>
-                </div>
-            @else
-                <li class="">
-                    <a class="cursor-pointer">recrutement</a>
-                </li>
-            @endif
-        @endauth
-    </ul>
+                @endif
+            @endauth
+        </ul>
+    </div>
 </nav>

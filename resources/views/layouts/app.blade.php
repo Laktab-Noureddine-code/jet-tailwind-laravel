@@ -16,19 +16,19 @@
 
 <body>
     <div class="flex">
-        <section class="fixed max-w-[16%] min-w-[16%] h-screen top-0 bg-gray-800 text-white flex flex-col ">
-            <img src="/logo.png" class="h-[100px] mx-auto py-4">
-            <div id="navbar" class="flex-1">
+        <aside class="fixed w-64 h-screen bg-[#0A1C3E]">
+            <div class="flex flex-col h-full">
+                <div class="p-4">
+                    <img src="/logo.png" alt="Jet Logo" class="h-16 mx-auto">
+                </div>
                 <x-navbar />
             </div>
-        </section>
-        <main class="ml-[16%] px-2 py-5 w-full bg-[#f6f7f9] min-h-screen">
+        </aside>
+        <main class="ml-64 px-6 py-8 w-full bg-[#f6f7f9] min-h-screen">
             @yield('content')
         </main>
     </div>
-    <script>
-        
-    </script>
+    <script></script>
 </body>
 
 </html>
