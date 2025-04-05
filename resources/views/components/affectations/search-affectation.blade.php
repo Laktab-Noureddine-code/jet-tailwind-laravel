@@ -1,38 +1,30 @@
-<div class="flex justify-between items-center my-4">
-    <!-- Bouton Ajouter une affectation -->
-    <div class="bg-gray-100">
-        <a href="{{ route('affectation.create') }}"
-            class="px-5 py-2 text-[16px] font-semibold rounded-lg bg-[#f4d103] hover:bg-[#f4c003] focus:ring-yellow-200 text-gray-800">
-            Ajouter une affectation
-        </a>    
-    </div>
-
-    <!-- Champ de recherche -->
-    <div class="w-[40%]">
-        <form class="w-full" action="{{ route('affectation.index') }}" method="get">
-            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+<div class="flex items-center justify-between gap-4">
+    <div class="flex-1 max-w-2xl">
+        <form action="{{ route('affectation.index') }}" method="get">
             <div class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" 
-                        fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                    <svg class="h-4 w-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                            clip-rule="evenodd" />
                     </svg>
                 </div>
-                <div class="flex gap-2">
-                    <input type="search" id="default-search" name="search"
-                        class="block w-full p-1 ps-10 text-lg text-gray-900 border border-gray-300 rounded-lg bg-white
-                               focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Rechercher ..." value="{{$search}}" />
-                    <button type="submit"
-                        class="text-gray-800 cursor-pointer  bg-[#f4d103]
-                               focus:ring-4 focus:outline-none focus:ring-yellow-200 font-medium rounded-lg
-                               text-sm px-4 py-2 hover:bg-[#f4c003]">
-                        Rechercher
-                    </button>
-                </div>
+                <input type="search" name="search"
+                    class="block w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-11 pr-4 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Rechercher une affectation..." value="{{ $search }}">
             </div>
         </form>
     </div>
-    
+
+    <div class="flex items-center gap-3">
+        <a href="{{ route('affectation.create') }}"
+            class="inline-flex items-center gap-2 rounded-lg bg-[#FFD700] px-4 py-2.5 text-sm font-semibold text-gray-900 hover:bg-[#FFD700]/90 focus:outline-none focus:ring-2 focus:ring-[#FFD700]/50">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="h-5 w-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Nouvelle Affectation
+        </a>
+    </div>
 </div>
