@@ -1,90 +1,124 @@
 @extends('layouts.app')
 
-@section('title', 'ordinateur')
+@section('title', 'Ajouter un ordinateur')
 
 @section('content')
-    <div class="container">
-        <form action="{{ route('ordinateurs.store') }}" method="POST" class="form-container mt-10">
-            @csrf
-            <h1 class="header-title">Ajouter un ordinateur</h1>
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <!-- Header -->
+                <div class="bg-[#0A1C3E] px-6 py-4">
+                    <h1 class="text-xl font-semibold text-white">Ajouter un nouvel ordinateur</h1>
+                </div>
 
-            <!-- Fabricant -->
-            <label class="form-label">Modèle
-                <input class="form-input" type="text" name="fabricant" value="{{ old('fabricant') }}" required>
-                @error('fabricant')
-                    <p class="error">{{ $message }}</p>
-                @enderror
-            </label>
+                <form action="{{ route('ordinateurs.store') }}" method="POST" class="p-6">
+                    @csrf
 
-            <!-- Numéro de Série -->
-            <label class="form-label">Numéro de Série
-                <input class="form-input" type="text" name="num_serie" value="{{ old('num_serie') }}" required>
-                @error('num_serie')
-                    <p class="error">{{ $message }}</p>
-                @enderror
-            </label>
+                    <div class="space-y-8">
+                        <!-- Section 1: Informations de base -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations de base</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Modèle</label>
+                                    <input type="text" name="fabricant" value="{{ old('fabricant') }}" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('fabricant') border-red-500 @enderror">
+                                    @error('fabricant')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
 
-            <div class="grid grid-cols-2 gap-10">
-                <!-- Type -->
-                <label class="form-label">Type
-                    <select class="form-input" name="type">
-                        <option value="Pc Portable" {{ old('type') == 'Pc Portable' ? 'selected' : '' }}>Pc Portable</option>
-                        <option value="Pc Bureau" {{ old('type') == 'Pc Bureau' ? 'selected' : '' }}>Pc Bureau</option>
-                    </select>
-                    @error('type')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
-                
-                {{-- <!-- Statut -->
-                <label class="form-label">Statut
-                    <select class="form-input" name="statut">
-                        <option value="NON AFFECTE" {{ old('statut') == 'NON AFFECTE' ? 'selected' : '' }}>NON AFFECTE</option>
-                        <option value="AFFECTE" {{ old('statut') == 'AFFECTE' ? 'selected' : '' }}>AFFECTE</option>
-                        <option value="REAFFECTE" {{ old('statut') == 'REAFFECTE' ? 'selected' : '' }}>RÉAFFECTE</option>
-                    </select>
-                    @error('statut')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label> --}}
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de Série</label>
+                                    <input type="text" name="num_serie" value="{{ old('num_serie') }}" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('num_serie') border-red-500 @enderror">
+                                    @error('num_serie')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- État -->
-                <label class="form-label">État
-                    <select class="form-input" name="etat">
-                        <option value="Neuf" {{ old('etat') == 'Neuf' ? 'selected' : '' }}>Neuf</option>
-                        <option value="Occasion" {{ old('etat') == 'Occasion' ? 'selected' : '' }}>Occasion</option>
-                    </select>
-                    @error('etat')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
+                        <!-- Section 2: Type et État -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Caractéristiques</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                                    <select name="type" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('type') border-red-500 @enderror">
+                                        <option value="Pc Portable" {{ old('type') == 'Pc Portable' ? 'selected' : '' }}>Pc
+                                            Portable</option>
+                                        <option value="Pc Bureau" {{ old('type') == 'Pc Bureau' ? 'selected' : '' }}>Pc
+                                            Bureau</option>
+                                    </select>
+                                    @error('type')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">État</label>
+                                    <select name="etat" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('etat') border-red-500 @enderror">
+                                        <option value="Neuf" {{ old('etat') == 'Neuf' ? 'selected' : '' }}>Neuf</option>
+                                        <option value="Occasion" {{ old('etat') == 'Occasion' ? 'selected' : '' }}>Occasion
+                                        </option>
+                                    </select>
+                                    @error('etat')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Spécifications techniques -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Spécifications techniques</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Processeur</label>
+                                    <input type="text" name="processeur" value="{{ old('processeur') }}"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('processeur') border-red-500 @enderror">
+                                    @error('processeur')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">RAM</label>
+                                    <input type="text" name="ram" value="{{ old('ram') }}"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('ram') border-red-500 @enderror">
+                                    @error('ram')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Stockage</label>
+                                    <input type="text" name="stockage" value="{{ old('stockage') }}"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('stockage') border-red-500 @enderror">
+                                    @error('stockage')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-8 flex justify-end space-x-4">
+                        <a href="{{ route('ordinateurs.index') }}"
+                            class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A1C3E]">
+                            Annuler
+                        </a>
+                        <button type="submit"
+                            class="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-[#0A1C3E] hover:bg-[#0A1C3E]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A1C3E]">
+                            Ajouter l'ordinateur
+                        </button>
+                    </div>
+                </form>
             </div>
-
-            <div class="grid grid-cols-3 gap-6">
-                <!-- Processeur -->
-                <label class="form-label">Processeur
-                    <input class="form-input" type="text" name="processeur" value="{{ old('processeur') }}">
-                    @error('processeur')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
-                <!-- RAM -->
-                <label class="form-label">RAM
-                    <input class="form-input" type="text" name="ram" value="{{ old('ram') }}">
-                    @error('ram')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
-                <!-- Stockage -->
-                <label class="form-label">Stockage
-                    <input class="form-input" type="text" name="stockage" value="{{ old('stockage') }}">
-                    @error('stockage')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
-            </div>
-
-            <button type="submit" class="submitBtn">Ajouter</button>
-        </form>
+        </div>
     </div>
 @endsection
