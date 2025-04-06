@@ -1,61 +1,100 @@
 @extends('layouts.app')
-@section('title' ,'peripherique')
+
+@section('title', 'Modifier un périphérique')
+
 @section('content')
-    <div class="container">
-        <form action="{{ route('peripheriques.update', $peripherique->id) }}" method="POST" class="form-container mt-10">
-            @csrf
-            @method('PUT')
-            <h1 class="header-title">Modifier le périphérique</h1>
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <!-- Header -->
+                <div class="bg-[#0A1C3E] px-6 py-4">
+                    <h1 class="text-xl font-semibold text-white">Modifier le périphérique</h1>
+                </div>
 
-            <!-- Fabricant -->
-            <label class="form-label">Modèle
-                <input class="form-input" type="text" name="fabricant" 
-                    value="{{ old('fabricant', $peripherique->fabricant) }}" required>
-                @error('fabricant')
-                    <p class="error">{{ $message }}</p>
-                @enderror
-            </label>
+                <form action="{{ route('peripheriques.update', $peripherique->id) }}" method="POST" class="p-6">
+                    @csrf
+                    @method('PUT')
 
-            <!-- Numéro de Série -->
-            <label class="form-label">Numéro de Série
-                <input class="form-input" type="text" name="num_serie" 
-                    value="{{ old('num_serie', $peripherique->num_serie) }}" required>
-                @error('num_serie')
-                    <p class="error">{{ $message }}</p>
-                @enderror
-            </label>
+                    <div class="space-y-8">
+                        <!-- Section 1: Informations de base -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations de base</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Modèle</label>
+                                    <input type="text" name="fabricant"
+                                        value="{{ old('fabricant', $peripherique->fabricant) }}" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('fabricant') outline-red-500 @enderror">
+                                    @error('fabricant')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
 
-            <div class="grid grid-cols-2 gap-10">
-                <!-- Type -->
-                <label class="form-label">Type
-                    <select class="form-input" name="type">
-                        @foreach ($types as $type)
-                        <option value="{{$type}}" {{ old('type', $peripherique->type) == $type ? 'selected' : '' }}>{{$type}}</option>
-                        @endforeach
-                        {{-- <option value="ROUTEUR" {{ old('type', $peripherique->type) == 'ROUTEUR' ? 'selected' : '' }}>Routeur</option>
-                        <option value="SOURIS" {{ old('type', $peripherique->type) == 'SOURIS' ? 'selected' : '' }}>Souris</option>
-                        <option value="Disque Externe" {{ old('type', $peripherique->type) == 'Disque Externe' ? 'selected' : '' }}>Disque Externe</option> --}}
-                    </select>
-                    @error('type')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
-                
-                
-                <!-- État -->
-                <label class="form-label">État
-                    <select class="form-input" name="etat">
-                        <option value="Neuf" {{ old('etat', $peripherique->etat) == 'Neuf' ? 'selected' : '' }}>Neuf</option>
-                        <option value="Occasion" {{ old('etat', $peripherique->etat) == 'Occasion' ? 'selected' : '' }}>Occasion</option>
-                        <option value="Endommagé" {{ old('etat', $peripherique->etat) == 'Endommagé' ? 'selected' : '' }}>Endommagé</option>
-                    </select>
-                    @error('etat')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de Série</label>
+                                    <input type="text" name="num_serie"
+                                        value="{{ old('num_serie', $peripherique->num_serie) }}" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('num_serie') outline-red-500 @enderror">
+                                    @error('num_serie')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Type et État -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Caractéristiques</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                                    <select name="type" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('type') outline-red-500 @enderror">
+                                        @foreach ($types as $type)
+                                            <option value="{{ $type }}"
+                                                {{ old('type', $peripherique->type) == $type ? 'selected' : '' }}>
+                                                {{ $type }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('type')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">État</label>
+                                    <select name="etat" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('etat') outline-2 outline-red-500 @enderror">
+                                        <option value="Neuf"
+                                            {{ old('etat', $peripherique->etat) == 'Neuf' ? 'selected' : '' }}>Neuf</option>
+                                        <option value="Occasion"
+                                            {{ old('etat', $peripherique->etat) == 'Occasion' ? 'selected' : '' }}>Occasion
+                                        </option>
+                                        <option value="Endommagé"
+                                            {{ old('etat', $peripherique->etat) == 'Endommagé' ? 'selected' : '' }}>
+                                            Endommagé</option>
+                                    </select>
+                                    @error('etat')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-8 flex justify-end space-x-4">
+                        <a href="{{ route('peripheriques.index') }}"
+                            class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A1C3E]">
+                            Annuler
+                        </a>
+                        <button type="submit"
+                            class="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-[#0A1C3E] hover:bg-[#0A1C3E]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A1C3E]">
+                            Mettre à jour
+                        </button>
+                    </div>
+                </form>
             </div>
-
-            <button type="submit" class="submitBtn">Enregistrer</button>
-        </form>
+        </div>
     </div>
 @endsection

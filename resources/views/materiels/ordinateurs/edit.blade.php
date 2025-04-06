@@ -24,7 +24,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Modèle</label>
                                     <input type="text" name="fabricant"
                                         value="{{ old('fabricant', $ordinateur->materiel->fabricant) }}" required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('fabricant') border-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('fabricant')outline-2 outline-red-500 @enderror">
                                     @error('fabricant')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -34,7 +34,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de Série</label>
                                     <input type="text" name="num_serie"
                                         value="{{ old('num_serie', $ordinateur->materiel->num_serie) }}" required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('num_serie') border-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('num_serie')outline-2 outline-red-500 @enderror">
                                     @error('num_serie')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -49,7 +49,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
                                     <select name="type" required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('type') border-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('type')outline-2 outline-red-500 @enderror">
                                         <option value="Pc Portable"
                                             {{ old('type', $ordinateur->materiel->type) == 'Pc Portable' ? 'selected' : '' }}>
                                             Pc Portable</option>
@@ -66,7 +66,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">État</label>
                                     <select name="etat" required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('etat') border-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('etat')outline-2 outline-red-500 @enderror">
                                         <option value="Neuf"
                                             {{ old('etat', $ordinateur->materiel->etat) == 'Neuf' ? 'selected' : '' }}>Neuf
                                         </option>
@@ -89,7 +89,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Processeur</label>
                                     <input type="text" name="processeur"
                                         value="{{ old('processeur', $ordinateur->processeur) }}"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('processeur') border-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('processeur')outline-2 outline-red-500 @enderror">
                                     @error('processeur')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -98,7 +98,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">RAM</label>
                                     <input type="text" name="ram" value="{{ old('ram', $ordinateur->ram) }}"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('ram') border-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('ram')outline-2 outline-red-500 @enderror">
                                     @error('ram')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -108,7 +108,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Stockage</label>
                                     <input type="text" name="stockage"
                                         value="{{ old('stockage', $ordinateur->stockage) }}"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('stockage') border-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('stockage')outline-2 outline-red-500 @enderror">
                                     @error('stockage')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
