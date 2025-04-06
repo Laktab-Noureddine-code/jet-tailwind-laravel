@@ -64,6 +64,13 @@
                                 <span>Notifications</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('trash.index') }}"
+                                class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('trash*') ? 'bg-[#FFD700]' : 'hover:bg-[#1a2c4e]' }}">
+                                <i class="fa-solid fa-trash text-[16px] w-6"></i>
+                                <span>Corbeille</span>
+                            </a>
+                        </li>
                     </div>
 
                     <div class="mt-6">

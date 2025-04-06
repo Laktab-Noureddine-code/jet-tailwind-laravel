@@ -69,9 +69,8 @@ Route::middleware("auth")->group(function () {
     })->middleware('is_admin:admin')->name('settings');
 
     // trash
-    Route::get('/trash', [TrashController::class, 'index'])->name('trash')->middleware('is_admin:admin');
-    Route::post('/trash/restore/{id}', [TrashController::class, 'restore'])->middleware('is_admin:admin')->name('trash.restore');
-    Route::delete('/trash/delete/{id}', [TrashController::class, 'forceDelete'])->middleware('is_admin:admin')->name('trash.forceDelete');
+    Route::get('/trash', [trashController::class, 'index'])->name('trash.index');
+    Route::delete('/trash/{id}', [trashController::class, 'forceDelete'])->name('trash.forceDelete');
 
     // account management
     Route::resource('accounts', AccountController::class)->middleware('is_admin:admin');
