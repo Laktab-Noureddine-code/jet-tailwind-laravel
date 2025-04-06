@@ -1,148 +1,173 @@
 @extends('layouts.app')
-@section('title', 'affectation')
+@section('title', 'Affectation')
 @section('content')
-    <div class="px-6">
-        <form action="{{ route('storeExists') }}" method="post" class="form-container">
-            <h1 class="text-3xl mb-3">Affectation d'un matériel à <span class="font-bold">{{$utilisateur->nom}}</span></h1>
-            @csrf
-            <div>
-                <div class="grid grid-cols-3 gap-6">
-                    <label for="nom" class="form-label">
-                        Nom & Prenom :
-                        <input type="text" id="nom" class="form-input focus:outline-0 bg-gray-100" name="nom"
-                            value="{{ $utilisateur->nom }}" readonly required >
-                        @error('nom')
-                            <p class="error">{{ $message }}</p>
-                        @enderror
-                    </label>
-                    <label for="fonction" class="form-label">
-                        Fonction :
-                        <input type="text" id="fonction" class="form-input focus:outline-0 bg-gray-100" name="fonction"
-                            value="{{ $utilisateur->fonction }}" required readonly>
-                        @error('fonction')
-                            <p class="error">{{ $message }}</p>
-                        @enderror
-                    </label>
-                    <label for="departement" class="form-label">
-                        Département :
-                        <input type="text" id="departement" class="form-input focus:outline-0 bg-gray-100"
-                            name="departement" value="{{ $utilisateur->departement }}" readonly required>
-                        @error('departement')
-                            <p class="error">{{ $message }}</p>
-                        @enderror
-                    </label>
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <!-- Header -->
+                <div class="bg-[#0A1C3E] px-6 py-4">
+                    <h1 class="text-xl font-semibold text-white">Affectation d'un matériel à <span
+                            class="font-bold">{{ $utilisateur->nom }}</span></h1>
                 </div>
-                <div class="grid grid-cols-2 gap-10">
-                    <label for="telephone" class="form-label">
-                        Téléphone :
-                        <input type="tel" id="telephone" class="form-input focus:outline-0 bg-gray-100" name="telephone"
-                            value="{{ $utilisateur->telephone }}" readonly required >
-                        @error('telephone')
-                            <p class="error">{{ $message }}</p>
-                        @enderror
-                    </label>
-                    <label for="email" class="form-label">
-                        Email :
-                        <input type="email" id="email" class="form-input focus:outline-0 bg-gray-100" name="email"
-                            value="{{ $utilisateur->email }}" readonly required >
-                        @error('email')
-                            <p class="error">{{ $message }}</p>
-                        @enderror
-                    </label>
-                </div>
-            </div>
-            <div class="grid grid-cols-3 gap-6">
-                <label for="date_affectation" class="form-label">
-                    Date d'Affectation :
-                    <input type="date" id="date_affectation" class="form-input" name="date_affectation"
-                        value="{{ old('date_affectation') }}" required>
-                    @error('date_affectation')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
-                <label for="utilisateur" class="form-label">
-                    Utilisateur :
-                    <input type="text" id="utilisateur" class="form-input" name="utilisateur"
-                        value="{{ old('utilisateur') }}">
-                    @error('utilisateur')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
-                <label for="chantier" class="form-label">
-                    Chantier :
-                    <input type="text" id="chantier" class="form-input" name="chantier" value="{{ old('chantier') }}">
-                    @error('chantier')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
-            </div>
-            <div>
-                <label for="num_serie" class="form-label">
-                    Numéro de Série :
-                    <input type="text" id="num_serie" class="form-input" name="num_serie" value="{{ old('num_serie') }}"
-                        required>
-                    @error('num_serie')
-                        <p class="error">{{ $message }}</p>
-                    @enderror
-                </label>
-                <div class="grid grid-cols-3 gap-6">
-                    <label for="fabricant" class="form-label">
-                        Modèle :
-                        <input type="text" id="fabricant" class="form-input focus:outline-0 bg-gray-100"
-                            name="fabricant" value="{{ old('fabricant') }}" readonly>
-                    </label>
-                    <label for="type" class="form-label">
-                        Type :
-                        <input type="text" id="type" class="form-input focus:outline-0 bg-gray-100"
-                            name="type" value="{{ old('type') }}" readonly>
-                    </label>
-                    <label for="etat" class="form-label">
-                        État :
-                        <input type="text" id="etat" class="form-input focus:outline-0 bg-gray-100" readonly
-                            name="etat" value="{{ old('etat') }}">
-                    </label>
-                </div>
-                {{-- processeur & ram & stockage --}}
-                <div class="grid grid-cols-3 gap-6" id="ordinateur">
-                    <!-- Processeur -->
-                    <label class="form-label">Processeur
-                        <input type="text" name="processeur" class="form-input focus:outline-0 bg-gray-100" readonly
-                            id="processeur" value="{{ old('processeur') }}" required>
-                        @error('processeur')
-                            <p class="error">{{ $message }}</p>
-                        @enderror
-                    </label>
-                    <!-- RAM -->
-                    <label class="form-label">RAM
-                        <input type="text" name="ram" class="form-input focus:outline-0 bg-gray-100" readonly
-                            id="ram" value="{{ old('ram') }}" required>
-                        @error('ram')
-                            <p class="error">{{ $message }}</p>
-                        @enderror
-                    </label>
-                    <!-- Stockage -->
-                    <label class="form-label">Stockage
-                        <input type="text" name="stockage" class="form-input focus:outline-0 bg-gray-100" readonly
-                            id="stockage" value="{{ old('stockage') }}" required>
-                        @error('stockage')
-                            <p class="error">{{ $message }}</p>
-                        @enderror
-                    </label>
+
+                <form action="{{ route('storeExists') }}" method="post" class="p-6">
+                    @csrf
+                    <div class="space-y-8">
+                        <!-- Section 1: Informations Personnelles -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations Personnelles</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nom & Prénom</label>
+                                    <input type="text" id="nom" name="nom" value="{{ $utilisateur->nom }}"
+                                        readonly required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Fonction</label>
+                                    <input type="text" id="fonction" name="fonction"
+                                        value="{{ $utilisateur->fonction }}" readonly required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Département</label>
+                                    <input type="text" id="departement" name="departement"
+                                        value="{{ $utilisateur->departement }}" readonly required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+                                    <input type="tel" id="telephone" name="telephone"
+                                        value="{{ $utilisateur->telephone }}" readonly required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" id="email" name="email" value="{{ $utilisateur->email }}"
+                                        readonly required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Détails de l'Affectation -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Détails de l'Affectation</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Date d'Affectation</label>
+                                    <input type="date" id="date_affectation" name="date_affectation"
+                                        value="{{ old('date_affectation') }}" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('date_affectation') outline-2 outline-red-500 @enderror">
+                                    @error('date_affectation')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Utilisateur</label>
+                                    <input type="text" id="utilisateur" name="utilisateur"
+                                        value="{{ old('utilisateur') }}"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('utilisateur') outline-red-500 @enderror">
+                                    @error('utilisateur')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Chantier</label>
+                                    <input type="text" id="chantier" name="chantier" value="{{ old('chantier') }}"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('chantier') outline-red-500 @enderror">
+                                    @error('chantier')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Informations Matériel -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations Matériel</h2>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de Série</label>
+                                <input type="text" id="num_serie" name="num_serie" value="{{ old('num_serie') }}"
+                                    required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('num_serie') outline-red-500 @enderror">
+                                @error('num_serie')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Modèle</label>
+                                    <input type="text" id="fabricant" name="fabricant" value="{{ old('fabricant') }}"
+                                        readonly
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                                    <input type="text" id="type" name="type" value="{{ old('type') }}"
+                                        readonly
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">État</label>
+                                    <input type="text" id="etat" name="etat" value="{{ old('etat') }}"
+                                        readonly
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 4: Spécifications Ordinateur -->
+                        <div id="ordinateur" class="space-y-4" style="display: none;">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Spécifications Ordinateur</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Processeur</label>
+                                    <input type="text" name="processeur" id="processeur"
+                                        value="{{ old('processeur') }}" readonly required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">RAM</label>
+                                    <input type="text" name="ram" id="ram" value="{{ old('ram') }}"
+                                        readonly required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Stockage</label>
+                                    <input type="text" name="stockage" id="stockage" value="{{ old('stockage') }}"
+                                        readonly required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <input type="hidden" name="id_materiel" id="id_materiel">
-                </div>
+
+                    <!-- Actions -->
+                    <div class="mt-8 flex justify-end space-x-4">
+                        <a href="{{ route('affectation.index') }}"
+                            class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A1C3E]">
+                            Annuler
+                        </a>
+                        <button type="button" id="submitBtn"
+                            class="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-[#0A1C3E] hover:bg-[#0A1C3E]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A1C3E] disabled:opacity-50 disabled:cursor-not-allowed">
+                            Ajouter
+                        </button>
+                    </div>
+                </form>
             </div>
-            <button type="button" id="submitBtn" class="mt-4 bg-gray-500 w-full font-bold px-4 py-2 rounded-lg">
-                Ajouter
-            </button>
-        </form>
+        </div>
     </div>
+
     <script>
         $(document).ready(function() {
             // Initially disable the button
-            $("#submitBtn").addClass('cursor-not-allowed text-gray-400');
+            $("#submitBtn").prop('disabled', true).addClass('opacity-50 cursor-not-allowed');
             $('#submitBtn').attr('type', 'button');
-
-            $("#ordinateur").hide();
 
             $("#num_serie").on('keyup', function() {
                 let numSerie = $(this).val();
@@ -154,8 +179,8 @@
                         dataType: "json",
                         success: function(data) {
                             // Enable the button and change styles
-                            $("#submitBtn").removeClass('cursor-not-allowed text-gray-400')
-                                .addClass('cursor-pointer text-white hover:bg-gray-700');
+                            $("#submitBtn").prop('disabled', false)
+                                .removeClass('opacity-50 cursor-not-allowed');
                             $('#submitBtn').attr('type', 'submit');
 
                             // Fill the fields with the fetched data
@@ -179,9 +204,8 @@
                         },
                         error: function() {
                             // Disable the button and reset styles
-                            $("#submitBtn").removeClass(
-                                'cursor-pointer text-white hover:bg-gray-700').addClass(
-                                'cursor-not-allowed text-gray-400');
+                            $("#submitBtn").prop('disabled', true)
+                                .addClass('opacity-50 cursor-not-allowed');
                             $('#submitBtn').attr('type', 'button');
 
                             // Reset all fields
@@ -197,8 +221,8 @@
                     });
                 } else {
                     // If the serial number is too short, disable the button and reset styles
-                    $("#submitBtn").removeClass('cursor-pointer text-white hover:bg-gray-700').addClass(
-                        'cursor-not-allowed text-gray-400');
+                    $("#submitBtn").prop('disabled', true)
+                        .addClass('opacity-50 cursor-not-allowed');
                     $('#submitBtn').attr('type', 'button');
 
                     // Reset all fields

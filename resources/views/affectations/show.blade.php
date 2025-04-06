@@ -1,171 +1,211 @@
 @extends('layouts.app')
 
-@section('title', 'affectation')
+@section('title', 'Affectation')
 
 @section('content')
-    <div class="container p-3">
-        <div class="bg-white rounded-lg border border-gray-400 shadow-lg px-4 py-3">
-            <!-- Formulaire -->
-            <form action="{{ route('utilisateur.update', $utilisateur->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <h1 class="text-xl text-center mb-10">
-                    <label class="">Affectations de l'utilisateur :</label>
-                    <input type="text" name="nom" class="px-2 py-1 rounded-md min-w-[70%] font-bold w-full text-center"
-                        value="{{ $utilisateur->nom }}" disabled>
-                </h1>
-                <div class="grid grid-cols-2 gap-4">
-                    <!-- Email -->
-                    <div class="flex flex-col">
-                        <div class="flex gap-2">
-                            <label class="text-lg">Email :</label>
-                            <input type="email" name="email" class="px-2 py-1 rounded-md min-w-[70%] font-bold "
-                                value="{{ old('email', $utilisateur->email) }}" disabled>
-                        </div>
-                        @error('email')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <!-- Téléphone -->
-                    <div class="flex flex-col">
-                        <div class="flex gap-2">
-                            <label class="text-lg">Téléphone :</label>
-                            <input type="text" name="telephone" class="px-2 py-1 rounded-md min-w-[70%] font-bold"
-                                value="{{ old('telephone', $utilisateur->telephone) }}" disabled>
-                        </div>
-                        @error('telephone')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- User Information Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+                <!-- Header -->
+                <div class="bg-[#0A1C3E] px-6 py-4">
+                    <h1 class="text-xl font-semibold text-white">Informations de l'utilisateur</h1>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 mt-2">
-                    <!-- Département -->
-                    <div class="flex flex-col">
-                        <div class="flex gap-2">
-                            <label class="text-lg">Département :</label>
-                            <input type="text" name="departement" class="px-2 py-1 rounded-md min-w-[70%] font-bold"
-                                value="{{ old('departement', $utilisateur->departement) }}" disabled>
+                <form action="{{ route('utilisateur.update', $utilisateur->id) }}" method="POST" class="p-6">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="space-y-6">
+                        <!-- Name -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations Personnelles</h2>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nom & Prénom</label>
+                                <input type="text" name="nom" value="{{ $utilisateur->nom }}" disabled
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Email -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" name="email" value="{{ old('email', $utilisateur->email) }}"
+                                        disabled
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                    @error('email')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <!-- Téléphone -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+                                    <input type="text" name="telephone"
+                                        value="{{ old('telephone', $utilisateur->telephone) }}" disabled
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                    @error('telephone')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Département -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Département</label>
+                                    <input type="text" name="departement"
+                                        value="{{ old('departement', $utilisateur->departement) }}" disabled
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                    @error('departement')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <!-- Fonction -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Fonction</label>
+                                    <input type="text" name="fonction"
+                                        value="{{ old('fonction', $utilisateur->fonction) }}" disabled
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50">
+                                    @error('fonction')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
-                        @error('departement')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
                     </div>
 
-                    <!-- Fonction -->
-                    <div class="flex flex-col">
-                        <div class="flex gap-2">
-                            <label class="text-lg">Fonction :</label>
-                            <input type="text" name="fonction" class="px-2 py-1 rounded-md min-w-[70%] font-bold"
-                                value="{{ old('fonction', $utilisateur->fonction) }}" disabled>
-                        </div>
-                        @error('fonction')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
+                    <!-- Actions -->
+                    <div class="mt-6 flex justify-end space-x-4">
+                        <button type="button" id="edit-btn"
+                            class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A1C3E]">
+                            <i class="fas fa-edit mr-2"></i>Modifier
+                        </button>
+                        <button type="submit" id="save-btn"
+                            class="hidden px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-[#0A1C3E] hover:bg-[#0A1C3E]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A1C3E]">
+                            <i class="fa-solid fa-floppy-disk mr-2"></i>Enregistrer
+                        </button>
+                        <button type="button" id="cancel-btn"
+                            class="hidden px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A1C3E]">
+                            <i class="fa-solid fa-xmark mr-2"></i>Annuler
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Affectations List Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <!-- Header -->
+                <div class="bg-[#0A1C3E] px-6 py-4">
+                    <h2 class="text-xl font-semibold text-white">Liste des affectations</h2>
+                </div>
+
+                <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Modèle</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Type</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Numéro de série</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date d'affectation</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Utilisateur</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Statut</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach ($utilisateur->affectations as $affectation)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $affectation->materiel->fabricant }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $affectation->materiel->type }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $affectation->materiel->num_serie }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $affectation->date_affectation }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $affectation->utilisateur1 }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $affectation->statut }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <div class="flex items-center space-x-4">
+                                                <form action="{{ route('affectation.destroy', $affectation) }}"
+                                                    method="post"
+                                                    onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette affectation')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-500 hover:text-red-700">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                                <a href="{{ route('generatePdf', $affectation) }}"
+                                                    class="text-red-700 hover:text-red-900">
+                                                    <i class="fa-solid fa-file-pdf"></i>
+                                                </a>
+                                                <form action="{{ route('upload', $affectation) }}" method="POST"
+                                                    enctype="multipart/form-data" class="inline">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <label for="fiche_{{ $affectation->id }}"
+                                                        class="cursor-pointer text-blue-500 hover:text-blue-700">
+                                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                    </label>
+                                                    <input type="file" name="fiche_affectation"
+                                                        id="fiche_{{ $affectation->id }}" class="hidden"
+                                                        onchange="document.getElementById('save_{{ $affectation->id }}').classList.remove('hidden')">
+                                                    <button type="submit" id="save_{{ $affectation->id }}"
+                                                        class="hidden ml-2 px-2 py-1 text-xs font-medium text-white bg-[#0A1C3E] rounded-md hover:bg-[#0A1C3E]/90">
+                                                        Enregistrer
+                                                    </button>
+                                                </form>
+                                                @if ($affectation->fiche_affectation)
+                                                    <a href="{{ asset('storage/' . $affectation->fiche_affectation) }}"
+                                                        target="_blank" class="text-gray-600 hover:text-gray-800">
+                                                        <i class="fa-solid fa-file"></i>
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <a href="{{ route('userExists', $utilisateur->id) }}"
+                            class="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-[#0A1C3E] hover:bg-[#0A1C3E]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A1C3E]">
+                            Ajouter une affectation
+                        </a>
                     </div>
                 </div>
-
-                <!-- Boutons -->
-                <div class="flex justify-end mt-4">
-                    <button type="button" id="edit-btn"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer"><i
-                            class="fas fa-edit"></i></button>
-                    <button type="submit" id="save-btn"
-                        class="hidden bg-green-500 text-white px-4 py-2 rounded-lg cursor-pointer ml-2"><i
-                            class="fa-solid fa-floppy-disk"></i></button>
-                    <button type="button" id="cancel-btn"
-                        class="hidden bg-gray-500 text-white px-4 py-2 rounded-lg cursor-pointer ml-2"><i
-                            class="fa-solid fa-xmark"></i></button>
-                </div>
-            </form>
-
-        </div>
-
-        <div class="bg-white rounded-lg border border-gray-400 shadow-lg px-4 py-5 mt-4">
-            <h3 class="text-2xl my-4"><i class="fa-solid fa-file mr-4"></i>Liste des affectations</h3>
-            <table class="text-left w-full border border-gray-400">
-                <thead>
-                    <tr class="tr">
-                        <th class="pl-2">Modèle</th>
-                        <th class="pl-2">Type</th>
-                        <th class="pl-2">Numéro de série</th>
-                        <th class="pl-2">Date d'affectation</th>
-                        <th class="pl-2">Utilisateur</th>
-                        <th class="pl-2">Statut</th>
-                        <th class="pl-2">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($utilisateur->affectations as $affectation)
-                        <tr class="border-b border-gray-400">
-                            <td>{{ $affectation->materiel->fabricant }}</td>
-                            <td>{{ $affectation->materiel->type }}</td>
-                            <td>{{ $affectation->materiel->num_serie }}</td>
-                            <td>{{ $affectation->date_affectation }}</td>
-                            <td>{{ $affectation->utilisateur1 }}</td>
-                            <td>{{ $affectation->statut }}</td>
-                            <td class="flex items-center justify-center gap-4">
-                                <form action="{{ route('affectation.destroy', $affectation) }}" method="post"
-                                    class="inline-block"
-                                    onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette affectation')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="mr-2 cursor-pointer">
-                                        <i class="fa-solid fa-trash text-red-500"></i>
-                                    </button>
-                                </form>
-                                <a href="{{ route('generatePdf', $affectation) }}">
-                                    <i class="fa-solid fa-file-pdf text-red-700"></i>
-                                </a>
-                                <form action="{{ route('upload', $affectation) }}" method="POST"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    @method('POST')
-                                    <label for="fiche_{{ $affectation->id }}" class="cursor-pointer">
-                                        <i class="fa-solid fa-cloud-arrow-up text-blue-500"></i>
-                                    </label>
-                                    <input type="file" name="fiche_affectation" id="fiche_{{ $affectation->id }}"
-                                        class="hidden"
-                                        onchange="document.getElementById('save_{{ $affectation->id }}').classList.remove('hidden')">
-                                    <button type="submit" id="save_{{ $affectation->id }}"
-                                        class="hidden bg-green-500 text-white px-2 py-1 rounded-lg text-sm">
-                                        Enregistrer
-                                    </button>
-                                </form>
-                                @if ($affectation->fiche_affectation)
-                                    {{-- <a href="{{ asset('storage/' . $affectation->fiche_affectation) }}"
-                                        download="{{ basename($affectation->fiche_affectation) }}" target="_blank">
-                                        <i class="fa-solid fa-file text-gray-600"></i>
-                                    </a> --}}
-                                    <a href="{{ asset('storage/' . $affectation->fiche_affectation) }}" target="_blank">
-                                        <i class="fa-solid fa-file text-gray-600"></i>
-                                    </a>
-                                @endif
-                            </td>
-                            @error('fiche_affectation')
-                                <p class="error">{{ $message }}</p>
-                            @enderror
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <div class="flex justify-end">
-                <a href="{{ route('userExists', $utilisateur->id) }}"
-                    class="form-btn w-[100px] bg-gray-700 text-white font-bold text-center">
-                    Ajouter
-                </a>
-
             </div>
         </div>
-
     </div>
+
     <script>
         $(document).ready(function() {
             $("#edit-btn").click(function() {
                 // Activer les champs du formulaire
                 $("input").prop("disabled", false);
-                $("input").addClass('outline outline-gray-500');
+                $("input").addClass('focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] bg-white');
 
                 // Masquer le bouton Modifier et afficher Enregistrer + Annuler
                 $("#edit-btn").hide();
@@ -179,7 +219,8 @@
                 });
                 // Désactiver les champs du formulaire
                 $("input").prop("disabled", true);
-                $("input").removeClass('outline outline-gray-500');
+                $("input").removeClass('focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] bg-white')
+                    .addClass('bg-gray-50');
 
                 // Réafficher Modifier et cacher Enregistrer + Annuler
                 $("#edit-btn").show();
@@ -187,5 +228,4 @@
             });
         });
     </script>
-
 @endsection
