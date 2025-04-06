@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Imprimante extends Model
 {
     /** @use HasFactory<\Database\Factories\ImprimanteFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         "materiel_id",
         "identifiant_noir",
