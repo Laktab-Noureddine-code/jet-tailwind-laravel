@@ -1,75 +1,102 @@
 @extends('layouts.app')
 @section('title', 'Notifications')
 @section('content')
-    <div>
-        <h1 class="header-title">Notifications</h1>
-        @if (session('error'))
-            <p class="error">{{ session('error') }}</p>
+    <div class="container mx-auto py-8 px-4">
+        <div class="mb-6 flex items-center justify-between">
+            <h1 class="text-3xl font-bold text-gray-900">Notifications</h1>
+        </div>
+
+        @if (session('success'))
+            <div class="mb-4 rounded-lg bg-green-100 px-6 py-5 text-base text-green-700" role="alert">
+                {{ session('success') }}
+            </div>
+        @elseif (session('error'))
+            <div class="mb-4 rounded-lg bg-red-100 px-6 py-5 text-base text-red-700" role="alert">
+                {{ session('error') }}
+            </div>
         @endif
-        <table class="table">
-            <thead>
-                <tr class="tr ">
-                    <th class="pl-2">Nom</th>
-                    <th class="pl-2">Fonction</th>
-                    <th class="pl-2">Departement</th>
-                    <th class="pl-2">Email</th>
-                    <th class="pl-2">Téléphone</th>
-                    <th class="pl-2">Modèle</th>
-                    <th class="pl-2">Numéro de Série</th>
-                    <th class="pl-2">Puk</th>
-                    <th class="pl-2">Pin</th>
-                    <th class="pl-2">Type de Contrat</th>
-                    <th class="pl-2">Statut</th>
-                    <th class="pl-2">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($notifications as $notification)
-                    <tr class="border-b border-gray-200 text-sm">
-                        <td class="h-[40px]">{{ $notification->recrutement->nom }}</td>
-                        <td class="h-[40px]">{{ $notification->recrutement->fonction }}</td>
-                        <td class="h-[40px]">{{ $notification->recrutement->departement }}</td>
-                        <td class="h-[40px]">{{ $notification->recrutement->email }}</td>
-                        <td class="h-[40px]">{{ $notification->recrutement->telephone }}</td>
-                        <td class="h-[40px]">{{ $notification->recrutement->model }}</td>
-                        <td class="h-[40px]">{{ $notification->recrutement->num_serie }}</td>
-                        <td class="h-[40px]">{{ $notification->recrutement->puk }}</td>
-                        <td class="h-[40px]">{{ $notification->recrutement->pin }}</td>
-                        <td class="h-[40px]">{{ $notification->recrutement->type_contrat }}</td>
-                        <td>
-                            <span
-                                class="text-nowrap {{ $notification->recrutement->status === 'validé' ? 'bg-green-500 px-2 py-1 rounded-lg text-white font-semibold' : 'bg-red-500 px-2 py-1 rounded-lg text-white font-semibold' }}">
-                                {{ $notification->recrutement->status }}
-                            </span>
 
-                        </td>
-                        @if ($notification->recrutement->status !== 'validé')
-                            <td class="flex items-center gap-2">
-                                <!-- Bouton Modifier -->
-                                <a href="{{ route('notifications.edit', $notification->id) }}"
-                                    class="text-lg text-blue-900"><i class="fa-solid fa-pen-to-square"></i></a>
+        <div class="mt-6 bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm" id="materiels-table">
+                    <thead class="text-xs uppercase text-white">
+                        <tr class="bg-[#0A1C3E]">
+                            <th scope="col" class="px-4 py-3">Nom</th>
+                            <th scope="col" class="px-4 py-3">Fonction</th>
+                            <th scope="col" class="px-4 py-3">Departement</th>
+                            <th scope="col" class="px-4 py-3">Email</th>
+                            <th scope="col" class="px-4 py-3">Téléphone</th>
+                            <th scope="col" class="px-4 py-3">Modèle</th>
+                            <th scope="col" class="px-4 py-3">Numéro de Série</th>
+                            <th scope="col" class="px-4 py-3">Type de Contrat</th>
+                            <th scope="col" class="px-4 py-3">Statut</th>
+                            <th scope="col" class="px-4 py-3 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($notifications as $notification)
+                            <tr class="border-b hover:bg-gray-50 {{ $notification->is_read ? '' : 'outline-2 outline-red-500' }}">
+                                <td class="px-4 py-3 font-medium text-gray-900">{{ $notification->recrutement->nom }}</td>
+                                <td class="px-4 py-3">{{ $notification->recrutement->fonction }}</td>
+                                <td class="px-4 py-3">{{ $notification->recrutement->departement }}</td>
+                                <td class="px-4 py-3">{{ $notification->recrutement->email }}</td>
+                                <td class="px-4 py-3">{{ $notification->recrutement->telephone }}</td>
+                                <td class="px-4 py-3">{{ $notification->recrutement->model }}</td>
+                                <td class="px-4 py-3">{{ $notification->recrutement->num_serie }}</td>
+                                <td class="px-4 py-3">
+                                    <span
+                                        class="px-2 py-1 text-xs rounded-full {{ $notification->recrutement->type_contrat === 'jet' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800' }}">
+                                        {{ $notification->recrutement->type_contrat }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <span
+                                        class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium {{ $notification->recrutement->status === 'validé' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                        {{ $notification->recrutement->status }}
+                                    </span>
+                                </td>
+                                @if ($notification->recrutement->status !== 'validé')
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center space-x-3">
+                                            <!-- Bouton Modifier -->
+                                            <a href="{{ route('notifications.edit', $notification->id) }}"
+                                                class="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-100 transition-colors"
+                                                title="Modifier">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
 
-                                <!-- Bouton Valider -->
-                                <form action="{{ route('notifications.valider', $notification->id) }}" method="POST"
-                                    style="display:inline;">
-                                    @csrf
-                                    <button type="submit" class="text-green-700 font-bold text-2xl cursor-pointer" onclick="return confirm('Êtes-vous sûr ?')"><i
-                                            class="fa-solid fa-check"></i></button>
-                                </form>
-                            </td>
-                        @else
-                            <td>
-                                <span class="bg-green-500 px-2 py-1 rounded-lg text-white font-semibold">Validé</span>
-                            </td>
-                        @endif
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="10" class="text-center text-gray-500 py-4">Aucun notification trouvé.</td>
-
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                                            <!-- Bouton Valider -->
+                                            <form action="{{ route('notifications.valider', $notification->id) }}"
+                                                method="POST" class="inline">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-100 transition-colors"
+                                                    title="Valider"
+                                                    onclick="return confirm('Êtes-vous sûr de vouloir valider ce recrutement ?')">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                @else
+                                    <td class="px-4 py-3 text-center">
+                                        <span
+                                            class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-green-100 text-green-800">
+                                            Validé
+                                        </span>
+                                    </td>
+                                @endif
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="10" class="px-6 py-6 text-center text-gray-500">
+                                    Aucune notification trouvée.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection

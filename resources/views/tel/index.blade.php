@@ -3,66 +3,119 @@
 @section('title', 'Liste des téléphones')
 
 @section('content')
-    <div>
-        <h1 class="header-title">Liste des Téléphones</h1>
-        <x-materiels.search-tel search="{{ $search }}" />
+    <div class="container mx-auto">
         @if (session('success'))
-            <p class="success">{{ session('success') }}</p>
+            <div class="mb-4 rounded-lg bg-green-100 px-6 py-5 text-base text-green-700" role="alert">
+                {{ session('success') }}
+            </div>
         @elseif (session('error'))
-            <p class="error">{{ session('error') }}</p>
+            <div class="mb-4 rounded-lg bg-red-100 px-6 py-5 text-base text-red-700" role="alert">
+                {{ session('error') }}
+            </div>
         @endif
 
-        <table class="table">
-            <thead>
-                <tr class="tr">
-                    <th class="pl-2">Modèle</th>
-                    <th class="pl-2">Type</th>
-                    <th class="pl-2">Numéro de Série</th>
-                    <th class="pl-2">État</th>
-                    <th class="pl-2">Statut</th>
-                    <th class="pl-2">PIN</th>
-                    <th class="pl-2">PUK</th>
-                    <th class="pl-2">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($telephones as $telephone)
-                    <tr class="border-b border-gray-200 text-sm">
-                        <td class="h-[40px]">{{ $telephone->materiel->fabricant }}</td>
-                        <td class="h-[40px]">{{ $telephone->materiel->type }}</td>
-                        <td class="h-[40px]">{{ $telephone->materiel->num_serie }}</td>
-                        <td class="h-[40px]">{{ $telephone->materiel->etat }}</td>
+        <div class="mb-6 flex items-center justify-between">
+            <h1 class="text-2xl font-semibold text-gray-900">Liste des Téléphones</h1>
+        </div>
 
-                        <td class="h-[40px]">
-                            @if ($telephone->materiel->affectations->isNotEmpty())
-                                <span>
-                                    {{ $telephone->materiel->affectations->first()->statut }}
-                                </span>
-                            @else
-                                <span class="">NON AFFECTÉ</span>
-                            @endif
-                        </td>
-                        <td class="h-[40px]">{{ $telephone->pin }}</td>
-                        <td class="h-[40px]">{{ $telephone->puk }}</td>
-                        <td class="h-[40px] flex items-center gap-2 justify-center ">
-                            <a href="{{ route('telephones.edit', $telephone->id) }}"><i
-                                    class="fa-regular fa-pen-to-square text-blue-700"></i>
-                            </a>
-                            <form action="{{ route('telephones.destroy', $telephone->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" onclick="return confirm('Supprimer ce téléphone ?')"> <i
-                                        class="fa-solid fa-trash text-red-500"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="7" class="text-center">Aucun téléphone trouvé.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+        {{-- search component --}}
+        <x-materiels.search-tel search="{{ $search }}" />
+
+        <div class="mt-6 bg-white rounded-lg shadow">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-500" id="materiels-table">
+                    <thead class="text-xs uppercase text-white">
+                        <tr class="bg-[#0A1C3E]">
+                            <th scope="col" class="px-6 py-4">Modèle</th>
+                            <th scope="col" class="px-6 py-4">Type</th>
+                            <th scope="col" class="px-6 py-4">Numéro de Série</th>
+                            <th scope="col" class="px-6 py-4">État</th>
+                            <th scope="col" class="px-6 py-4">Statut</th>
+                            <th scope="col" class="px-6 py-4">PIN</th>
+                            <th scope="col" class="px-6 py-4">PUK</th>
+                            <th scope="col" class="px-6 py-4 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($telephones as $telephone)
+                            <tr class="border-b hover:bg-gray-50"
+                                data-statut="{{ $telephone->materiel->affectations->isNotEmpty() ? $telephone->materiel->affectations->first()->statut : 'NON AFFECTE' }}">
+                                <td class="px-6 py-4">{{ $telephone->materiel->fabricant }}</td>
+                                <td class="px-6 py-4">{{ $telephone->materiel->type }}</td>
+                                <td class="px-6 py-4">{{ $telephone->materiel->num_serie }}</td>
+                                <td class="px-6 py-4">{{ $telephone->materiel->etat }}</td>
+                                <td class="px-6 py-4">
+                                    @if ($telephone->materiel->affectations->isNotEmpty())
+                                        <span
+                                            class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                                            {{ $telephone->materiel->affectations->first()->statut }}
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
+                                            NON AFFECTÉ
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">{{ $telephone->pin }}</td>
+                                <td class="px-6 py-4">{{ $telephone->puk }}</td>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="flex items-center justify-center space-x-3">
+                                        <a href="{{ route('telephones.edit', $telephone->id) }}"
+                                            class="text-blue-600 hover:text-blue-900">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </a>
+                                        <form action="{{ route('telephones.destroy', $telephone->id) }}" method="POST"
+                                            class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-900"
+                                                onclick="return confirm('Supprimer ce téléphone ?')">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="px-6 py-4 text-center text-gray-500">
+                                    Aucun téléphone trouvé.
+                                </td>
+                            </tr>
+                        @endforelse
+                        <tr class="js-no-results" style="display: none;">
+                            <td colspan="8" class="px-6 py-4 text-center text-gray-500">
+                                Aucun téléphone correspond au filtre
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('input[name="statut"]').change(function() {
+                const selectedStatut = $(this).val();
+                let hasVisibleRows = false;
+
+                // Filtrer les lignes
+                $('#materiels-table tbody tr[data-statut]').each(function() {
+                    const rowStatut = $(this).data('statut');
+                    const isVisible = (selectedStatut === 'all' || rowStatut === selectedStatut);
+
+                    $(this).toggle(isVisible);
+                    if (isVisible) hasVisibleRows = true;
+                });
+
+                // Gérer le message
+                $('.js-no-results').toggle(!hasVisibleRows);
+
+                // Masquer le message initial si besoin
+                $('.no-results').toggle(!hasVisibleRows && selectedStatut === 'all');
+            });
+        });
+    </script>
 @endsection

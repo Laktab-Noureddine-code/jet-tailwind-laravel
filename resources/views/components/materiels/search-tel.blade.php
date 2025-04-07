@@ -1,34 +1,47 @@
 @props(['search'])
-<div class="flex justify-between items-center my-4">
-    <!-- Bouton Ajouter une affectation -->
-    <div class="">
-    </div>
-    <!-- Champ de recherche -->
-    <div class="w-[40%]">
-        <form class="w-full" action="{{ route('telephones.index') }}" method="get">
-            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
-            <div class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
+<div class="mb-6">
+    <div class="flex flex-col justify-between md:flex-row items-start md:items-center gap-4">
+        <div></div>
+        <!-- Champ de recherche -->
+        <div class="w-full md:w-1/3">
+            <form action="{{ route('telephones.index') }}" method="get" class="relative">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input type="search" name="search" value="{{ $search ? $search : '' }}"
+                        class="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] sm:text-sm transition duration-150 ease-in-out"
+                        placeholder="Rechercher un téléphone...">
                 </div>
-                <div class="flex gap-2">
-                    <input type="search" id="default-search" name="search"
-                        class="block w-full p-1 ps-10 text-lg text-gray-900 border border-gray-300 rounded-lg bg-white
-                               focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Rechercher ..." value="{{ $search ? $search : '' }}" />
-                    <button type="submit"
-                        class="text-gray-800 cursor-pointer  bg-[#f4d103]
-                               focus:ring-4 focus:outline-none focus:ring-yellow-200 font-medium rounded-lg
-                               text-sm px-4 py-2 hover:bg-[#f4c003]">
-                        Rechercher
-                    </button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-    <script></script>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const statusFilters = document.getElementById('status-filters');
+        const radioInputs = statusFilters.querySelectorAll('input[type="radio"]');
+        const labels = statusFilters.querySelectorAll('label');
+
+        radioInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                // Reset all labels to default style
+                labels.forEach(label => {
+                    label.classList.remove('bg-[#0A1C3E]', 'text-white');
+                    label.classList.add('bg-gray-100', 'text-gray-700');
+                });
+
+                // Apply active style to selected label
+                const selectedLabel = this.closest('label');
+                selectedLabel.classList.remove('bg-gray-100', 'text-gray-700');
+                selectedLabel.classList.add('bg-[#0A1C3E]', 'text-white');
+            });
+        });
+    });
+</script>
