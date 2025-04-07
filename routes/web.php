@@ -71,7 +71,6 @@ Route::middleware("auth")->group(function () {
     // trash
     Route::get('/trash', [trashController::class, 'index'])->name('trash.index');
     Route::delete('/trash/{id}', [trashController::class, 'forceDelete'])->name('trash.forceDelete');
-
     // account management
     Route::resource('accounts', AccountController::class)->middleware('is_admin:admin');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

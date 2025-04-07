@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Affectation;
+use App\Models\Utilisateur;
+use App\Models\Materiel;
 use Illuminate\Http\Request;
 
 class trashController extends Controller
@@ -11,8 +13,23 @@ class trashController extends Controller
     {
         // Récupérer les affectations supprimées avec les relations utilisateur et matériel
         $affectations = Affectation::onlyTrashed()
-            ->with(['utilisateur', 'materiel'])
+            ->with(['utilisateur' => function ($query) {
+                $query->withTrashed();
+            }, 'materiel' => function ($query) {
+                $query->withTrashed();
+            }])
+            ->orderBy('deleted_at', 'desc')
             ->get();
+
+        // Vérifier si les relations existent encore
+        foreach ($affectations as $affectation) {
+            if ($affectation->utilisateur_id && !Utilisateur::withTrashed()->find($affectation->utilisateur_id)) {
+                $affectation->utilisateur = null;
+            }
+            if ($affectation->materiel_id && !Materiel::withTrashed()->find($affectation->materiel_id)) {
+                $affectation->materiel = null;
+            }
+        }
 
         return view('trash.index', compact('affectations'));
     }
@@ -26,6 +43,6 @@ class trashController extends Controller
         $affectation->forceDelete();
 
         return redirect()->route('trash.index')
-            ->with('success', 'Affectation supprimée définitivement.');
+            ->with('success', 'L\'affectation a été supprimée définitivement.');
     }
 }

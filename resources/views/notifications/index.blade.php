@@ -38,7 +38,7 @@
                         <td class="h-[40px]">{{ $notification->recrutement->type_contrat }}</td>
                         <td>
                             <span
-                                class="{{ $notification->recrutement->status === 'validé' ? 'bg-green-500 px-2 py-1 rounded-lg text-white font-semibold' : 'bg-red-500 px-2 py-1 rounded-lg text-white font-semibold' }}">
+                                class="text-nowrap {{ $notification->recrutement->status === 'validé' ? 'bg-green-500 px-2 py-1 rounded-lg text-white font-semibold' : 'bg-red-500 px-2 py-1 rounded-lg text-white font-semibold' }}">
                                 {{ $notification->recrutement->status }}
                             </span>
 

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 
 class AccountController extends Controller
 {
@@ -33,6 +34,7 @@ class AccountController extends Controller
 
         return redirect()->route('accounts.index')->with('success', 'Utilisateur ajouté avec succès');
     }
+
     public function edit(User $account)
     {
         return view('accounts.edit', compact('account'));
@@ -41,38 +43,55 @@ class AccountController extends Controller
     public function update(Request $request, User $account)
     {
         $request->validate([
-            'name'=>'required|string',
+            'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $account->id,
             'password' => 'nullable|min:8',
+            'role' => ['required', Rule::in(['admin', 'user'])],
         ]);
 
-        if ($request->email) {
-            $account->email = $request->email;
+        // Vérifier si c'est le dernier admin qu'on essaie de changer en user
+        if ($account->role === 'admin' && $request->role === 'user' && User::where('role', 'admin')->count() === 1) {
+            return redirect()->route('accounts.index')
+                ->with('error', 'Impossible de modifier le rôle du dernier administrateur.');
         }
 
-        if ($request->password) {
+        $account->name = $request->name;
+        $account->email = $request->email;
+        if ($request->filled('password')) {
             $account->password = Hash::make($request->password);
         }
-        if ($request->name) {
-            $account->name = $request->name;
-        }
         $account->role = $request->role;
-
         $account->save();
 
-        return redirect()->route('accounts.index')->with('success', 'Utilisateur mis à jour avec succès');
+        return redirect()->route('accounts.index')
+            ->with('success', 'Utilisateur mis à jour avec succès');
     }
 
-
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        // $use = User::find($user->id);
-        // dd($use);
-        // Vérifier si c'est le seul admin
-        if ($user->role === 'admin' && User::where('role', 'admin')->count() === 1) {
-            return redirect()->route('accounts.index')->with('error', 'Impossible de supprimer le dernier administrateur.');
+        Log::info('Tentative de suppression de l\'utilisateur ID: ' . $id);
+
+        try {
+            $user = User::findOrFail($id);
+
+            Log::info('Utilisateur trouvé: ' . $user->email);
+
+            // Vérifier si c'est le dernier admin
+            if ($user->role === 'admin' && User::where('role', 'admin')->count() === 1) {
+                Log::warning('Tentative de suppression du dernier admin');
+                return redirect()->route('accounts.index')
+                    ->with('error', 'Impossible de supprimer le dernier administrateur.');
+            }
+
+            $user->delete();
+            Log::info('Utilisateur supprimé avec succès');
+
+            return redirect()->route('accounts.index')
+                ->with('success', 'Utilisateur supprimé avec succès');
+        } catch (\Exception $e) {
+            Log::error('Erreur lors de la suppression: ' . $e->getMessage());
+            return redirect()->route('accounts.index')
+                ->with('error', 'Erreur lors de la suppression de l\'utilisateur');
         }
-        $user->delete();
-        return redirect()->route('accounts.index')->with('success', 'Utilisateur supprimé');
     }
 }

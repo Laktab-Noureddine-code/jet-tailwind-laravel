@@ -208,6 +208,7 @@
                         method: 'GET',
                         dataType: "json",
                         success: function(data) {
+                            console.log('Success:', data);
                             // Enable the button and change styles
                             $("#submitBtn").prop('disabled', false)
                                 .removeClass('opacity-50 cursor-not-allowed');
@@ -232,7 +233,8 @@
                                 $("#stockage").val('');
                             }
                         },
-                        error: function() {
+                        error: function(xhr, status, error) {
+                            console.log('Error:', xhr, status, error);
                             // Disable the button and reset styles
                             $("#submitBtn").prop('disabled', true)
                                 .addClass('opacity-50 cursor-not-allowed');

@@ -9,6 +9,11 @@
                 {{ session('success') }}
             </div>
         @endif
+        @if (session('error'))
+            <div class="mb-4 rounded-lg bg-red-100 px-6 py-5 text-base text-red-700" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <div class="mb-6 flex items-center justify-between">
             <h1 class="text-2xl font-semibold text-gray-900">Liste des Comptes</h1>
@@ -88,10 +93,22 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex justify-center space-x-3">
-                                        <a href="{{ route('accounts.edit', $user) }}"
+                                        <a href="{{ route('accounts.edit', $user->id) }}"
                                             class="text-blue-600 hover:text-blue-900" title="Modifier">
                                             <i class="fa-solid fa-user-pen"></i>
                                         </a>
+                                        @if (!($user->role === 'admin' && \App\Models\User::where('role', 'admin')->count() === 1))
+                                            <button onclick="deleteUser({{ $user->id }})"
+                                                class="text-red-600 hover:text-red-900" title="Supprimer">
+                                                <i class="fa-solid fa-user-minus"></i>
+                                            </button>
+                                            <form id="delete-form-{{ $user->id }}"
+                                                action="{{ route('accounts.destroy', $user->id) }}" method="POST"
+                                                style="display: none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -101,4 +118,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function deleteUser(userId) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+                document.getElementById('delete-form-' + userId).submit();
+            }
+        }
+    </script>
 @endsection

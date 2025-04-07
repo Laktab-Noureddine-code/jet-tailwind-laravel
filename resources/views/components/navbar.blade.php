@@ -72,7 +72,6 @@
                             </a>
                         </li>
                     </div>
-
                     <div class="mt-6">
                         <li>
                             <form action="{{ route('logout') }}" method="post">
