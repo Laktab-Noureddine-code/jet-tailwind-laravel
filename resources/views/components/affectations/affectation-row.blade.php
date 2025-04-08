@@ -7,11 +7,8 @@
             </div>
         </div>
     </td>
-    {{-- <td>{{ $affectation->utilisateur->fonction }}</td> --}}
-    {{-- <td>{{ $affectation->utilisateur->telephone }}</td> --}}
+    
     <td class="px-6 py-4">{{ $affectation->utilisateur->email }}</td>
-    {{-- <td>{{ $affectation->utilisateur->departement }}</td> --}}
-    {{-- <td>{{ $affectation->chantier }}</td> --}}
     <td class="px-6 py-4">{{ \Carbon\Carbon::parse($affectation->date_affectation)->format('d M Y') }}</td>
     <td class="px-6 py-4">{{ $affectation->materiel ? $affectation->materiel->fabricant : 'N/A' }}</td>
     <td class="px-6 py-4">
@@ -31,7 +28,7 @@
             {{ $affectation->statut }}
         </span>
     </td>
-    <td class="px-6 py-4 font-medium text-nowrap">{{ $affectation->materiel ? $affectation->materiel->num_serie : 'N/A' }}</td>
+    <td class="px-6 py-4 font-medium">{{ $affectation->materiel ? $affectation->materiel->num_serie : 'N/A' }}</td>
     <td class="px-6 py-4">
         @if ($affectation->materiel)
             <span

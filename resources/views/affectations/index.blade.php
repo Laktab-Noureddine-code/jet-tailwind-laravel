@@ -17,18 +17,18 @@
 
         <div class="mt-6 bg-white rounded-lg shadow">
             <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm text-gray-500">
+                <table class="max-w-full text-left text-sm text-gray-500">
                     <thead class="text-xs uppercase text-white">
                         <tr class="bg-[#0A1C3E]">
-                            <th scope="col" class="px-6 py-4">Nom</th>
-                            <th scope="col" class="px-6 py-4">Email</th>
-                            <th scope="col" class="px-6 py-4">Date d'Affectation</th>
-                            <th scope="col" class="px-6 py-4">Modèle</th>
-                            <th scope="col" class="px-6 py-4">Type</th>
-                            <th scope="col" class="px-6 py-4">Statut</th>
-                            <th scope="col" class="px-6 py-4">Numéro de Série</th>
-                            <th scope="col" class="px-6 py-4">État</th>
-                            <th scope="col" class="px-6 py-4 text-center">Actions</th>
+                            <th class="px-2 py-2">Nom</th>
+                            <th class="px-2 py-2">Email</th>
+                            <th class="px-2 py-2">Date d'Affectation</th>
+                            <th class="px-8 py-2">Modèle</th>
+                            <th class="px-2 py-2">Type</th>
+                            <th class="px-2 py-2">Statut</th>
+                            <th class="px-2 py-2">Numéro de Série</th>
+                            <th class="px-2 py-2">État</th>
+                            <th class="px-2 py-2 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
