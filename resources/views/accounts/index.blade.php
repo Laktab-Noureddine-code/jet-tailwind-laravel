@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Comptes')
+@section('title', 'Gestion des Comptes Utilisateurs')
 
 @section('content')
     <div class="container mx-auto">

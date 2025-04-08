@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', 'Tableau de Bord')
 @section('content')
     <h1 class="header-title">Dashboard ,{{auth()->user()->name}}</h1>
     <div class="p-4 grid gap-4">

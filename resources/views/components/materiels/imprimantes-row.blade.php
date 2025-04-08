@@ -5,7 +5,7 @@
     <td class="px-6 py-4">{{ $imprimante->utilisateur_nom }}</td>
     <td class="px-6 py-4">
         <span
-            class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 
+            class="inline-flex rounded-full text-nowrap px-2 text-xs font-semibold leading-5 
             {{ $imprimante->statut === 'AFFECTE'
                 ? 'bg-green-100 text-green-800'
                 : ($imprimante->statut === 'REAFFECTE'
@@ -16,7 +16,7 @@
     </td>
     <td class="px-6 py-4">
         <span
-            class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 
+            class="inline-flex rounded-full px-2 text-xs text-nowrap font-semibold leading-5 
             {{ $imprimante->etat === 'Neuf' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
             {{ $imprimante->etat }}
         </span>

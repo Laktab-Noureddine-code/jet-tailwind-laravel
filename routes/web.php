@@ -18,16 +18,17 @@ use App\Http\Controllers\UtilisateurController;
 use App\Models\Notification;
 
 Route::middleware("auth")->group(function () {
-    Route::get(
-        '/',
-        [DashboardController::class, 'index']
-    )
-        ->name('dashboard.index');
+    // Redirection de la racine vers le tableau de bord
+    Route::redirect('/', '/dashboard', 301);
+    
+    // Route du tableau de bord
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    // 
+    
     Route::get('getChartData', [DashboardController::class, 'getChartData'])->middleware('is_admin:admin');
     Route::get('getAffectationStats', [DashboardController::class, 'getAffectationStats'])->middleware('is_admin:admin');
     Route::get('/getAffectationByMonth', [DashboardController::class, 'getAffectationByMonth'])->middleware('is_admin:admin');
 
-    // Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     // ? ordinateurs
     Route::resource('/ordinateurs', OrdinateurController::class)->middleware('is_admin:admin');
 

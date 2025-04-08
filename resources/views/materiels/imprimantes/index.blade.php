@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'imprimante')
+@section('title', 'Gestion des Imprimantes')
 
 @section('content')
     <div class="container mx-auto">

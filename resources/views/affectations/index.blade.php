@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Affectations')
+@section('title', 'Gestion des Affectations')
 @section('content')
     <div class="container mx-auto">
         @if (session('message'))

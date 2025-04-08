@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'ordinateur')
+@section('title', 'Paramètres Système')
 
 @section('content')
-<a href="">gérer les utilisateurs</a>
-<a href=""></a>
+    <a href="">gérer les utilisateurs</a>
+    <a href=""></a>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Liste des téléphones')
+@section('title', 'Gestion des Téléphones')
 
 @section('content')
     <div class="container mx-auto">

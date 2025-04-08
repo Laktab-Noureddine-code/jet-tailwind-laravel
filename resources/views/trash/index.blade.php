@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Gestion de la Corbeille')
+
 @section('content')
     <div class="container mx-auto">
         @if (session('success'))

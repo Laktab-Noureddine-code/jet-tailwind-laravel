@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Notifications')
+@section('title', 'Centre de Notifications')
 @section('content')
     <div class="container mx-auto py-8 px-4">
         <div class="mb-6 flex items-center justify-between">
@@ -35,7 +35,8 @@
                     </thead>
                     <tbody>
                         @forelse ($notifications as $notification)
-                            <tr class="border-b hover:bg-gray-50 {{ $notification->is_read ? '' : 'outline-2 outline-red-500' }}">
+                            <tr
+                                class="border-b hover:bg-gray-50 {{ $notification->is_read ? '' : 'outline-2 outline-red-500' }}">
                                 <td class="px-4 py-3 font-medium text-gray-900">{{ $notification->recrutement->nom }}</td>
                                 <td class="px-4 py-3">{{ $notification->recrutement->fonction }}</td>
                                 <td class="px-4 py-3">{{ $notification->recrutement->departement }}</td>

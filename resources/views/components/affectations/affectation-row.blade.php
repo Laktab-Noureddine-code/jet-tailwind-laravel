@@ -16,7 +16,7 @@
     <td class="px-6 py-4">{{ $affectation->materiel ? $affectation->materiel->fabricant : 'N/A' }}</td>
     <td class="px-6 py-4">
         @if ($affectation->materiel)
-            <span class="inline-flex rounded-full bg-blue-100 px-2 text-xs font-semibold leading-5 text-blue-800">
+            <span class="inline-flex rounded-full bg-blue-100 px-2 text-nowrap text-xs font-semibold leading-5 text-blue-800">
                 {{ $affectation->materiel->type }}
             </span>
         @else
@@ -27,19 +27,19 @@
     </td>
     <td class="px-6 py-4">
         <span
-            class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 {{ $affectation->statut === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+            class="inline-flex rounded-full px-2 text-nowrap text-xs font-semibold leading-5 {{ $affectation->statut === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
             {{ $affectation->statut }}
         </span>
     </td>
-    <td class="px-6 py-4 font-medium">{{ $affectation->materiel ? $affectation->materiel->num_serie : 'N/A' }}</td>
+    <td class="px-6 py-4 font-medium text-nowrap">{{ $affectation->materiel ? $affectation->materiel->num_serie : 'N/A' }}</td>
     <td class="px-6 py-4">
         @if ($affectation->materiel)
             <span
-                class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 {{ $affectation->materiel->etat === 'Neuf' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                class="inline-flex text-nowrap rounded-full px-2 text-xs font-semibold leading-5 {{ $affectation->materiel->etat === 'Neuf' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                 {{ $affectation->materiel->etat }}
             </span>
         @else
-            <span class="inline-flex rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-800">
+            <span class="inline-flex text-nowrap rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-800">
                 N/A
             </span>
         @endif
