@@ -20,11 +20,11 @@ use App\Models\Notification;
 Route::middleware("auth")->group(function () {
     // Redirection de la racine vers le tableau de bord
     Route::redirect('/', '/dashboard', 301);
-    
+
     // Route du tableau de bord
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     // 
-    
+
     Route::get('getChartData', [DashboardController::class, 'getChartData'])->middleware('is_admin:admin');
     Route::get('getAffectationStats', [DashboardController::class, 'getAffectationStats'])->middleware('is_admin:admin');
     Route::get('/getAffectationByMonth', [DashboardController::class, 'getAffectationByMonth'])->middleware('is_admin:admin');
@@ -71,7 +71,7 @@ Route::middleware("auth")->group(function () {
 
     // trash
     Route::get('/trash', [trashController::class, 'index'])->name('trash.index');
-    Route::delete('/trash/{id}', [trashController::class, 'forceDelete'])->name('trash.forceDelete');
+    Route::delete('/trash/{type}/{id}', [trashController::class, 'forceDelete'])->name('trash.forceDelete');
     // account management
     Route::resource('accounts', AccountController::class)->middleware('is_admin:admin');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

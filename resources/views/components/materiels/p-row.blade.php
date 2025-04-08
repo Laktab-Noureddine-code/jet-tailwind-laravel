@@ -11,7 +11,7 @@
     </td>
     <td class="px-6 py-4">
         <span
-            class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 
+            class="inline-flex rounded-full text-nowrap px-2 text-xs font-semibold leading-5 
             {{ $peripherique->statut === 'AFFECTE'
                 ? 'bg-green-100 text-green-800'
                 : ($peripherique->statut === 'REAFFECTE'

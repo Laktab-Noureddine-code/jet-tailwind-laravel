@@ -22,7 +22,7 @@ class Imprimante extends Model
         "toner_jaune"
     ];
 
-    public function materiels()
+    public function materiel()
     {
         return $this->belongsTo(Materiel::class, 'materiel_id');
     }

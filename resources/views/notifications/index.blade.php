@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <div class="mt-6 bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="mt-6 bg-white rounded-[0_0_10px_10px] shadow-lg overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm" id="materiels-table">
                     <thead class="text-xs uppercase text-white">
