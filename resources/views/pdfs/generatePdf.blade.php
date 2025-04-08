@@ -21,9 +21,9 @@
             width: 85%;
             background-color: #f4d103;
         }
-
     </style>
 </head>
+
 <body>
     <div class="">
         <table width="100%">
@@ -53,7 +53,7 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{$utilisateur->nom}}</strong>
+                        <strong>{{ $utilisateur->nom }}</strong>
                     </span>
                 </td>
             </tr>
@@ -62,7 +62,7 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{$utilisateur->email}}</strong>
+                        <strong>{{ $utilisateur->email }}</strong>
                     </span>
                 </td>
             </tr>
@@ -71,7 +71,7 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{$utilisateur->fonction}}</strong>
+                        <strong>{{ $utilisateur->fonction }}</strong>
                     </span>
                 </td>
             </tr>
@@ -80,7 +80,7 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{$utilisateur->telephone}}</strong>
+                        <strong>{{ $utilisateur->telephone }}</strong>
                     </span>
                 </td>
             </tr>
@@ -89,7 +89,7 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{$utilisateur->departement}}</strong>
+                        <strong>{{ $utilisateur->departement }}</strong>
                     </span>
                 </td>
             </tr>
@@ -98,7 +98,7 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{$chantier}}</strong>
+                        <strong>{{ $chantier }}</strong>
                     </span>
                 </td>
             </tr>
@@ -107,7 +107,7 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{$dateAffectation}}</strong>
+                        <strong>{{ $dateAffectation }}</strong>
                     </span>
                 </td>
             </tr>
@@ -116,7 +116,7 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{$materiel->type}}</strong>
+                        <strong>{{ $materiel->type }}</strong>
                     </span>
                 </td>
             </tr>
@@ -125,7 +125,7 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{$materiel->fabricant}}</strong>
+                        <strong>{{ $materiel->fabricant }}</strong>
                     </span>
                 </td>
             </tr>
@@ -134,7 +134,7 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{$materiel->num_serie}}</strong>
+                        <strong>{{ $materiel->num_serie }}</strong>
                     </span>
                 </td>
             </tr>
@@ -161,24 +161,29 @@
                 </td>
             </tr>
         </table>
-        <table width="100%" style="font-size: 10px; margin-top: 160px;text-align: center;">
+        <table width="100%" style="font-size: 10px; margin-top: 160px;">
             <tr>
-                <td width="33%">
+                <td width="25%" style="text-align: left; vertical-align: top;">
                     Quartier Industriel de Oued Yquem<br>
                     CP 12040 Skhinate - Maroc<br>
                 </td>
 
                 <!-- Pied de page avec les adresses -->
-                <td width="33%">
+                <td width="25%" style="text-align: center; vertical-align: top;">
                     Tél : (212) 537 74 92 92<br>
                     Fax : (212) 537 74 92 30<br>
                     contact@jet-contractors.com<br>
                 </td>
-                <td width="33%" style="font-weight: bolder;">
+                <td width="25%" style=" vertical-align: top;">
                     www.jet-contractors.com<br>
+                    <img src="{{ public_path('/lien.png') }}" style="height: 10px;">
+                </td>
+                <td width="25%" style="text-align: center; vertical-align: top;">
+                    <img src="{{ public_path('/Certifica.jpg') }}" style="width: 100%;">
                 </td>
             </tr>
         </table>
     </div>
 </body>
+
 </html>

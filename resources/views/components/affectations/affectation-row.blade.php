@@ -9,7 +9,7 @@
     </td>
     
     <td class="px-6 py-4">{{ $affectation->utilisateur->email }}</td>
-    <td class="px-6 py-4">{{ \Carbon\Carbon::parse($affectation->date_affectation)->format('d M Y') }}</td>
+    <td class="px-6 py-4">{{ $affectation->date_affectation}}</td>
     <td class="px-6 py-4">{{ $affectation->materiel ? $affectation->materiel->fabricant : 'N/A' }}</td>
     <td class="px-6 py-4">
         @if ($affectation->materiel)
