@@ -17,7 +17,7 @@
 
         <div class="mt-6 bg-white rounded-lg shadow">
             <div class="overflow-x-auto">
-                <table class="max-w-full text-left text-sm text-gray-500">
+                <table class="w-full text-left text-sm text-gray-500">
                     <thead class="text-xs uppercase text-white">
                         <tr class="bg-[#0A1C3E]">
                             <th class="px-2 py-2">Nom</th>

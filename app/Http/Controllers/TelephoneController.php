@@ -66,6 +66,16 @@ class TelephoneController extends Controller
         // On récupère le téléphone par son ID
         $telephone = Telephone::findOrFail($telephone);
 
+        // Vérifier si le téléphone est actuellement affecté
+        $hasActiveAffectation = $telephone->materiel->affectations()
+            ->whereIn('statut', ['AFFECTE', 'REAFFECTE'])
+            ->exists();
+
+        if ($hasActiveAffectation) {
+            return redirect()->back()
+                ->with('error', 'Ce téléphone est actuellement affecté. Vous ne pouvez pas le supprimer.');
+        }
+
         // Si un matériel est lié, on le supprime aussi (optionnel selon ta logique métier)
         if ($telephone->materiel) {
             $telephone->materiel->delete();
