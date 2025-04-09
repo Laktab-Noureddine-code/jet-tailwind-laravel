@@ -17,7 +17,7 @@
         @endif
 
         <div class="mb-6 flex items-center justify-between">
-            <h1 class="text-2xl font-semibold text-gray-900">Corbeille</h1>
+            <h1 class="text-3xl font-bold text-gray-900">Corbeille</h1>
         </div>
 
         <!-- Affectations -->

@@ -71,18 +71,17 @@
                                 <span>Corbeille</span>
                             </a>
                         </li>
-                    </div>
-                    <div class="mt-6">
                         <li>
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf
-                                <button class="w-full flex items-center px-3 py-2 text-white rounded-md hover:bg-[#1a2c4e]">
+                                <button class="w-full flex cursor-pointer items-center px-3 py-2 text-white rounded-md hover:bg-[#1a2c4e]">
                                     <i class="fa-solid fa-arrow-right-from-bracket text-[16px] w-6"></i>
                                     <span>Logout</span>
                                 </button>
                             </form>
                         </li>
                     </div>
+                    
                 @else
                     <li>
                         <a class="flex items-center px-3 py-2 text-white rounded-md hover:bg-[#1a2c4e]">

@@ -93,11 +93,17 @@ class AffectationController extends Controller
     public function upload(Request $request, Affectation $affectation)
     {
         $request->validate([
-            'fiche_affectation' => 'required|mimes:jpeg,png,jpg,pdf|max:6000', // Validation fichier image
+            'fiche_affectation' => 'required|mimes:jpeg,png,jpg,pdf|max:6000', 
         ]);
 
-        // Stocker l'image
-        $path = $request->file('fiche_affectation')->store('affectations', 'public');
+        // Générer un nom de fichier unique avec timestamp et id d'affectation
+        $extension = $request->file('fiche_affectation')->getClientOriginalExtension();
+        $utilisateur = $affectation->utilisateur;
+        $uniqueCode = uniqid();
+        $fileName = 'affectation_' . str_replace(' ', '_', $utilisateur->nom) . '_' . $uniqueCode . '.' . $extension;
+
+        // Stocker le fichier avec le nom personnalisé
+        $path = $request->file('fiche_affectation')->storeAs('affectations', $fileName, 'public');
 
         // Mettre à jour la base de données
         $affectation->update(['fiche_affectation' => $path]);

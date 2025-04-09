@@ -10,7 +10,9 @@ class RecrutementController extends Controller
 {
     public function index()
     {
-        $recrutements = Recrutement::orderBy('status' ,'asc')->get();
+        $recrutements = Recrutement::orderBy('status', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('recruitment.index', compact('recrutements'));
     }
 
@@ -44,6 +46,9 @@ class RecrutementController extends Controller
 
     public function edit(Recrutement $recrutement)
     {
+        if ($recrutement->status === 'validé') {
+            return redirect()->route('recrutements.index')->with('error', 'Impossible de modifier un recrutement validé.');
+        }
         return view('recruitment.edit', compact('recrutement'));
     }
 
@@ -67,7 +72,14 @@ class RecrutementController extends Controller
 
     public function destroy(Recrutement $recrutement)
     {
+        if ($recrutement->status === 'validé') {
+            return redirect()->route('recrutements.index')->with('error', 'Impossible de supprimer un recrutement validé.');
+        }
         $recrutement->delete();
+        // Supprimer la notification associée
+        if ($recrutement->notification) {
+            $recrutement->notification->delete();
+        }
         return redirect()->route('recrutements.index')->with('success', 'Recrutement supprimé avec succès.');
     }
 }

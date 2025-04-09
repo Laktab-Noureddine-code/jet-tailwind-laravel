@@ -112,15 +112,6 @@
                 </td>
             </tr>
             <tr>
-                <td style="height:45px; width: 33%;">Type :
-                </td>
-                <td>
-                    <span>
-                        <strong>{{ $materiel->type }}</strong>
-                    </span>
-                </td>
-            </tr>
-            <tr>
                 <td style="height:45px; width: 33%;">Modèle :
                 </td>
                 <td>
@@ -130,7 +121,16 @@
                 </td>
             </tr>
             <tr>
-                <td style="height:45px; width: 33%;">Num-serie :
+                <td style="height:45px; width: 33%;">Type de matériel :
+                </td>
+                <td>
+                    <span>
+                        <strong>{{ $materiel->type }}</strong>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td style="height:45px; width: 33%;">Numéro de série :
                 </td>
                 <td>
                     <span>
@@ -175,7 +175,7 @@
                     contact@jet-contractors.com<br>
                 </td>
                 <td width="25%" style=" vertical-align: top;">
-                    www.jet-contractors.com<br>
+                    <strong>www.jet-contractors.com</strong><br>
                     <img src="{{ public_path('/lien.png') }}" style="height: 10px;">
                 </td>
                 <td width="25%" style="text-align: center; vertical-align: top;">

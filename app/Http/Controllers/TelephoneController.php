@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Affectation;
 use App\Models\Telephone;
 use Illuminate\Http\Request;
 
@@ -66,10 +67,10 @@ class TelephoneController extends Controller
         // On récupère le téléphone par son ID
         $telephone = Telephone::findOrFail($telephone);
 
-        // Vérifier si le téléphone est actuellement affecté
-        $hasActiveAffectation = $telephone->materiel->affectations()
+        $hasActiveAffectation = Affectation::where('materiel_id', $telephone->materiel_id)
             ->whereIn('statut', ['AFFECTE', 'REAFFECTE'])
             ->exists();
+
 
         if ($hasActiveAffectation) {
             return redirect()->back()

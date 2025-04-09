@@ -35,38 +35,56 @@
                     </thead>
                     <tbody>
                         @forelse ($notifications as $notification)
-                            <tr
-                                class="border-b hover:bg-gray-50 ">
-                                <td class="px-4 py-3 font-medium text-gray-900">{{ $notification->recrutement->nom }}</td>
-                                <td class="px-4 py-3">{{ $notification->recrutement->fonction }}</td>
-                                <td class="px-4 py-3">{{ $notification->recrutement->departement }}</td>
-                                <td class="px-4 py-3">{{ $notification->recrutement->email }}</td>
-                                <td class="px-4 py-3">{{ $notification->recrutement->telephone }}</td>
-                                <td class="px-4 py-3">{{ $notification->recrutement->model }}</td>
-                                <td class="px-4 py-3">{{ $notification->recrutement->num_serie }}</td>
-                                <td class="px-4 py-3">
-                                    <span
-                                        class="px-2 py-1 text-xs rounded-full {{ $notification->recrutement->type_contrat === 'jet' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800' }}">
-                                        {{ $notification->recrutement->type_contrat }}
-                                    </span>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="px-4 py-3 font-medium text-gray-900">
+                                    {{ $notification->recrutement ? $notification->recrutement->nom : 'N/A' }}
                                 </td>
                                 <td class="px-4 py-3">
-                                    <span
-                                        class="inline-flex items-center text-nowrap rounded-full px-2.5 py-1 text-xs font-medium {{ $notification->recrutement->status === 'validé' ? 'bg-green-100 text-green-800' : 'bg-red-400 text-black' }}">
-                                        {{ $notification->recrutement->status }}
-                                    </span>
+                                    {{ $notification->recrutement ? $notification->recrutement->fonction : 'N/A' }}
                                 </td>
-                                @if ($notification->recrutement->status !== 'validé')
+                                <td class="px-4 py-3">
+                                    {{ $notification->recrutement ? $notification->recrutement->departement : 'N/A' }}
+                                </td>
+                                <td class="px-4 py-3">
+                                    {{ $notification->recrutement ? $notification->recrutement->email : 'N/A' }}
+                                </td>
+                                <td class="px-4 py-3">
+                                    {{ $notification->recrutement ? $notification->recrutement->telephone : 'N/A' }}
+                                </td>
+                                <td class="px-4 py-3">
+                                    {{ $notification->recrutement ? $notification->recrutement->model : 'N/A' }}
+                                </td>
+                                <td class="px-4 py-3">
+                                    {{ $notification->recrutement ? $notification->recrutement->num_serie : 'N/A' }}
+                                </td>
+                                <td class="px-4 py-3">
+                                    @if ($notification->recrutement)
+                                        <span
+                                            class="px-2 py-1 text-xs rounded-full {{ $notification->recrutement->type_contrat === 'jet' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800' }}">
+                                            {{ $notification->recrutement->type_contrat }}
+                                        </span>
+                                    @else
+                                        <span class="px-2 py-1 text-xs">N/A</span>
+                                    @endif
+                                </td>
+                                <td class="px-4 py-3">
+                                    @if ($notification->recrutement)
+                                        <span
+                                            class="inline-flex items-center text-nowrap rounded-full px-2.5 py-1 text-xs font-medium {{ $notification->recrutement->status === 'validé' ? 'bg-green-100 text-green-800' : 'bg-red-400 text-black' }}">
+                                            {{ $notification->recrutement->status }}
+                                        </span>
+                                    @else
+                                        <span class="px-2 py-1 text-xs">N/A</span>
+                                    @endif
+                                </td>
+                                @if ($notification->recrutement && $notification->recrutement->status !== 'validé')
                                     <td class="px-4 py-3 text-center">
                                         <div class="flex items-center justify-center space-x-3">
-                                            <!-- Bouton Modifier -->
                                             <a href="{{ route('notifications.edit', $notification->id) }}"
                                                 class="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-100 transition-colors"
                                                 title="Modifier">
                                                 <i class="fa-regular fa-pen-to-square"></i>
                                             </a>
-
-                                            <!-- Bouton Valider -->
                                             <form action="{{ route('notifications.valider', $notification->id) }}"
                                                 method="POST" class="inline">
                                                 @csrf

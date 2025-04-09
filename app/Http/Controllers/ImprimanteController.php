@@ -23,8 +23,8 @@ class ImprimanteController extends Controller
             ->join('imprimantes', 'materiels.id', '=', 'imprimantes.materiel_id')
             ->leftJoin('affectations', function ($join) {
                 $join->on('materiels.id', '=', 'affectations.materiel_id')
-                    ->where('affectations.statut', '=', 'AFFECTE')
-                    ->whereRaw('affectations.id = (select id from affectations where materiel_id = materiels.id order by date_affectation desc limit 1)');
+                    ->whereIn('affectations.statut', ['AFFECTE', 'REAFFECTE'])
+                    ->whereRaw('affectations.id = (select id from affectations where materiel_id = materiels.id and statut in ("AFFECTE", "REAFFECTE") order by date_affectation desc, created_at desc limit 1)');
             })
             ->leftJoin('utilisateurs', 'affectations.utilisateur_id', '=', 'utilisateurs.id')
             ->when($search, function ($query, $search) {
@@ -61,6 +61,7 @@ class ImprimanteController extends Controller
             )
             ->paginate(10);
         $lastAffectations = Affectation::whereIn('materiel_id', $imprimantes->pluck('materiel_id'))
+            ->whereIn('statut', ['AFFECTE', 'REAFFECTE'])
             ->orderByDesc('date_affectation')
             ->orderByDesc('created_at')
             ->get()

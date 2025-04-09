@@ -156,6 +156,7 @@
                                                     </button>
                                                 </form>
                                                 <a href="{{ route('generatePdf', $affectation) }}"
+                                                    title="Voir la fiche d'affectation" 
                                                     class="text-red-700 hover:text-red-900">
                                                     <i class="fa-solid fa-file-pdf"></i>
                                                 </a>
@@ -163,7 +164,7 @@
                                                     enctype="multipart/form-data" class="inline">
                                                     @csrf
                                                     @method('POST')
-                                                    <label for="fiche_{{ $affectation->id }}"
+                                                    <label for="fiche_{{ $affectation->id }}" title="Ajouter une fiche d'affectation"
                                                         class="cursor-pointer text-blue-500 hover:text-blue-700">
                                                         <i class="fa-solid fa-cloud-arrow-up"></i>
                                                     </label>
@@ -177,7 +178,9 @@
                                                 </form>
                                                 @if ($affectation->fiche_affectation)
                                                     <a href="{{ asset('storage/' . $affectation->fiche_affectation) }}"
-                                                        target="_blank" class="text-gray-600 hover:text-gray-800">
+                                                        title="télécharger la fiche d'affectation"
+                                                        target="_blank"
+                                                        class="text-gray-600 hover:text-gray-800">
                                                         <i class="fa-solid fa-file"></i>
                                                     </a>
                                                 @endif

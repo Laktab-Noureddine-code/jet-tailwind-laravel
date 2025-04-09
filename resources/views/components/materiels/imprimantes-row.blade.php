@@ -78,7 +78,7 @@
             </form>
 
             @if ($imprimante->ip_adresse)
-                <a href="http://{{ $imprimante->ip_adresse }}" target="_blank" class="text-sm" title="go to printer"
+                <a href="{{ $imprimante->ip_adresse }}" target="_blank" class="text-sm" title="go to printer"
                     class="text-blue-600 hover:text-blue-900">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
