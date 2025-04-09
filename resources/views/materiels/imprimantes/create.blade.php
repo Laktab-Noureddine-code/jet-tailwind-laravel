@@ -21,7 +21,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Modèle</label>
                                     <input type="text" name="fabricant" value="{{ old('fabricant') }}" required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('fabricant') border-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('fabricant') outline-2 outline-red-500 @enderror">
                                     @error('fabricant')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -30,7 +30,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de Série</label>
                                     <input type="text" name="num_serie" value="{{ old('num_serie') }}" required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('num_serie') border-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('num_serie') outline-2 outline-red-500 @enderror">
                                     @error('num_serie')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -44,7 +44,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">État</label>
                                 <select name="etat" required
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('etat') border-red-500 @enderror">
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('etat') outline-2 outline-red-500 @enderror">
                                     <option value="Neuf" {{ old('etat') == 'Neuf' ? 'selected' : '' }}>Neuf</option>
                                     <option value="Occasion" {{ old('etat') == 'Occasion' ? 'selected' : '' }}>Occasion
                                     </option>
@@ -52,6 +52,19 @@
                                     </option>
                                 </select>
                                 @error('etat')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Section 2.5: IP Adresse -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Adresse IP</h2>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Adresse IP</label>
+                                <input type="text" name="ip_adresse" value="{{ old('ip_adresse') }}"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('ip_adresse') outline-2 outline-red-500 @enderror">
+                                @error('ip_adresse')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>

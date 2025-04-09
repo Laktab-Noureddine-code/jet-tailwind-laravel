@@ -19,7 +19,8 @@ class Imprimante extends Model
         "toner_noir",
         "toner_bleu",
         "toner_magenta",
-        "toner_jaune"
+        "toner_jaune",
+        "ip_adresse"
     ];
 
     public function materiel()

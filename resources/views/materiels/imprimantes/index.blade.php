@@ -25,10 +25,10 @@
 
         <div class="mt-6 bg-white rounded-lg shadow">
             <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm text-gray-500" id="materiels-table">
+                <table class="w-full max-w-full text-left text-sm text-gray-500" id="materiels-table">
                     <thead class="text-xs uppercase text-white">
                         <tr class="bg-[#0A1C3E]">
-                            <th scope="col" class="px-6 py-4">Numéro de Série</th>
+                            <th scope="col" class="px-6 py-4">N° de Série</th>
                             <th scope="col" class="px-6 py-4">Modèle</th>
                             <th scope="col" class="px-6 py-4">Utilisateur</th>
                             <th scope="col" class="px-6 py-4">Statut</th>
@@ -45,13 +45,13 @@
                             <x-materiels.imprimantes-row :imprimante="$imprimante" />
                         @empty
                             <tr>
-                                <td colspan="10" class="px-6 py-4 text-center text-gray-500">
+                                <td colspan="11" class="px-6 py-4 text-center text-gray-500">
                                     Aucune imprimante trouvée
                                 </td>
                             </tr>
                         @endforelse
                         <tr class="js-no-results" style="display: none;">
-                            <td colspan="10" class="px-6 py-4 text-center text-gray-500">
+                            <td colspan="11" class="px-6 py-4 text-center text-gray-500">
                                 Aucune imprimante correspond au filtre
                             </td>
                         </tr>

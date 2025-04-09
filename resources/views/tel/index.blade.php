@@ -21,7 +21,7 @@
         {{-- search component --}}
         <x-materiels.search-tel search="{{ $search }}" />
 
-        <div class="mt-6 bg-white rounded-lg shadow">
+        <div class="mt-6 bg-white shadow">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm text-gray-500" id="materiels-table">
                     <thead class="text-xs uppercase text-white">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Centre de Notifications')
 @section('content')
-    <div class="container mx-auto py-8 px-4">
+    <div class="container mx-auto py-8">
         <div class="mb-6 flex items-center justify-between">
             <h1 class="text-3xl font-bold text-gray-900">Notifications</h1>
         </div>
@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <div class="mt-6 bg-white rounded-[0_0_10px_10px] shadow-lg overflow-hidden">
+        <div class="mt-6 bg-white shadow ">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm" id="materiels-table">
                     <thead class="text-xs uppercase text-white">
@@ -36,7 +36,7 @@
                     <tbody>
                         @forelse ($notifications as $notification)
                             <tr
-                                class="border-b hover:bg-gray-50 {{ $notification->is_read ? '' : 'outline-2 outline-red-500' }}">
+                                class="border-b hover:bg-gray-50 ">
                                 <td class="px-4 py-3 font-medium text-gray-900">{{ $notification->recrutement->nom }}</td>
                                 <td class="px-4 py-3">{{ $notification->recrutement->fonction }}</td>
                                 <td class="px-4 py-3">{{ $notification->recrutement->departement }}</td>
@@ -52,7 +52,7 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <span
-                                        class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium {{ $notification->recrutement->status === 'validé' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                        class="inline-flex items-center text-nowrap rounded-full px-2.5 py-1 text-xs font-medium {{ $notification->recrutement->status === 'validé' ? 'bg-green-100 text-green-800' : 'bg-red-400 text-black' }}">
                                         {{ $notification->recrutement->status }}
                                     </span>
                                 </td>

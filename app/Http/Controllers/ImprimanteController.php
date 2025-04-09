@@ -55,6 +55,7 @@ class ImprimanteController extends Controller
                 'imprimantes.toner_magenta',
                 'imprimantes.identifiant_jaune',
                 'imprimantes.toner_jaune',
+                'imprimantes.ip_adresse',
                 'affectations.statut',
                 'utilisateurs.nom as utilisateur_nom',
             )
@@ -94,6 +95,7 @@ class ImprimanteController extends Controller
             'toner_magenta' => 'nullable|integer|min:0',
             'identifiant_jaune' => 'nullable|string|max:100',
             'toner_jaune' => 'nullable|integer|min:0',
+            'ip_adresse' => 'nullable|string|max:45',
         ]);
 
         // Créer un nouvel enregistrement dans la table `materiels`
@@ -115,6 +117,7 @@ class ImprimanteController extends Controller
             'toner_magenta' => $request->toner_magenta,
             'identifiant_jaune' => $request->identifiant_jaune,
             'toner_jaune' => $request->toner_jaune,
+            'ip_adresse' => $request->ip_adresse,
         ]);
 
         // Rediriger vers la liste des imprimantes avec un message de succès
@@ -151,7 +154,8 @@ class ImprimanteController extends Controller
                 'imprimantes.identifiant_magenta',
                 'imprimantes.toner_magenta',
                 'imprimantes.identifiant_jaune',
-                'imprimantes.toner_jaune'
+                'imprimantes.toner_jaune',
+                'imprimantes.ip_adresse'
             )
             ->firstOrFail(); // Si l'imprimante n'existe pas, renvoyer une erreur 404
 
@@ -177,6 +181,7 @@ class ImprimanteController extends Controller
             'toner_magenta' => 'nullable|integer|min:0',
             'identifiant_jaune' => 'nullable|string|max:100',
             'toner_jaune' => 'nullable|integer|min:0',
+            'ip_adresse' => 'nullable|string|max:45',
         ]);
 
         // Récupérer l'imprimante à mettre à jour
@@ -200,6 +205,7 @@ class ImprimanteController extends Controller
             'toner_magenta' => $request->toner_magenta,
             'identifiant_jaune' => $request->identifiant_jaune,
             'toner_jaune' => $request->toner_jaune,
+            'ip_adresse' => $request->ip_adresse,
         ]);
 
         // Rediriger vers la liste des imprimantes avec un message de succès

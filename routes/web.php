@@ -16,10 +16,15 @@ use App\Http\Controllers\RecrutementController;
 use App\Http\Controllers\TelephoneController;
 use App\Http\Controllers\UtilisateurController;
 use App\Models\Notification;
+use Illuminate\Support\Facades\Auth;
+
+// Root route - redirect to dashboard if authenticated, or login if not
+Route::get('/', function () {
+    return Auth::check() ? redirect('/dashboard') : redirect('/login');
+});
 
 Route::middleware("auth")->group(function () {
     // Redirection de la racine vers le tableau de bord
-    Route::redirect('/', '/dashboard', 301);
 
     // Route du tableau de bord
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

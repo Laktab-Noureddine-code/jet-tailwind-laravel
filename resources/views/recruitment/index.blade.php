@@ -14,7 +14,7 @@
 
 </head>
 
-<body class="bg-[#f6f7f9]">
+<body class="bg-gray-200">
     <div class="p-3">
         <div class="py-6 relative">
             <h1 class="text-center text-3xl font-bold">Liste des Recrutements</h1>
@@ -26,15 +26,17 @@
                 </button>
             </form>
         </div>
+        @if (session('success'))
+            <div class="mb-4 rounded-lg bg-green-100 px-6 py-5 text-base text-green-700" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <a href="{{ route('recrutements.create') }}"
             class="px-5 py-2 text-[16px] font-semibold rounded-lg bg-sky-950 text-white">Créer un Recrutement</a>
 
-        <div class="mt-6 bg-white rounded-lg shadow">
+        <div class="mt-6 bg-white shadow">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm text-gray-500" id="materiels-table">
-                    @if (session('success'))
-                        <div class="message">{{ session('success') }}</div>
-                    @endif
                     <thead class="text-xs uppercase text-white">
                         <tr class="bg-[#0A1C3E]">
                             <th scope="col" class="px-2 py-2">Nom</th>

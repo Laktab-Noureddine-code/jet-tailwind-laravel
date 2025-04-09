@@ -16,7 +16,7 @@
 
 <body>
     <div class="flex">
-        <aside class="fixed w-64 h-screen bg-[#0A1C3E]">
+        <aside class="fixed w-52 h-screen bg-[#0A1C3E]">
             <div class="flex flex-col h-full">
                 <div class="p-4">
                     <img src="/logo.png" alt="Jet Logo" class="h-16 mx-auto">
@@ -24,7 +24,7 @@
                 <x-navbar />
             </div>
         </aside>
-        <main class="ml-64 px-6 py-8 w-full bg-[#f6f7f9] min-h-screen">
+        <main class="ml-52 px-6 py-8 w-full bg-gray-200 min-h-screen">
             @yield('content')
         </main>
     </div>

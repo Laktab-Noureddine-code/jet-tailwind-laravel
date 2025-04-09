@@ -14,10 +14,10 @@
 
 </head>
 
-<body class="bg-[#f6f7f9]">
+<body class="bg-gray-200">
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-3xl mx-auto">
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-white shadow">
                 <!-- Header -->
                 <div class="bg-[#0A1C3E] px-6 py-4">
                     <h1 class="text-xl font-semibold text-white">Modifier le Recrutement</h1>

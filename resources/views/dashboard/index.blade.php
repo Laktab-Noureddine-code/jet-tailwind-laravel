@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Tableau de Bord')
 @section('content')
-    <h1 class="header-title">Dashboard ,{{auth()->user()->name}}</h1>
+    <h1 class="header-title">Dashboard ,{{ auth()->user()->name }}</h1>
     <div class="p-4 grid gap-4">
         <div class="grid gap-4 grid-cols-2 ">
             <div class="bg-white  rounded-lg shadow-lg p-4">
@@ -26,9 +26,9 @@
                 <h1 class="font-semibold text-lg ">Types de Matériels</h1>
                 <div>
                     @if (session('error'))
-                        <p class="error py-2">
+                        <div class="mb-4 rounded-lg bg-red-100 px-6 py-5 text-base text-red-700" role="alert">
                             {{ session('error') }}
-                        </p>
+                        </div>
                     @endif
                     <div class="grid grid-cols-3 gap-2">
                         @foreach ($types as $type)
