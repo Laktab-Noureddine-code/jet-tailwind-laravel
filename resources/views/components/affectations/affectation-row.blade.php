@@ -3,7 +3,7 @@
     <td class="px-6 py-4 font-medium text-gray-900">
         <div class="flex items-center">
             <div class="ml-4">
-                <div class="font-medium text-gray-900">{{ $affectation->utilisateur->nom }}</div>
+                <div class="font-medium text-gray-900 uppercase">{{ $affectation->utilisateur->nom }}</div>
             </div>
         </div>
     </td>

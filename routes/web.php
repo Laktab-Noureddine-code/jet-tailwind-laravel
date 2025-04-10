@@ -15,13 +15,18 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RecrutementController;
 use App\Http\Controllers\TelephoneController;
 use App\Http\Controllers\UtilisateurController;
+use App\Mail\TestMail;
+use App\Models\Affectation;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 // Root route - redirect to dashboard if authenticated, or login if not
 Route::get('/', function () {
     return Auth::check() ? redirect('/dashboard') : redirect('/login');
 });
+
+
 
 Route::middleware("auth")->group(function () {
     // Redirection de la racine vers le tableau de bord
@@ -87,6 +92,7 @@ Route::middleware("auth")->group(function () {
     Route::get('/telephones/{id}/edit', [TelephoneController::class, 'edit'])->name('telephones.edit');
     Route::put('/telephones/{telephone}', [TelephoneController::class, 'update'])->name('telephones.update');
     Route::delete('/telephones/{telephone}', [TelephoneController::class, 'destroy'])->name('telephones.destroy');
+    Route::post('/affectation/{affectation}/send-email', [AffectationController::class, 'sendEmail'])->name('send.affectation.email');
 });
 
 Route::middleware('guest')->group(function () {

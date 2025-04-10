@@ -156,15 +156,24 @@
                                                     </button>
                                                 </form>
                                                 <a href="{{ route('generatePdf', $affectation) }}"
-                                                    title="Voir la fiche d'affectation" 
+                                                    title="Voir la fiche d'affectation"
                                                     class="text-red-700 hover:text-red-900">
                                                     <i class="fa-solid fa-file-pdf"></i>
                                                 </a>
+                                                <form action="{{ route('send.affectation.email', $affectation) }}"
+                                                    method="POST" class="inline">
+                                                    @csrf
+                                                    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir envoyer un email de confirmation ?')" title="Envoyer email de confirmation"
+                                                        class="text-blue-500 hover:text-blue-700 cursor-pointer">
+                                                        <i class="fa-solid fa-envelope"></i>
+                                                    </button>
+                                                </form>
                                                 <form action="{{ route('upload', $affectation) }}" method="POST"
                                                     enctype="multipart/form-data" class="inline">
                                                     @csrf
                                                     @method('POST')
-                                                    <label for="fiche_{{ $affectation->id }}" title="Ajouter une fiche d'affectation"
+                                                    <label for="fiche_{{ $affectation->id }}"
+                                                        title="Ajouter une fiche d'affectation"
                                                         class="cursor-pointer text-blue-500 hover:text-blue-700">
                                                         <i class="fa-solid fa-cloud-arrow-up"></i>
                                                     </label>
@@ -178,8 +187,7 @@
                                                 </form>
                                                 @if ($affectation->fiche_affectation)
                                                     <a href="{{ asset('storage/' . $affectation->fiche_affectation) }}"
-                                                        title="télécharger la fiche d'affectation"
-                                                        target="_blank"
+                                                        title="télécharger la fiche d'affectation" target="_blank"
                                                         class="text-gray-600 hover:text-gray-800">
                                                         <i class="fa-solid fa-file"></i>
                                                     </a>

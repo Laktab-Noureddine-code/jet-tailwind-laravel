@@ -8,6 +8,8 @@ use App\Models\Ordinateur;
 use App\Models\Utilisateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
 
 class AffectationController extends Controller
 {
@@ -41,9 +43,9 @@ class AffectationController extends Controller
 
         // Récupérer les résultats paginés
         $affectations = $query->orderBy('created_at', 'desc')
-                            ->orderBy('statut')
-                            ->paginate(50)
-                            ->appends(["search" => $search]);
+            ->orderBy('statut')
+            ->paginate(50)
+            ->appends(["search" => $search]);
 
         return view('affectations.index', compact('affectations', 'search'));
     }
@@ -58,7 +60,7 @@ class AffectationController extends Controller
         return view('affectations.createExists', compact('utilisateur'));
     }
 
-    
+
 
     public function getByNum($num_serie)
     {
@@ -93,7 +95,7 @@ class AffectationController extends Controller
     public function upload(Request $request, Affectation $affectation)
     {
         $request->validate([
-            'fiche_affectation' => 'required|mimes:jpeg,png,jpg,pdf|max:6000', 
+            'fiche_affectation' => 'required|mimes:jpeg,png,jpg,pdf|max:6000',
         ]);
 
         // Générer un nom de fichier unique avec timestamp et id d'affectation
@@ -190,11 +192,11 @@ class AffectationController extends Controller
         if (!$utilisateur) {
             return redirect()->back()->with('error', 'Utilisateur introuvable.');
         }
-        $materiel = Materiel::where('num_serie' ,$request->num_serie)->get()->first();
+        $materiel = Materiel::where('num_serie', $request->num_serie)->get()->first();
         $ancienneAffectation = Affectation::where('materiel_id', $materiel->id)
             ->latest('date_affectation') // Récupérer la dernière affectation enregistrée
             ->first();
-        
+
 
         // Si une affectation précédente existe, on doit définir son statut sur "NON AFFECTE"
         if ($ancienneAffectation) {
@@ -210,7 +212,7 @@ class AffectationController extends Controller
             'date_affectation' => $request->date_affectation,
             'chantier' => $request->chantier,
             'utilisateur1' => $request->utilisateur,
-            'statut'=>$statutAffectation,
+            'statut' => $statutAffectation,
             'materiel_id' => $request->id_materiel,
         ]);
 
@@ -309,6 +311,17 @@ class AffectationController extends Controller
         return redirect()->route('affectation.index')->with('success', 'Affectation mise à jour avec succès.');
     }
 
+    public function sendEmail(Affectation $affectation)
+    {
+        try {
+            Mail::to("nourd2008in@gmail.com")
+                ->send(new TestMail($affectation));
+
+            return back()->with('success', 'Email de confirmation envoyé avec succès !');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erreur lors de l\'envoi de l\'email : ' . $e->getMessage());
+        }
+    }
 
     /**
      * Remove the specified resource from storage.

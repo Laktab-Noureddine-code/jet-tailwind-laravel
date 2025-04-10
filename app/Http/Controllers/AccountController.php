@@ -12,7 +12,7 @@ class AccountController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::orderBy('role','asc')->get();
         return view('accounts.index', compact('users'));
     }
 

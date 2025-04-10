@@ -27,13 +27,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('telephones.index') }}"
-                            class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('telephones*') ? 'bg-[#2a3955]' : 'hover:bg-[#1a2c4e]' }}">
-                            <i class="fa-solid fa-mobile-screen text-[16px] w-6"></i>
-                            <span>Télephones</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{ route('imprimantes.index') }}"
                             class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('imprimantes*') ? 'bg-[#2a3955]' : 'hover:bg-[#1a2c4e]' }}">
                             <i class="fa-solid fa-print text-[16px] w-6"></i>
@@ -47,7 +40,15 @@
                             <span>Périphériques</span>
                         </a>
                     </li>
-
+                    
+                    <li>
+                        <a href="{{ route('telephones.index') }}"
+                            class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('telephones*') ? 'bg-[#2a3955]' : 'hover:bg-[#1a2c4e]' }}">
+                            <i class="fa-solid fa-mobile-screen text-[16px] w-6"></i>
+                            <span>Télephones</span>
+                        </a>
+                    </li>
+                    
                     <div class="mt-6">
                         <p class="text-xs font-medium text-gray-400 px-3 mb-2">SETTINGS</p>
                         <li>
