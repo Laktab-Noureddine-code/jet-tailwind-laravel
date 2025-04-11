@@ -22,7 +22,7 @@
 
         <!-- Content Container -->
         <div class="relative w-full flex items-center justify-center p-4">
-            <div class="bg-white/90 backdrop-blur-sm w-full max-w-md rounded-2xl shadow-2xl p-8 space-y-8">
+            <div class="bg-white backdrop-blur-sm w-full max-w-md rounded-2xl shadow-2xl p-8 space-y-8">
                 <!-- Logo -->
                 <div class="flex justify-center">
                     <img src="/logo.png" class="h-24 drop-shadow-lg" alt="Logo">
