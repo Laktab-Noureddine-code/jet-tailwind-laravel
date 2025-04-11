@@ -133,13 +133,29 @@
                                 @foreach ($utilisateur->affectations as $affectation)
                                     <tr class="hover:bg-gray-50">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $affectation->materiel->fabricant }}</td>
+                                            @if ($affectation->materiel)
+                                                {{ $affectation->materiel->fabricant }}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $affectation->materiel->type }}</td>
+                                            @if ($affectation->materiel)
+                                                {{ $affectation->materiel->type }}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $affectation->materiel->num_serie }}</td>
+                                            @if ($affectation->materiel)
+                                                {{ $affectation->materiel->num_serie }}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $affectation->date_affectation }}</td>
+                                            {{ $affectation->date_affectation }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {{ $affectation->utilisateur1 }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -163,7 +179,9 @@
                                                 <form action="{{ route('send.affectation.email', $affectation) }}"
                                                     method="POST" class="inline">
                                                     @csrf
-                                                    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir envoyer un email de confirmation ?')" title="Envoyer email de confirmation"
+                                                    <button type="submit"
+                                                        onclick="return confirm('Êtes-vous sûr de vouloir envoyer un email de confirmation ?')"
+                                                        title="Envoyer email de confirmation"
                                                         class="text-blue-500 hover:text-blue-700 cursor-pointer">
                                                         <i class="fa-solid fa-envelope"></i>
                                                     </button>

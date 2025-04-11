@@ -30,7 +30,7 @@
             <tr>
                 <td style="text-align: left; vertical-align: text-top;">
                     <img src="{{ public_path('/title.png') }}" style="width: 230px;">
-                    <p style="font-size: 7px; color: #222;">
+                    <p style=" color: #222; font-size: 7px;">
                         TCE - Enveloppes de Bâtiments - Constructions Métalliques<br /> Ouvrages D'art - Ossature Bois -
                         EPC
                         solaire...
@@ -161,25 +161,25 @@
                 </td>
             </tr>
         </table>
-        <table width="100%" style="font-size: 10px; margin-top: 160px;">
+        <table width="100%" style="font-size: 8px; margin-top: 160px;font-weight: 700;">
             <tr>
-                <td width="25%" style="text-align: left; vertical-align: top;">
+                <td width="25%" style="text-align: left; vertical-align: middle;">
                     Quartier Industriel de Oued Yquem<br>
                     CP 12040 Skhinate - Maroc<br>
                 </td>
 
                 <!-- Pied de page avec les adresses -->
-                <td width="25%" style="text-align: center; vertical-align: top;">
+                <td width="25%" style="vertical-align: middle; ">
                     Tél : (212) 537 74 92 92<br>
                     Fax : (212) 537 74 92 30<br>
                     contact@jet-contractors.com<br>
                 </td>
-                <td width="25%" style=" vertical-align: top;">
+                <td width="25%" style=" vertical-align: middle; font-weight: 900;">
                     <strong>www.jet-contractors.com</strong><br>
                     <img src="{{ public_path('/lien.png') }}" style="height: 10px;">
                 </td>
-                <td width="25%" style="text-align: center; vertical-align: top;">
-                    <img src="{{ public_path('/Certifica.jpg') }}" style="width: 100%;">
+                <td width="25%" style="text-align: center; vertical-align: middle; ">
+                    <img src="{{ public_path('/Certifica.jpg') }}" style="width: 80%;">
                 </td>
             </tr>
         </table>

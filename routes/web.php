@@ -26,8 +26,6 @@ Route::get('/', function () {
     return Auth::check() ? redirect('/dashboard') : redirect('/login');
 });
 
-
-
 Route::middleware("auth")->group(function () {
     // Redirection de la racine vers le tableau de bord
 

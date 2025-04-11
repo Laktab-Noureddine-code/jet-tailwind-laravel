@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Tableau de Bord')
 @section('content')
-    <h1 class="text-3xl font-bold text-gray-900">Dashboard, {{ auth()->user()->name }}</h1>
+    <h1 class="text-3xl font-bold text-gray-900">Bonjour, {{ auth()->user()->name }}</h1>
     <div class="p-4 grid gap-4">
         <div class="grid gap-4 grid-cols-2 ">
             <div class="bg-white  rounded-lg shadow-lg p-4">

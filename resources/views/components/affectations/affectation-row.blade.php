@@ -57,7 +57,7 @@
                 </button>
             </form>
 
-            <a href="{{ route('generatePdf', $affectation) }}" class="text-red-600 hover:text-red-900"
+            <a href="{{ route('generatePdf', $affectation) }}" class="text-gray-700 hover:text-gray-800"
                 title="Télécharger PDF">
                 <i class="fa-solid fa-file-pdf"></i>
             </a>

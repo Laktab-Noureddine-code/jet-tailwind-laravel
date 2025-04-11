@@ -81,13 +81,13 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                            <tr class="border-b border-gray-200 hover:bg-gray-50 mt-2">
                                 <td class="px-6 py-4">{{ $user->name }}</td>
                                 <td class="px-6 py-4">{{ $user->email }}</td>
                                 <td class="px-6 py-4">
                                     <span
                                         class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold 
-                                        {{ $user->role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800' }}">
+                                        {{ $user->role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800' }}">
                                         {{ $user->role }}
                                     </span>
                                 </td>

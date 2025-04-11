@@ -69,16 +69,17 @@
                 notre département. Si vous avez besoin de plus d'informations ou si des ajustements sont nécessaires,
                 n'hésitez pas à me contacter.</p>
 
-            <div class="signature">
+            {{-- <div class="signature">
                 <p>Cordialement,</p>
-                <p><strong>Service IT</strong></p>
+                <p><strong>Direction RH</strong></p>
+                <img src="{{ public_path('/logo1.png') }}" alt="">
                 <div class="contact-info">
-                    <p>Responsable Affectation de Matériel IT</p>
-                    <p>Jet Contractors</p>
-                    <p>Tél : +212 5 37 27 37 27</p>
-                    <p>Email : it@jet-contractors.com</p>
+                    <p>JET CONTRACTORS</p>
+                    <p>Quartier Industriel de Oued Yquem CP 12040 Skhirate - Maroc</p>
+                    <p>Tél : +(212) 6 62 57 23 00</p>
+                    <p>www.jet-contractors.com</p>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </body>
