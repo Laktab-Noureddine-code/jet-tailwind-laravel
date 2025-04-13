@@ -18,6 +18,7 @@ class Recrutement extends Model
         'type_contrat',
         'telephone',
         'model',
+        'date_affectation',
         'num_serie',
         'puk',
         'pin',

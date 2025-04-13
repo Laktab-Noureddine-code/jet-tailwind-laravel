@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Centre de Notifications')
 @section('content')
-    <div class="container mx-auto py-8">
+    <div class=" mx-auto py-8">
         <div class="mb-6 flex items-center justify-between">
             <h1 class="text-3xl font-bold text-gray-900">Notifications</h1>
         </div>
@@ -25,9 +25,10 @@
                             <th scope="col" class="px-4 py-3">Fonction</th>
                             <th scope="col" class="px-4 py-3">Departement</th>
                             <th scope="col" class="px-4 py-3">Email</th>
+                            <th scope="col" class="px-4 py-3">Date d'affectation</th>
                             <th scope="col" class="px-4 py-3">Téléphone</th>
                             <th scope="col" class="px-4 py-3">Modèle</th>
-                            <th scope="col" class="px-4 py-3">Numéro de Série</th>
+                            <th scope="col" class="px-4 py-3">N° Série</th>
                             <th scope="col" class="px-4 py-3">Type de Contrat</th>
                             <th scope="col" class="px-4 py-3">Statut</th>
                             <th scope="col" class="px-4 py-3 text-center">Actions</th>
@@ -35,8 +36,8 @@
                     </thead>
                     <tbody>
                         @forelse ($notifications as $notification)
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="px-4 py-3 font-medium text-gray-900">
+                            <tr class="border-b hover:bg-gray-50 text-sm">
+                                <td class="px-4 py-3 font-medium text-gray-900 uppercase text-nowrap">
                                     {{ $notification->recrutement ? $notification->recrutement->nom : 'N/A' }}
                                 </td>
                                 <td class="px-4 py-3">
@@ -47,6 +48,9 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     {{ $notification->recrutement ? $notification->recrutement->email : 'N/A' }}
+                                </td>
+                                <td class="px-4 py-3">
+                                    {{ $notification->recrutement ? $notification->recrutement->date_affectation : 'N/A' }}
                                 </td>
                                 <td class="px-4 py-3">
                                     {{ $notification->recrutement ? $notification->recrutement->telephone : 'N/A' }}
@@ -60,7 +64,7 @@
                                 <td class="px-4 py-3">
                                     @if ($notification->recrutement)
                                         <span
-                                            class="px-2 py-1 text-xs rounded-full {{ $notification->recrutement->type_contrat === 'jet' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800' }}">
+                                            class="px-2 py-1 text-xs rounded-full">
                                             {{ $notification->recrutement->type_contrat }}
                                         </span>
                                     @else

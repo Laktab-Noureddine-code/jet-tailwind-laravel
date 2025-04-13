@@ -141,6 +141,7 @@ class NotificationController extends Controller
             'email' => 'required|email|max:255',
             'fonction' => 'required|string|max:255',
             'type_contrat' => 'required',
+            'date_affectation' => 'required',
             'telephone' => 'required|string',
             'fabricant' => 'required|string|max:255',
             'num_serie' => 'required|unique:materiels,num_serie',
@@ -159,6 +160,7 @@ class NotificationController extends Controller
             'telephone' => $request->telephone,
             'model' => $request->fabricant, // Correspond au modèle du matériel
             'num_serie' => $request->num_serie,
+            'date_affectation' => $request->date_affectation,
             'puk' => $request->puk,
             'pin' => $request->pin,
         ]);
@@ -168,7 +170,6 @@ class NotificationController extends Controller
         $notification->update([
             'type' => $request->type,
             'etat' => $request->etat,
-            'date_affectation' => $request->date_affectation,
             'chantier' => $request->chantier,
         ]);
 

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('recrutement_id')->constrained()->onDelete('cascade');
             $table->string('type')->default('telephone');
             $table->string('etat')->default('Neuf');
-            $table->string('date_affectation')->nullable();
             $table->string('chantier')->nullable();
             $table->string('utilisateur')->nullable();
             $table->boolean('is_read')->default(false);

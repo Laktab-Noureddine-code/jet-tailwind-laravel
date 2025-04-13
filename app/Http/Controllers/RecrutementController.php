@@ -28,7 +28,8 @@ class RecrutementController extends Controller
             'email' => 'max:40',
             'fonction' => 'required',
             'departement' => 'required',
-            'type_contrat' => 'in:jet,total',
+            'date_affectation' => 'required',
+            'type_contrat' => 'required',
             'telephone' => 'max:20',
             'model' => 'max:255',
             'num_serie' => 'unique:materiels,num_serie',
@@ -54,18 +55,20 @@ class RecrutementController extends Controller
 
     public function update(Request $request, Recrutement $recrutement)
     {
-        $request->validate([
+        // dd($request);
+        $fields = $request->validate([
             'nom' => 'max:255',
             'email' => 'max:50',
-            'type_contrat' => 'in:jet,total',
+            'type_contrat' => 'required',
             'telephone' => 'max:20',
             'model' => 'max:255',
+            'date_affectation' => 'required',
             'num_serie' => 'max:255',
             'puk' => 'max:255',
             'pin' => 'max:255',
         ]);
 
-        $recrutement->update($request->only(['nom', 'email', 'type_contrat', 'telephone', 'model', 'num_serie', 'puk', 'pin']));
+        $recrutement->update($fields);
 
         return redirect()->route('recrutements.index')->with('success', 'Recrutement mis à jour avec succès.');
     }

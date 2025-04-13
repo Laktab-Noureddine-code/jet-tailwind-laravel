@@ -19,7 +19,6 @@
                         <!-- Section 1: Informations personnelles -->
                         <div class="space-y-4">
                             <h2 class="text-lg font-medium text-gray-900 border-b pb-2 flex items-center">
-                                <i class="fas fa-user-circle mr-2 text-[#0A1C3E]"></i>
                                 Informations personnelles
                             </h2>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -63,18 +62,61 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Type de Contrat</label>
-                                <div class="mt-2 space-x-4">
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" name="type_contrat" value="jet"
-                                            {{ $notification->recrutement->type_contrat == 'jet' ? 'checked' : '' }}
-                                            class="focus:ring-[#0A1C3E] h-4 w-4 text-[#0A1C3E] border-gray-300">
-                                        <span class="ml-2 text-sm text-gray-700">Jet</span>
+                                <div class="flex flex-wrap gap-4 mt-2">
+                                    <label class="relative">
+                                        <input type="radio" name="type_contrat" value="cdi"
+                                            class="peer absolute opacity-0 w-0 h-0"
+                                            {{ old('type_contrat', $notification->recrutement->type_contrat) == 'cdi' ? 'checked' : '' }}>
+                                        <span
+                                            class="px-4 py-2 rounded-lg cursor-pointer block uppercase font-medium transition-all duration-200
+                                            peer-checked:bg-[#0A1C3E] peer-checked:text-white
+                                            bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                            CDI
+                                        </span>
                                     </label>
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" name="type_contrat" value="total"
-                                            {{ $notification->recrutement->type_contrat == 'total' ? 'checked' : '' }}
-                                            class="focus:ring-[#0A1C3E] h-4 w-4 text-[#0A1C3E] border-gray-300">
-                                        <span class="ml-2 text-sm text-gray-700">Total</span>
+                                    <label class="relative">
+                                        <input type="radio" name="type_contrat" value="cdd"
+                                            class="peer absolute opacity-0 w-0 h-0"
+                                            {{ old('type_contrat', $notification->recrutement->type_contrat) == 'cdd' ? 'checked' : '' }}>
+                                        <span
+                                            class="px-4 py-2 rounded-lg cursor-pointer block uppercase font-medium transition-all duration-200
+                                            peer-checked:bg-[#0A1C3E] peer-checked:text-white
+                                            bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                            CDD
+                                        </span>
+                                    </label>
+                                    <label class="relative">
+                                        <input type="radio" name="type_contrat" value="cp"
+                                            class="peer absolute opacity-0 w-0 h-0"
+                                            {{ old('type_contrat', $notification->recrutement->type_contrat) == 'cp' ? 'checked' : '' }}>
+                                        <span
+                                            class="px-4 py-2 rounded-lg cursor-pointer block uppercase font-medium transition-all duration-200
+                                            peer-checked:bg-[#0A1C3E] peer-checked:text-white
+                                            bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                            CP
+                                        </span>
+                                    </label>
+                                    <label class="relative">
+                                        <input type="radio" name="type_contrat" value="interim"
+                                            class="peer absolute opacity-0 w-0 h-0"
+                                            {{ old('type_contrat', $notification->recrutement->type_contrat) == 'interim' ? 'checked' : '' }}>
+                                        <span
+                                            class="px-4 py-2 rounded-lg cursor-pointer block font-medium transition-all duration-200
+                                            peer-checked:bg-[#0A1C3E] peer-checked:text-white
+                                            bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                            Interim
+                                        </span>
+                                    </label>
+                                    <label class="relative">
+                                        <input type="radio" name="type_contrat" value="autre"
+                                            class="peer absolute opacity-0 w-0 h-0"
+                                            {{ old('type_contrat', $notification->recrutement->type_contrat) == 'autre' ? 'checked' : '' }}>
+                                        <span
+                                            class="px-4 py-2 rounded-lg cursor-pointer block font-medium transition-all duration-200
+                                            peer-checked:bg-[#0A1C3E] peer-checked:text-white
+                                            bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                            Autre
+                                        </span>
                                     </label>
                                 </div>
                                 @error('type_contrat')
@@ -86,7 +128,6 @@
                         <!-- Section 2: Informations matériel -->
                         <div class="space-y-4">
                             <h2 class="text-lg font-medium text-gray-900 border-b pb-2 flex items-center">
-                                <i class="fas fa-mobile-alt mr-2 text-[#0A1C3E]"></i>
                                 Informations matériel
                             </h2>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -175,14 +216,13 @@
                         <!-- Section 3: Informations affectation -->
                         <div class="space-y-4">
                             <h2 class="text-lg font-medium text-gray-900 border-b pb-2 flex items-center">
-                                <i class="fas fa-briefcase mr-2 text-[#0A1C3E]"></i>
                                 Informations d'affectation
                             </h2>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Date d'Affectation</label>
                                     <input type="date" name="date_affectation"
-                                        value="{{ $notification->date_affectation }}"
+                                        value="{{ old('date_affectation', $notification->recrutement->date_affectation) }}"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('date_affectation')outline-2 outline-red-500 @enderror">
                                     @error('date_affectation')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

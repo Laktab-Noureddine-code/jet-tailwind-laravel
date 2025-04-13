@@ -24,7 +24,7 @@
                 <x-navbar />
             </div>
         </aside>
-        <main class="ml-52 px-6 py-8 w-full bg-gray-200 min-h-screen">
+        <main class="ml-52 px-3 py-8 w-full bg-gray-200 min-h-screen">
             @yield('content')
         </main>
     </div>

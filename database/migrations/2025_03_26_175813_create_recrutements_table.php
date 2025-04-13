@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('fonction');
             $table->string('departement')->nullable();
+            $table->string('date_affectation')->nullable();
             $table->string('email')->nullable();
             $table->string('type_contrat')->nullable();
             $table->string('telephone')->nullable();

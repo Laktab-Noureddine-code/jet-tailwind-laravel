@@ -14,7 +14,6 @@ class Notification extends Model
         'is_read',
         'type', //materiel
         'etat', //materiel
-        'date_affectation', //affectation
         'chantier', //affectation   
         'utilisateur', //affectation   
     ];

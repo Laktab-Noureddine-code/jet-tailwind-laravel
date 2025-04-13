@@ -46,6 +46,7 @@
                             <th scope="col" class="px-2 py-2">Téléphone</th>
                             <th scope="col" class="px-2 py-2">Modèle</th>
                             <th scope="col" class="px-2 py-2">Numéro de Série</th>
+                            <th scope="col" class="px-2 py-2">Date d'affectation</th>
                             <th scope="col" class="px-2 py-2">Puk</th>
                             <th scope="col" class="px-2 py-2">Pin</th>
                             <th scope="col" class="px-2 py-2">Statut</th>
@@ -55,13 +56,14 @@
                     <tbody>
                         @forelse ($recrutements as $recrutement)
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="px-2 py-2">{{ $recrutement->nom }}</td>
+                                <td class="px-2 py-2 uppercase font-semibold">{{ $recrutement->nom }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->email }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->fonction }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->type_contrat }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->telephone }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->model }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->num_serie }}</td>
+                                <td class="px-2 py-2">{{ $recrutement->date_affectation }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->puk }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->pin }}</td>
                                 <td class="px-2 py-2">
