@@ -15,7 +15,7 @@ class PeripheriqueController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        
+
 
         // Types exclus (à externaliser en config si utilisé souvent)
         $excludedTypes = ['PC Bureau', 'PC Portable', 'Imprimante', 'Telephone'];
@@ -50,7 +50,7 @@ class PeripheriqueController extends Controller
     public function create()
     {
         $types = Type::all()->select('type')->pluck('type');
-        return view('materiels.périphériques.create' ,compact('types'));
+        return view('materiels.périphériques.create', compact('types'));
     }
 
     /**
@@ -100,7 +100,7 @@ class PeripheriqueController extends Controller
         $types = Type::all()->select('type')->pluck('type');
 
         // Passer les données à la vue
-        return view('materiels.périphériques.edit', compact('peripherique' , 'types'));
+        return view('materiels.périphériques.edit', compact('peripherique', 'types'));
     }
 
     /**
@@ -138,20 +138,31 @@ class PeripheriqueController extends Controller
     {
         // Récupérer le périphérique à supprimer
         $peripherique = Materiel::findOrFail($id);
-        
-        $hasActiveAffectation = Affectation::where('materiel_id', $id)
-            ->whereIn('statut', ['AFFECTE', 'REAFFECTE'])
-            ->exists();
 
-        if ($hasActiveAffectation) {
-            return redirect()->back()
-                ->with('error', 'Ce matériel est actuellement affecté. Vous ne pouvez pas le supprimer.');
+        // Vérifier si le périphérique a une affectation
+        $affectation = Affectation::where('materiel_id', $id)->first();
+
+        if ($affectation) {
+            // Si le statut est AFFECTE ou REAFFECTE
+            if (in_array($affectation->statut, ['AFFECTE', 'REAFFECTE'])) {
+                return redirect()->back()
+                    ->with('error', 'Ce matériel est actuellement affecté. Vous ne pouvez pas le supprimer.');
+            }
+
+            // Si le statut est NON AFFECTE
+            if ($affectation->statut === 'NON AFFECTE') {
+                // Supprimer l'affectation
+                $affectation->delete();
+                // Supprimer le périphérique
+                $peripherique->delete();
+                return redirect()->route('peripheriques.index')
+                    ->with('message', 'Périphérique et l\'affectation associée supprimés avec succès.');
+            }
         }
 
-        // Supprimer l'enregistrement dans la table `materiels`
+        // Si aucune affectation n'existe
         $peripherique->delete();
-
-        // Rediriger vers la liste des périphériques avec un message de succès
-        return redirect()->route('peripheriques.index')->with('message', 'Périphérique supprimé avec succès.');
+        return redirect()->route('peripheriques.index')
+            ->with('message', 'Périphérique supprimé avec succès.');
     }
 }

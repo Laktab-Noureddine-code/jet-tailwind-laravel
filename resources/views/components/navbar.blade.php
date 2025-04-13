@@ -45,7 +45,7 @@
                         <a href="{{ route('telephones.index') }}"
                             class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('telephones*') ? 'bg-[#2a3955]' : 'hover:bg-[#1a2c4e]' }}">
                             <i class="fa-solid fa-mobile-screen text-[16px] w-6"></i>
-                            <span>Télephones</span>
+                            <span>Téléphones</span>
                         </a>
                     </li>
                     

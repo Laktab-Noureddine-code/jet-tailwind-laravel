@@ -9,13 +9,11 @@
                 {{ session('success') }}
             </div>
         @endif
-
         @if (session('error'))
             <div class="mb-4 rounded-lg bg-red-100 px-6 py-5 text-base text-red-700" role="alert">
                 {{ session('error') }}
             </div>
         @endif
-
         <div class="mb-6 flex items-center justify-between">
             <h1 class="text-3xl font-bold text-gray-900">Corbeille</h1>
         </div>
@@ -33,7 +31,6 @@
                                     <th scope="col" class="px-6 py-4">Matériel</th>
                                     <th scope="col" class="px-6 py-4">Numéro de série</th>
                                     <th scope="col" class="px-6 py-4">Date d'affectation</th>
-                                    <th scope="col" class="px-6 py-4">Statut</th>
                                     <th scope="col" class="px-6 py-4">Chantier</th>
                                     <th scope="col" class="px-6 py-4">Utilisateur</th>
                                     <th scope="col" class="px-6 py-4">Date de suppression</th>
@@ -65,11 +62,10 @@
                                             @endif
                                         </td>
                                         <td class="px-6 py-4">{{ $affectation->date_affectation }}</td>
-                                        <td class="px-6 py-4">{{ $affectation->statut }}</td>
                                         <td class="px-6 py-4">{{ $affectation->chantier }}</td>
                                         <td class="px-6 py-4">{{ $affectation->utilisateur1 }}</td>
                                         <td class="px-6 py-4">
-                                            {{ $affectation->deleted_at ? $affectation->deleted_at->format('Y-m-d H:i:s') : '' }}
+                                            {{ $affectation->deleted_at ? $affectation->deleted_at->setTimezone('Africa/Casablanca')->format('Y-m-d H:i:s') : '' }}
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form
@@ -120,7 +116,7 @@
                                         <td class="px-6 py-4">{{ $ordinateur->stockage }}</td>
                                         <td class="px-6 py-4">{{ $ordinateur->processeur }}</td>
                                         <td class="px-6 py-4">
-                                            {{ $ordinateur->deleted_at ? $ordinateur->deleted_at->format('Y-m-d H:i:s') : '' }}
+                                            {{ $ordinateur->deleted_at ? $ordinateur->deleted_at->setTimezone('Africa/Casablanca')->format('Y-m-d H:i:s') : '' }}
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form
@@ -219,7 +215,7 @@
                                             @endif
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $imprimante->deleted_at ? $imprimante->deleted_at->format('Y-m-d H:i:s') : '' }}
+                                            {{ $imprimante->deleted_at ? $imprimante->deleted_at->setTimezone('Africa/Casablanca')->format('Y-m-d H:i:s') : '' }}
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form
@@ -268,7 +264,7 @@
                                         <td class="px-6 py-4">{{ $telephone->pin }}</td>
                                         <td class="px-6 py-4">{{ $telephone->puk }}</td>
                                         <td class="px-6 py-4">
-                                            {{ $telephone->deleted_at ? $telephone->deleted_at->format('Y-m-d H:i:s') : '' }}
+                                            {{ $telephone->deleted_at ? $telephone->deleted_at->setTimezone('Africa/Casablanca')->format('Y-m-d H:i:s') : '' }}
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form
@@ -317,7 +313,7 @@
                                         <td class="px-6 py-4">{{ $peripherique->type }}</td>
                                         <td class="px-6 py-4">{{ $peripherique->etat }}</td>
                                         <td class="px-6 py-4">
-                                            {{ $peripherique->deleted_at ? $peripherique->deleted_at->format('Y-m-d H:i:s') : '' }}
+                                            {{ $peripherique->deleted_at ? $peripherique->deleted_at->setTimezone('Africa/Casablanca')->format('Y-m-d H:i:s') : '' }}
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form
@@ -364,7 +360,7 @@
                                         <td class="px-6 py-4">{{ $recrutement->email }}</td>
                                         <td class="px-6 py-4">{{ $recrutement->fonction }}</td>
                                         <td class="px-6 py-4">
-                                            {{ $recrutement->deleted_at ? $recrutement->deleted_at->format('Y-m-d H:i:s') : '' }}
+                                            {{ $recrutement->deleted_at ? $recrutement->deleted_at->setTimezone('Africa/Casablanca')->format('Y-m-d H:i:s') : '' }}
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form
@@ -415,7 +411,7 @@
                                         <td class="px-6 py-4">{{ $notification->chantier }}</td>
                                         <td class="px-6 py-4">{{ $notification->utilisateur }}</td>
                                         <td class="px-6 py-4">
-                                            {{ $notification->deleted_at ? $notification->deleted_at->format('Y-m-d H:i:s') : '' }}
+                                            {{ $notification->deleted_at ? $notification->deleted_at->setTimezone('Africa/Casablanca')->format('Y-m-d H:i:s') : '' }}
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form

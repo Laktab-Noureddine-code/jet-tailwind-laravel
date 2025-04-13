@@ -67,25 +67,37 @@ class TelephoneController extends Controller
         // On récupère le téléphone par son ID
         $telephone = Telephone::findOrFail($telephone);
 
-        $hasActiveAffectation = Affectation::where('materiel_id', $telephone->materiel_id)
-            ->whereIn('statut', ['AFFECTE', 'REAFFECTE'])
-            ->exists();
+        // Vérifier si le téléphone a une affectation
+        $affectation = Affectation::where('materiel_id', $telephone->materiel_id)->first();
 
-
-        if ($hasActiveAffectation) {
-            return redirect()->back()
-                ->with('error', 'Ce téléphone est actuellement affecté. Vous ne pouvez pas le supprimer.');
+        if ($affectation) {
+            // Si le statut est AFFECTE ou REAFFECTE
+            if (in_array($affectation->statut, ['AFFECTE', 'REAFFECTE'])) {
+                return redirect()->back()
+                    ->with('error', 'Ce téléphone est actuellement affecté. Vous ne pouvez pas le supprimer.');
+            }
+            
+            // Si le statut est NON AFFECTE
+            if ($affectation->statut === 'NON AFFECTE') {
+                // Supprimer l'affectation
+                $affectation->delete();
+                // Supprimer le matériel associé
+                if ($telephone->materiel) {
+                    $telephone->materiel->delete();
+                }
+                // Supprimer le téléphone
+                $telephone->delete();
+                return redirect()->route('telephones.index')
+                    ->with('success', 'Téléphone et l\'affectation associée supprimés avec succès.');
+            }
         }
 
-        // Si un matériel est lié, on le supprime aussi (optionnel selon ta logique métier)
+        // Si aucune affectation n'existe
         if ($telephone->materiel) {
             $telephone->materiel->delete();
         }
-
-        // Suppression du téléphone
         $telephone->delete();
-
-        // Redirection avec un message de succès
-        return redirect()->route('telephones.index')->with('success', 'Téléphone supprimé avec succès.');
+        return redirect()->route('telephones.index')
+            ->with('success', 'Téléphone supprimé avec succès.');
     }
 }

@@ -158,20 +158,33 @@ class OrdinateurController extends Controller
      */
     public function destroy(Ordinateur $ordinateur)
     {
-        $hasActiveAffectation = Affectation::where('materiel_id', $ordinateur->materiel_id)
-            ->whereIn('statut', ['AFFECTE', 'REAFFECTE'])
-            ->exists();
+        // Vérifier si l'ordinateur a une affectation
+        $affectation = Affectation::where('materiel_id', $ordinateur->materiel_id)->first();
 
-        if ($hasActiveAffectation) {
-            return redirect()->back()
-                ->with('error', 'Ce matériel est actuellement affecté. Vous ne pouvez pas le supprimer.');
+        if ($affectation) {
+            // Si le statut est AFFECTE ou REAFFECTE
+            if (in_array($affectation->statut, ['AFFECTE', 'REAFFECTE'])) {
+                return redirect()->back()
+                    ->with('error', 'Ce matériel est actuellement affecté. Vous ne pouvez pas le supprimer.');
+            }
+
+            // Si le statut est NON AFFECTE
+            if ($affectation->statut === 'NON AFFECTE') {
+                // Supprimer l'affectation
+                $affectation->delete();
+                // Supprimer l'ordinateur
+                $ordinateur->delete();
+                // Supprimer le matériel associé
+                $ordinateur->materiel->delete();
+                return redirect()->route('ordinateurs.index')
+                    ->with('message', 'Ordinateur et l\'affectation associée supprimés avec succès.');
+            }
         }
-        // Supprimer l'ordinateur
+
+        // Si aucune affectation n'existe
         $ordinateur->delete();
-
-        // Supprimer le matériel associé
         $ordinateur->materiel->delete();
-
-        return redirect()->route('ordinateurs.index')->with('message', 'Ordinateur supprimé avec succès.');
+        return redirect()->route('ordinateurs.index')
+            ->with('message', 'Ordinateur supprimé avec succès.');
     }
 }

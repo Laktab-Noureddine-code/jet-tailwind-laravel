@@ -59,7 +59,7 @@ class ImprimanteController extends Controller
                 'affectations.statut',
                 'utilisateurs.nom as utilisateur_nom',
             )
-            ->paginate(10);
+            ->get();
         $lastAffectations = Affectation::whereIn('materiel_id', $imprimantes->pluck('materiel_id'))
             ->whereIn('statut', ['AFFECTE', 'REAFFECTE'])
             ->orderByDesc('date_affectation')
@@ -220,29 +220,39 @@ class ImprimanteController extends Controller
     {
         // Récupérer le matériel correspondant à l'ID
         $materiel = Materiel::find($id);
+        // Vérifier si l'imprimante a une affectation
+        $affectation = Affectation::where('materiel_id', $id)->first();
 
-        if (!$materiel) {
-            abort(404, 'Imprimante non trouvée.');
+        if ($affectation) {
+            // Si le statut est AFFECTE ou REAFFECTE
+            if (in_array($affectation->statut, ['AFFECTE', 'REAFFECTE'])) {
+                return redirect()->back()
+                    ->with('error', 'Ce matériel est actuellement affecté. Vous ne pouvez pas le supprimer.');
+            }
+
+            // Si le statut est NON AFFECTE
+            if ($affectation->statut === 'NON AFFECTE') {
+                // Supprimer l'affectation
+                $affectation->delete();
+                // Supprimer l'imprimante
+                $imprimante = Imprimante::where('materiel_id', $materiel->id)->first();
+                if ($imprimante) {
+                    $imprimante->delete();
+                }
+                // Supprimer le matériel
+                $materiel->delete();
+                return redirect()->route('imprimantes.index')
+                    ->with('message', 'Imprimante et l\'affectation associée supprimées avec succès.');
+            }
         }
-        $hasActiveAffectation = Affectation::where('materiel_id', $id)
-            ->whereIn('statut', ['AFFECTE', 'REAFFECTE'])
-            ->exists();
 
-        if ($hasActiveAffectation) {
-            return redirect()->back()
-                ->with('error', 'Ce matériel est actuellement affecté. Vous ne pouvez pas le supprimer.');
-        }
-
-        // Supprimer l'enregistrement dans la table `imprimantes`
+        // Si aucune affectation n'existe
         $imprimante = Imprimante::where('materiel_id', $materiel->id)->first();
         if ($imprimante) {
             $imprimante->delete();
         }
-
-        // Supprimer l'enregistrement dans la table `materiels`
         $materiel->delete();
-
-        // Rediriger vers la liste des imprimantes avec un message de succès
-        return redirect()->route('imprimantes.index')->with('message', 'Imprimante supprimée avec succès.');
+        return redirect()->route('imprimantes.index')
+            ->with('message', 'Imprimante supprimée avec succès.');
     }
 }

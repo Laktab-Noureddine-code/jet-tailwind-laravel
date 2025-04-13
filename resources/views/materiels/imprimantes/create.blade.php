@@ -48,8 +48,6 @@
                                     <option value="Neuf" {{ old('etat') == 'Neuf' ? 'selected' : '' }}>Neuf</option>
                                     <option value="Occasion" {{ old('etat') == 'Occasion' ? 'selected' : '' }}>Occasion
                                     </option>
-                                    <option value="Endommagé" {{ old('etat') == 'Endommagé' ? 'selected' : '' }}>Endommagé
-                                    </option>
                                 </select>
                                 @error('etat')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

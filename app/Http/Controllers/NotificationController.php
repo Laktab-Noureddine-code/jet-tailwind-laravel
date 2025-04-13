@@ -44,7 +44,7 @@ class NotificationController extends Controller
             'email' => $recrutement->email,
             'fonction' => $recrutement->fonction,
             'telephone' => $recrutement->telephone,
-            'date_affectation' => $notification->date_affectation,
+            'date_affectation' => $recrutement->date_affectation,
             'model' => $recrutement->model,
             'num_serie' => $recrutement->num_serie,
         ];
@@ -109,7 +109,7 @@ class NotificationController extends Controller
         Affectation::create([
             'materiel_id' => $materiel->id,
             'utilisateur_id' => $utilisateur->id,
-            'date_affectation' => $notification->date_affectation,
+            'date_affectation' => $recrutement->date_affectation,
             'chantier' => $notification->chantier,
             'statut' => 'AFFECTE',
             'utilisateur1' => $notification->utilisateur

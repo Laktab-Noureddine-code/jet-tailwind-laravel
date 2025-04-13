@@ -23,44 +23,48 @@
     </td>
 
     <td class="px-2 py-2">
-        <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600">{{ $imprimante->identifiant_noir }}</span>
-            <span
-                class="ml-2 inline-flex items-center justify-center h-6 w-6 rounded-full border {{ $imprimante->toner_noir === 0 ? 'bg-red-100 border-red-200' : 'bg-gray-100 border-gray-200' }}">
+        @if ($imprimante->identifiant_noir)
+            <div class="flex flex-col">
+                <span>{{ $imprimante->identifiant_noir }}</span>
                 <span
-                    class="text-xs font-medium {{ $imprimante->toner_noir === 0 ? 'text-red-800' : 'text-gray-800' }}">{{ $imprimante->toner_noir }}</span>
-            </span>
-        </div>
+                    class="mt-1 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-black text-white">
+                    {{ $imprimante->toner_noir ?? '0' }}
+                </span>
+            </div>
+        @endif
     </td>
     <td class="px-2 py-2">
-        <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600">{{ $imprimante->identifiant_bleu }}</span>
-            <span
-                class="ml-2 inline-flex items-center justify-center h-6 w-6 rounded-full border {{ $imprimante->toner_bleu === 0 ? 'bg-red-100 border-red-200' : 'bg-gray-100 border-gray-200' }}">
+        @if ($imprimante->identifiant_bleu)
+            <div class="flex flex-col">
+                <span>{{ $imprimante->identifiant_bleu }}</span>
                 <span
-                    class="text-xs font-medium {{ $imprimante->toner_bleu === 0 ? 'text-red-800' : 'text-gray-800' }}">{{ $imprimante->toner_bleu }}</span>
-            </span>
-        </div>
+                    class="mt-1 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-500 text-white">
+                    {{ $imprimante->toner_bleu ?? '0' }}
+                </span>
+            </div>
+        @endif
     </td>
     <td class="px-2 py-2">
-        <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600">{{ $imprimante->identifiant_magenta }}</span>
-            <span
-                class="ml-2 inline-flex items-center justify-center h-6 w-6 rounded-full border {{ $imprimante->toner_magenta === 0 ? 'bg-red-100 border-red-200' : 'bg-gray-100 border-gray-200' }}">
+        @if ($imprimante->identifiant_magenta)
+            <div class="flex flex-col">
+                <span>{{ $imprimante->identifiant_magenta }}</span>
                 <span
-                    class="text-xs font-medium {{ $imprimante->toner_magenta === 0 ? 'text-red-800' : 'text-gray-800' }}">{{ $imprimante->toner_magenta }}</span>
-            </span>
-        </div>
+                    class="mt-1 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-pink-500 text-white">
+                    {{ $imprimante->toner_magenta ?? '0' }}
+                </span>
+            </div>
+        @endif
     </td>
     <td class="px-2 py-2">
-        <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600">{{ $imprimante->identifiant_jaune }}</span>
-            <span
-                class="ml-2 inline-flex items-center justify-center h-6 w-6 rounded-full border {{ $imprimante->toner_jaune === 0 ? 'bg-red-100 border-red-200' : 'bg-gray-100 border-gray-200' }}">
+        @if ($imprimante->identifiant_jaune)
+            <div class="flex flex-col">
+                <span>{{ $imprimante->identifiant_jaune }}</span>
                 <span
-                    class="text-xs font-medium {{ $imprimante->toner_jaune === 0 ? 'text-red-800' : 'text-gray-800' }}">{{ $imprimante->toner_jaune }}</span>
-            </span>
-        </div>
+                    class="mt-1 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-500 text-white">
+                    {{ $imprimante->toner_jaune ?? '0' }}
+                </span>
+            </div>
+        @endif
     </td>
     <td class="px-2 py-2">
         <div class="flex items-center justify-center space-x-3">
