@@ -7,14 +7,6 @@
         <div class="mb-6 flex items-center justify-between">
             <h1 class="text-3xl font-bold text-gray-900">Liste des Recrutements</h1>
         </div>
-
-        @if (session('success'))
-            <div class="mb-4 rounded-lg bg-green-100 px-6 py-5 text-base text-green-700" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
-
-
         <x-recruitment.search-recruitment :search="request('search')" />
 
         <div class="mt-6 bg-white shadow">

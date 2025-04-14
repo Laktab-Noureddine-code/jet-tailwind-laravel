@@ -72,10 +72,10 @@ class TypeController extends Controller
     {
         $typeInMateriel = Materiel::where('type', $id)->exists();
         if ($typeInMateriel) {
-            return redirect()->back()->with(['error' => 'Impossible de supprimer le type ' . $id . ' car il est encore utilisé.']);
+            return redirect()->back()->with('error', 'Impossible de supprimer le type ' . $id . ' car il est encore utilisé.');
         }
         $type = Type::where('type', $id)->select('id')->first();
         Type::destroy($type->id);
-        return redirect()->back()->with(['error' => 'Type supprimé avec succès.']);
+        return redirect()->back()->with('success', 'Type supprimé avec succès.');
     }
 }

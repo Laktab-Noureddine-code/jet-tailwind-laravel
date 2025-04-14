@@ -2,15 +2,6 @@
 @section('title', 'Centre de Notifications')
 @section('content')
     <div class="mx-auto py-8">
-        @if (session('success'))
-            <div class="mb-4 rounded-lg bg-green-100 px-6 py-5 text-base text-green-700" role="alert">
-                {{ session('success') }}
-            </div>
-        @elseif (session('error'))
-            <div class="mb-4 rounded-lg bg-red-100 px-6 py-5 text-base text-red-700" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
         <div class="flex justify-end">
             <a href="{{ route('recrutements.index') }}"
                 class="inline-flex items-center px-4 py-2 bg-[#0A1C3E] text-white font-medium rounded-lg hover:bg-[#0A1C3E]/90 focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:ring-offset-2 transition-all duration-200">

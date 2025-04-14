@@ -12,7 +12,6 @@ class RecrutementController extends Controller
     public function index(Request $request)
     {
         $query = Recrutement::query();
-
         // Recherche
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
@@ -35,7 +34,6 @@ class RecrutementController extends Controller
         // Ajouter pagination avec 20 éléments par page
         $recrutements = $query->orderBy('created_at', 'desc')
             ->paginate(20)
-            ->orderBy('created_at', 'desc')
             ->appends(['search' => $request->search]);
 
         return view('recruitment.index', compact('recrutements'));

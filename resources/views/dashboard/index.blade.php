@@ -25,11 +25,6 @@
             <div class="p-3 bg-white rounded-lg shadow-lg relative grid grid-rows-[1fr_3fr_1fr]">
                 <h1 class="font-semibold text-lg ">Types de Matériels</h1>
                 <div>
-                    @if (session('error'))
-                        <div class="mb-4 rounded-lg bg-red-100 px-6 py-5 text-base text-red-700" role="alert">
-                            {{ session('error') }}
-                        </div>
-                    @endif
                     <div class="grid grid-cols-3 gap-2">
                         @foreach ($types as $type)
                             <div class="flex items-center">

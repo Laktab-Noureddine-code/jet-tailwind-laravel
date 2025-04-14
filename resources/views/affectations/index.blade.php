@@ -2,12 +2,6 @@
 @section('title', 'Gestion des Affectations')
 @section('content')
     <div class="container mx-auto">
-        @if (session('message'))
-            <div class="mb-4 rounded-lg bg-green-100 px-6 py-5 text-base text-green-700" role="alert">
-                {{ session('message') }}
-            </div>
-        @endif
-
         <div class="mb-6 flex items-center justify-between">
             <h1 class="text-3xl font-bold text-gray-900">Liste des Affectations</h1>
         </div>
