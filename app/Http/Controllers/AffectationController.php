@@ -7,6 +7,7 @@ use App\Models\Materiel;
 use App\Models\Ordinateur;
 use App\Models\Utilisateur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
@@ -98,21 +99,89 @@ class AffectationController extends Controller
             'fiche_affectation' => 'required|mimes:jpeg,png,jpg,pdf|max:6000',
         ]);
 
-        // Générer un nom de fichier unique avec timestamp et id d'affectation
-        $extension = $request->file('fiche_affectation')->getClientOriginalExtension();
-        $utilisateur = $affectation->utilisateur;
-        $uniqueCode = uniqid();
-        $fileName = 'affectation_' . str_replace(' ', '_', $utilisateur->nom) . '_' . $uniqueCode . '.' . $extension;
+        try {
+            // Vérifier si le fichier est bien téléchargé
+            if (!$request->hasFile('fiche_affectation') || !$request->file('fiche_affectation')->isValid()) {
+                return back()->with('error', 'Fichier invalide ou non téléchargé.');
+            }
 
-        // Stocker le fichier avec le nom personnalisé
-        $path = $request->file('fiche_affectation')->storeAs('affectations', $fileName, 'public');
+            // Générer un nom de fichier unique avec timestamp et id d'affectation
+            $extension = $request->file('fiche_affectation')->getClientOriginalExtension();
+            $utilisateur = $affectation->utilisateur;
+            $uniqueCode = uniqid();
+            $fileName = 'affectation_' . str_replace(' ', '_', $utilisateur->nom) . '_' . $uniqueCode . '.' . $extension;
 
-        // Mettre à jour la base de données
-        $affectation->update(['fiche_affectation' => $path]);
+            // Créer le répertoire s'il n'existe pas
+            $storagePath = storage_path('app/public/affectations');
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath, 0755, true);
+            }
 
-        return back()->with('success', 'Fiche affectation mise à jour avec succès !');
+            // Stocker le fichier avec le nom personnalisé
+            $path = $request->file('fiche_affectation')->storeAs('affectations', $fileName, 'public');
+
+            // Vérifier si le chemin est vide
+            if (empty($path)) {
+                return back()->with('error', 'Impossible de sauvegarder le fichier. Veuillez réessayer.');
+            }
+
+            // Mettre à jour la base de données
+            $affectation->update(['fiche_affectation' => $path]);
+
+            return back()->with('success', 'Fiche affectation mise à jour avec succès !');
+        } catch (\Exception $e) {
+            // Log l'erreur
+            error_log('Erreur lors du téléchargement : ' . $e->getMessage());
+            return back()->with('error', 'Une erreur est survenue lors du téléchargement : ' . $e->getMessage());
+        }
     }
 
+    /**
+     * Alternative upload method that uses direct file system operations
+     * Use this if the standard upload method isn't working on IIS
+     */
+    public function uploadDirect(Request $request, Affectation $affectation)
+    {
+        $request->validate([
+            'fiche_affectation' => 'required|mimes:jpeg,png,jpg,pdf|max:6000',
+        ]);
+
+        try {
+            // Vérifier si le fichier est bien téléchargé
+            if (!$request->hasFile('fiche_affectation') || !$request->file('fiche_affectation')->isValid()) {
+                return back()->with('error', 'Fichier invalide ou non téléchargé.');
+            }
+
+            // Générer un nom de fichier unique
+            $extension = $request->file('fiche_affectation')->getClientOriginalExtension();
+            $utilisateur = $affectation->utilisateur;
+            $uniqueCode = uniqid();
+            $fileName = 'affectation_' . str_replace(' ', '_', $utilisateur->nom) . '_' . $uniqueCode . '.' . $extension;
+
+            // Créer le répertoire physique si nécessaire
+            $uploadDirectory = public_path('uploads/affectations');
+            if (!file_exists($uploadDirectory)) {
+                mkdir($uploadDirectory, 0755, true);
+            }
+
+            // Déplacer directement le fichier
+            $uploadedFile = $request->file('fiche_affectation');
+            $filePath = $uploadDirectory . '/' . $fileName;
+
+            if ($uploadedFile->move($uploadDirectory, $fileName)) {
+                // Enregistrer le chemin relatif dans la base de données
+                $relativePath = 'uploads/affectations/' . $fileName;
+                $affectation->update(['fiche_affectation' => $relativePath]);
+
+                return back()->with('success', 'Fiche affectation mise à jour avec succès !');
+            } else {
+                return back()->with('error', 'Impossible de déplacer le fichier.');
+            }
+        } catch (\Exception $e) {
+            error_log('Erreur lors du téléchargement direct : ' . $e->getMessage());
+            return back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+        }
+    }
 
     /**
      * Show the form for creating a new resource.

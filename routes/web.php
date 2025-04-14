@@ -52,6 +52,8 @@ Route::middleware("auth")->group(function () {
     // Route::get('/affectation/getByNum', [AffectationController::class, 'getByNum'])->name('getByNum');
     Route::post('/affectation/storeExists', [AffectationController::class, 'storeExists'])->middleware('is_admin:admin')->name('storeExists');
     Route::post('/upload/{affectation}', [AffectationController::class, 'upload'])->middleware('is_admin:admin')->name('upload');
+    // Alternative direct upload route for IIS server
+    Route::post('/upload-direct/{affectation}', [AffectationController::class, 'uploadDirect'])->middleware('is_admin:admin')->name('upload.direct');
     // ajouter pour un utilisateur exist
     Route::get('/affectation/userExists/{user}', [AffectationController::class, 'userExists'])->middleware('is_admin:admin')->name('userExists');
 
@@ -96,4 +98,35 @@ Route::middleware("auth")->group(function () {
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
+});
+
+// Diagnostic route for storage issues - Remove after troubleshooting
+Route::get('/storage-diagnostic', function () {
+    $data = [
+        'storage_path' => storage_path(),
+        'public_path' => public_path(),
+        'storage_link_exists' => file_exists(public_path('storage')),
+        'storage_directory_writable' => is_writable(storage_path('app/public')),
+        'affectations_directory_exists' => file_exists(storage_path('app/public/affectations')),
+        'affectations_directory_writable' => file_exists(storage_path('app/public/affectations')) ?
+            is_writable(storage_path('app/public/affectations')) : false,
+        'permissions' => [
+            'storage_app' => substr(sprintf('%o', fileperms(storage_path('app'))), -4),
+            'storage_app_public' => file_exists(storage_path('app/public')) ?
+                substr(sprintf('%o', fileperms(storage_path('app/public'))), -4) : 'not found',
+        ]
+    ];
+
+    // Create the directory if it doesn't exist
+    if (!file_exists(storage_path('app/public/affectations'))) {
+        try {
+            mkdir(storage_path('app/public/affectations'), 0755, true);
+            $data['affectations_directory_created'] = true;
+        } catch (\Exception $e) {
+            $data['affectations_directory_created'] = false;
+            $data['creation_error'] = $e->getMessage();
+        }
+    }
+
+    return response()->json($data);
 });

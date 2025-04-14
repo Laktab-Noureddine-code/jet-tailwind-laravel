@@ -186,7 +186,7 @@
                                                         <i class="fa-solid fa-envelope"></i>
                                                     </button>
                                                 </form>
-                                                <form action="{{ route('upload', $affectation) }}" method="POST"
+                                                <form action="{{ route('upload.direct', $affectation) }}" method="POST"
                                                     enctype="multipart/form-data" class="inline">
                                                     @csrf
                                                     @method('POST')
@@ -204,7 +204,15 @@
                                                     </button>
                                                 </form>
                                                 @if ($affectation->fiche_affectation)
-                                                    <a href="{{ asset('storage/' . $affectation->fiche_affectation) }}"
+                                                    @php
+                                                        $filePath = str_starts_with(
+                                                            $affectation->fiche_affectation,
+                                                            'uploads/',
+                                                        )
+                                                            ? $affectation->fiche_affectation
+                                                            : 'storage/' . $affectation->fiche_affectation;
+                                                    @endphp
+                                                    <a href="{{ asset($filePath) }}"
                                                         title="télécharger la fiche d'affectation" target="_blank"
                                                         class="text-gray-600 hover:text-gray-800">
                                                         <i class="fa-solid fa-file"></i>
