@@ -59,7 +59,6 @@ class ImprimanteController extends Controller
                 'affectations.statut',
                 'utilisateurs.nom as utilisateur_nom',
             )
-            ->orderBy('created_at', 'desc')
             ->get();
         $lastAffectations = Affectation::whereIn('materiel_id', $imprimantes->pluck('materiel_id'))
             ->whereIn('statut', ['AFFECTE', 'REAFFECTE'])
