@@ -46,6 +46,10 @@ class trashController extends Controller
         $telephones = Telephone::onlyTrashed()
             ->with(['materiel' => function ($query) {
                 $query->withTrashed();
+            }, 'materiel.affectations' => function ($query) {
+                $query->withTrashed()->latest('date_affectation')->take(1);
+            }, 'materiel.affectations.utilisateur' => function ($query) {
+                $query->withTrashed();
             }])
             ->orderBy('deleted_at', 'desc')
             ->get();

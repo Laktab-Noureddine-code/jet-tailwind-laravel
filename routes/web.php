@@ -90,6 +90,8 @@ Route::middleware("auth")->group(function () {
     Route::resource('notifications', NotificationController::class)->middleware('is_admin:admin');
     Route::post('/notifications/{notification}/valider', [NotificationController::class, 'valider'])->name('notifications.valider');
     Route::get('/telephones', [TelephoneController::class, 'index'])->name('telephones.index');
+    Route::get('/telephones/create', [TelephoneController::class, 'create'])->name('telephones.create');
+    Route::post('/telephones', [TelephoneController::class, 'store'])->name('telephones.store');
     Route::get('/telephones/{id}/edit', [TelephoneController::class, 'edit'])->name('telephones.edit');
     Route::put('/telephones/{telephone}', [TelephoneController::class, 'update'])->name('telephones.update');
     Route::delete('/telephones/{telephone}', [TelephoneController::class, 'destroy'])->name('telephones.destroy');

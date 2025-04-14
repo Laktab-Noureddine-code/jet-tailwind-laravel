@@ -15,22 +15,58 @@ class TelephoneController extends Controller
         $search = $request->input('search');
         $telephones = Telephone::with(['materiel', 'materiel.affectations' => function ($query) {
             $query->latest('date_affectation')->take(1);
-        }])
+        }, 'materiel.affectations.utilisateur'])
             ->when($search, function ($query, $search) {
                 return $query->where(function ($q) use ($search) {
                     $q->where('pin', 'like', "%$search%")
                         ->orWhere('puk', 'like', "%$search%")
                         ->orWhereHas('materiel', function ($q) use ($search) {
                             $q->where('fabricant', 'like', "%$search%")
-                                ->orWhere('num_serie', 'like', "%$search%")
-                                ->orWhere('etat', 'like', "%$search%");
+                                ->orWhere('num_serie', 'like', "%$search%");
+                        })
+                        ->orWhereHas('materiel.affectations.utilisateur', function ($q) use ($search) {
+                            $q->where('nom', 'like', "%$search%");
                         });
                 });
             })
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('tel.index', compact('telephones', 'search'));
     }
+
+    public function create()
+    {
+        return view('tel.create');
+    }
+
+    public function store(Request $request)
+    {
+        // Validation des données du formulaire
+        $request->validate([
+            'pin' => 'nullable|string|max:255',
+            'puk' => 'nullable|string|max:255',
+            'fabricant' => 'required|string|max:255',
+            'num_serie' => 'required|string|max:255|unique:materiels,num_serie',
+        ]);
+
+        // Créer un nouveau matériel
+        $materiel = \App\Models\Materiel::create([
+            'fabricant' => $request->fabricant,
+            'type' => 'Telephone',
+            'num_serie' => $request->num_serie,
+        ]);
+
+        // Créer un téléphone associé au matériel
+        Telephone::create([
+            'pin' => $request->pin,
+            'puk' => $request->puk,
+            'materiel_id' => $materiel->id,
+        ]);
+
+        return redirect()->route('telephones.index')->with('success', 'Téléphone ajouté avec succès.');
+    }
+
     public function edit($id)
     {
         $telephone = Telephone::with('materiel')->findOrFail($id);
@@ -43,7 +79,6 @@ class TelephoneController extends Controller
             'puk' => 'string|max:255',
             'fabricant' => 'required|string|max:255',
             'num_serie' => 'required|string|max:255|unique:materiels,num_serie,' . $telephone->materiel->id,
-            'etat' => 'required|string|max:255',
         ]);
 
         // Mise à jour du téléphone
@@ -56,7 +91,6 @@ class TelephoneController extends Controller
             $telephone->materiel->update([
                 'fabricant' => $request->fabricant,
                 'num_serie' => $request->num_serie,
-                'etat' => $request->etat,
             ]);
         }
 
@@ -76,7 +110,7 @@ class TelephoneController extends Controller
                 return redirect()->back()
                     ->with('error', 'Ce téléphone est actuellement affecté. Vous ne pouvez pas le supprimer.');
             }
-            
+
             // Si le statut est NON AFFECTE
             if ($affectation->statut === 'NON AFFECTE') {
                 // Supprimer l'affectation

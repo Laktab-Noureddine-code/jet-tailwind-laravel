@@ -47,6 +47,7 @@ class NotificationController extends Controller
 
         // Ajouter pagination avec 20 éléments par page
         $notifications = $query->orderBy('is_read')
+            ->orderBy('created_at', 'desc')
             ->paginate(20)
             ->appends(['search' => $request->search]);
 

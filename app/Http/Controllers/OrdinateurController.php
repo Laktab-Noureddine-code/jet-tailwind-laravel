@@ -45,6 +45,7 @@ class OrdinateurController extends Controller
                 'ordinateurs.stockage',
                 'ordinateurs.processeur'
             )
+            ->orderBy('created_at', 'desc')
             ->get();
 
         // Récupération des dernières affectations pour les matériels concernés

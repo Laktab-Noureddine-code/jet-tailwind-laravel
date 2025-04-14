@@ -252,6 +252,7 @@
                                     <th scope="col" class="px-6 py-4">Fabricant</th>
                                     <th scope="col" class="px-6 py-4">PIN</th>
                                     <th scope="col" class="px-6 py-4">PUK</th>
+                                    <th scope="col" class="px-6 py-4">Utilisateur</th>
                                     <th scope="col" class="px-6 py-4">Date de suppression</th>
                                     <th scope="col" class="px-6 py-4 text-center">Actions</th>
                                 </tr>
@@ -263,6 +264,11 @@
                                         <td class="px-6 py-4">{{ $telephone->materiel->fabricant }}</td>
                                         <td class="px-6 py-4">{{ $telephone->pin }}</td>
                                         <td class="px-6 py-4">{{ $telephone->puk }}</td>
+                                        <td class="px-6 py-4">
+                                            @if ($telephone->materiel->affectations->isNotEmpty() && $telephone->materiel->affectations->first()->utilisateur)
+                                                {{ $telephone->materiel->affectations->first()->utilisateur->nom }}
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4">
                                             {{ $telephone->deleted_at ? $telephone->deleted_at->setTimezone('Africa/Casablanca')->format('Y-m-d H:i:s') : '' }}
                                         </td>

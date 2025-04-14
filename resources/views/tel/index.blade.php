@@ -30,6 +30,7 @@
                             <th scope="col" class="px-6 py-4">Numéro de Série</th>
                             <th scope="col" class="px-6 py-4">État</th>
                             <th scope="col" class="px-6 py-4">Statut</th>
+                            <th scope="col" class="px-6 py-4">Utilisateur</th>
                             <th scope="col" class="px-6 py-4">PIN</th>
                             <th scope="col" class="px-6 py-4">PUK</th>
                             <th scope="col" class="px-6 py-4 text-center">Actions</th>
@@ -53,6 +54,11 @@
                                             class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
                                             NON AFFECTÉ
                                         </span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if ($telephone->materiel->affectations->isNotEmpty() && $telephone->materiel->affectations->first()->utilisateur)
+                                        {{ $telephone->materiel->affectations->first()->utilisateur->nom }}
                                     @endif
                                 </td>
                                 <td class="px-6 py-4">{{ $telephone->pin }}</td>

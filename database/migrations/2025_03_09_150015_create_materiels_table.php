@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('num_serie')->unique();
             $table->string('fabricant');
             $table->string('type', 50);
-            $table->string('etat', 50);
+            $table->string('etat', 50)->nullable();
             $table->timestamps();
         });
     }
