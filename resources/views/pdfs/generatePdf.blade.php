@@ -116,7 +116,8 @@
                 </td>
                 <td>
                     <span>
-                        <strong>{{ $materiel->fabricant }}</strong>
+                        <strong>{{ $materiel->fabricant }} {{ $ordinateur->processeur }} {{ $ordinateur->ram }}
+                            {{ $ordinateur->stockage }}</strong>
                     </span>
                 </td>
             </tr>

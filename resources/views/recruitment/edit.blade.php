@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Liste des Recrutements</title>
-    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
-    @vite('resources/css/app.css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@section('title', 'Modifier un Recrutement')
 
-</head>
-
-<body class="bg-gray-200">
+@section('content')
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-3xl mx-auto">
             <div class="bg-white shadow">
@@ -158,8 +146,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Modèle</label>
-                                    <input type="text" name="model"
-                                        value="{{ old('model', $recrutement->model) }}"
+                                    <input type="text" name="model" value="{{ old('model', $recrutement->model) }}"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('model') outline-2 outline-red-500 @enderror">
                                     @error('model')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -225,6 +212,4 @@
             </div>
         </div>
     </div>
-</body>
-
-</html>
+@endsection

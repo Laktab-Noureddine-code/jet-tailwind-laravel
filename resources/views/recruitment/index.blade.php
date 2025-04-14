@@ -1,38 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Liste des Recrutements</title>
-    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
-    @vite('resources/css/app.css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@section('title', 'Liste des Recrutements')
 
-</head>
-
-<body class="bg-gray-200">
-    <div class="p-3">
-        <div class="py-6 relative">
-            <h1 class="text-center text-3xl font-bold">Liste des Recrutements</h1>
-            <form action="{{ route('logout') }}" method="post" class="absolute right-2 top-[50%] translate-y-[-50%]">
-                @csrf
-                <button class="cursor-pointer font-semibold text-red-500">
-                    Se déconnecter
-                    <i class="text-[16px] fa-solid fa-arrow-right-from-bracket"></i>
-                </button>
-            </form>
+@section('content')
+    <div class="container mx-auto">
+        <div class="mb-6 flex items-center justify-between">
+            <h1 class="text-3xl font-bold text-gray-900">Liste des Recrutements</h1>
         </div>
+
         @if (session('success'))
             <div class="mb-4 rounded-lg bg-green-100 px-6 py-5 text-base text-green-700" role="alert">
                 {{ session('success') }}
             </div>
         @endif
-        <a href="{{ route('recrutements.create') }}"
-            class="px-5 py-2 text-[16px] font-semibold rounded-lg bg-sky-950 text-white">Créer un Recrutement</a>
+
+
+        <x-recruitment.search-recruitment :search="request('search')" />
 
         <div class="mt-6 bg-white shadow">
             <div class="overflow-x-auto">
@@ -59,7 +42,12 @@
                                 <td class="px-2 py-2 uppercase font-semibold">{{ $recrutement->nom }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->email }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->fonction }}</td>
-                                <td class="px-2 py-2">{{ $recrutement->type_contrat }}</td>
+                                <td class="px-2 py-2">
+                                    <span
+                                        class="inline-flex items-center text-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800">
+                                        {{ $recrutement->type_contrat }}
+                                    </span>
+                                </td>
                                 <td class="px-2 py-2">{{ $recrutement->telephone }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->model }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->num_serie }}</td>
@@ -75,12 +63,11 @@
                                 @if ($recrutement->status !== 'validé')
                                     <td class="px-2 py-2 text-center">
                                         <div class="flex items-center justify-center space-x-3">
-                                            <a href="{{ route('recrutements.edit', $recrutement) }}"
-                                                class="text-blue-600">
+                                            <a href="{{ route('recrutements.edit', $recrutement) }}" class="text-blue-600">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <form action="{{ route('recrutements.destroy', $recrutement) }}"
-                                                method="POST" class="inline">
+                                            <form action="{{ route('recrutements.destroy', $recrutement) }}" method="POST"
+                                                class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-600"
@@ -92,16 +79,28 @@
                                     </td>
                                 @else
                                     <td class="px-2 py-2 text-center">
-                                        <span
-                                            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
-                                            Validé
-                                        </span>
+                                        @if (auth()->user()->role === 'admin')
+                                            <form action="{{ route('recrutements.destroy', $recrutement) }}" method="POST"
+                                                class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600"
+                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce recrutement validé ?')">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span
+                                                class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
+                                                Validé
+                                            </span>
+                                        @endif
                                     </td>
                                 @endif
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="11" class="px-6 py-4 text-center text-gray-500">
+                                <td colspan="12" class="px-6 py-4 text-center text-gray-500">
                                     Aucun recrutement trouvé.
                                 </td>
                             </tr>
@@ -109,8 +108,11 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Pagination -->
+            <div class="mt-4 p-4">
+                {{ $recrutements->links() }}
+            </div>
         </div>
     </div>
-</body>
-
-</html>
+@endsection

@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Liste des Recrutements</title>
-    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
-    @vite('resources/css/app.css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@section('title', 'Créer un Recrutement')
 
-</head>
-
-<body class="bg-gray-200">
+@section('content')
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-3xl mx-auto">
             <div class="bg-white shadow">
@@ -94,8 +82,7 @@
                                 <div class="flex flex-wrap gap-4 mt-2">
                                     <label class="relative">
                                         <input type="radio" name="type_contrat" value="cdi"
-                                            class="peer absolute opacity-0 w-0 h-0"
-                                            checked
+                                            class="peer absolute opacity-0 w-0 h-0" checked
                                             {{ old('type_contrat') == 'cdi' ? 'checked' : '' }}>
                                         <span
                                             class="px-4 py-2 rounded-lg cursor-pointer block uppercase font-medium transition-all duration-200
@@ -230,6 +217,4 @@
             </div>
         </div>
     </div>
-</body>
-
-</html>
+@endsection

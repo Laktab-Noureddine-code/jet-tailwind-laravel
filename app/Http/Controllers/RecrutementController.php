@@ -5,14 +5,38 @@ namespace App\Http\Controllers;
 use App\Models\Notification;
 use App\Models\Recrutement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecrutementController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $recrutements = Recrutement::orderBy('status', 'asc')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $query = Recrutement::query();
+
+        // Recherche
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nom', 'LIKE', "%$search%")
+                    ->orWhere('email', 'LIKE', "%$search%")
+                    ->orWhere('fonction', 'LIKE', "%$search%")
+                    ->orWhere('departement', 'LIKE', "%$search%")
+                    ->orWhere('telephone', 'LIKE', "%$search%")
+                    ->orWhere('model', 'LIKE', "%$search%")
+                    ->orWhere('num_serie', 'LIKE', "%$search%")
+                    ->orWhere('date_affectation', 'LIKE', "%$search%")
+                    ->orWhere('type_contrat', 'LIKE', "%$search%")
+                    ->orWhere('puk', 'LIKE', "%$search%")
+                    ->orWhere('pin', 'LIKE', "%$search%")
+                    ->orWhere('status', 'LIKE', "%$search%");
+            });
+        }
+
+        // Ajouter pagination avec 20 éléments par page
+        $recrutements = $query->orderBy('created_at', 'desc')
+            ->paginate(20)
+            ->appends(['search' => $request->search]);
+
         return view('recruitment.index', compact('recrutements'));
     }
 
@@ -75,14 +99,31 @@ class RecrutementController extends Controller
 
     public function destroy(Recrutement $recrutement)
     {
+        // Vérifie si l'utilisateur est admin
+        if (Auth::user()->role === 'admin') {
+            // Supprimer la notification associée
+            if ($recrutement->notification) {
+                $recrutement->notification->delete();
+            }
+            // Supprimer le recrutement
+            $recrutement->delete();
+
+            return redirect()->route('recrutements.index')->with('success', 'Recrutement supprimé avec succès.');
+        }
+
+        // Si ce n'est pas un admin et que le recrutement est validé, empêcher la suppression
         if ($recrutement->status === 'validé') {
             return redirect()->route('recrutements.index')->with('error', 'Impossible de supprimer un recrutement validé.');
         }
+
+        // Cas standard pour non-admin avec recrutement non validé
         $recrutement->delete();
+
         // Supprimer la notification associée
         if ($recrutement->notification) {
             $recrutement->notification->delete();
         }
+
         return redirect()->route('recrutements.index')->with('success', 'Recrutement supprimé avec succès.');
     }
 }

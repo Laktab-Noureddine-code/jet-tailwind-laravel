@@ -1,11 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Centre de Notifications')
 @section('content')
-    <div class=" mx-auto py-8">
-        <div class="mb-6 flex items-center justify-between">
-            <h1 class="text-3xl font-bold text-gray-900">Notifications</h1>
-        </div>
-
+    <div class="mx-auto py-8">
         @if (session('success'))
             <div class="mb-4 rounded-lg bg-green-100 px-6 py-5 text-base text-green-700" role="alert">
                 {{ session('success') }}
@@ -15,8 +11,16 @@
                 {{ session('error') }}
             </div>
         @endif
-
-        <div class="mt-6 bg-white shadow ">
+        <div class="flex justify-end">
+            <a href="{{ route('recrutements.index') }}"
+                class="inline-flex items-center px-4 py-2 bg-[#0A1C3E] text-white font-medium rounded-lg hover:bg-[#0A1C3E]/90 focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:ring-offset-2 transition-all duration-200">
+                <i class="fa-regular fa-eye text-[16px] w-6"></i>
+                <span>Voir les recrutements</span>
+            </a>
+        </div>
+        <!-- Intégration du composant de recherche -->
+        <x-notifications.search-notification :search="request('search')" />
+        <div class="bg-white shadow">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm" id="materiels-table">
                     <thead class="text-xs uppercase text-white">
@@ -61,17 +65,17 @@
                                 <td class="px-4 py-3">
                                     {{ $notification->recrutement ? $notification->recrutement->num_serie : 'N/A' }}
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-4 py-3 text-center">
                                     @if ($notification->recrutement)
                                         <span
-                                            class="px-2 py-1 text-xs rounded-full">
+                                            class="inline-flex items-center text-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800">
                                             {{ $notification->recrutement->type_contrat }}
                                         </span>
                                     @else
                                         <span class="px-2 py-1 text-xs">N/A</span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-4 py-3 text-center">
                                     @if ($notification->recrutement)
                                         <span
                                             class="inline-flex items-center text-nowrap rounded-full px-2.5 py-1 text-xs font-medium {{ $notification->recrutement->status === 'validé' ? 'bg-green-100 text-green-800' : 'bg-red-400 text-black' }}">
@@ -81,8 +85,8 @@
                                         <span class="px-2 py-1 text-xs">N/A</span>
                                     @endif
                                 </td>
-                                @if ($notification->recrutement && $notification->recrutement->status !== 'validé')
-                                    <td class="px-4 py-3 text-center">
+                                <td class="px-4 py-3 text-center">
+                                    @if ($notification->recrutement && $notification->recrutement->status !== 'validé')
                                         <div class="flex items-center justify-center space-x-3">
                                             <a href="{{ route('notifications.edit', $notification->id) }}"
                                                 class="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-100 transition-colors"
@@ -100,25 +104,42 @@
                                                 </button>
                                             </form>
                                         </div>
-                                    </td>
-                                @else
-                                    <td class="px-4 py-3 text-center">
-                                        <span
-                                            class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-green-100 text-green-800">
-                                            Validé
-                                        </span>
-                                    </td>
-                                @endif
+                                    @else
+                                        @if (auth()->user()->role === 'admin')
+                                            <form action="{{ route('notifications.destroy', $notification->id) }}"
+                                                method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100 transition-colors"
+                                                    title="Supprimer"
+                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette notification ?')">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span
+                                                class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-green-100 text-green-800">
+                                                Validé
+                                            </span>
+                                        @endif
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10" class="px-6 py-6 text-center text-gray-500">
+                                <td colspan="11" class="px-6 py-6 text-center text-gray-500">
                                     Aucune notification trouvée.
                                 </td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-4 p-4">
+                {{ $notifications->links() }}
             </div>
         </div>
     </div>

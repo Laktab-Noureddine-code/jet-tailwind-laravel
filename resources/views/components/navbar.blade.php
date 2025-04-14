@@ -1,7 +1,6 @@
 <nav class="flex-1">
     <div class="px-3 py-2">
         <p class="text-xs font-medium text-gray-400 px-3 mb-2">MAIN MENU</p>
-
         <ul class="space-y-1">
             @auth
                 @if (auth()->user()->role === 'admin')
@@ -40,7 +39,7 @@
                             <span>Périphériques</span>
                         </a>
                     </li>
-                    
+
                     <li>
                         <a href="{{ route('telephones.index') }}"
                             class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('telephones*') ? 'bg-[#2a3955]' : 'hover:bg-[#1a2c4e]' }}">
@@ -48,7 +47,9 @@
                             <span>Téléphones</span>
                         </a>
                     </li>
+
                     
+
                     <div class="mt-6">
                         <p class="text-xs font-medium text-gray-400 px-3 mb-2">SETTINGS</p>
                         <li>
@@ -75,20 +76,25 @@
                         <li>
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf
-                                <button onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?')" class="w-full flex cursor-pointer items-center px-3 py-2 text-white rounded-md hover:bg-[#1a2c4e]">
+                                <button onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?')"
+                                    class="w-full flex cursor-pointer items-center px-3 py-2 text-white rounded-md hover:bg-[#1a2c4e]">
                                     <i class="fa-solid fa-arrow-right-from-bracket text-[16px] w-6"></i>
-                                    <span>Logout</span>
+                                    <span>Déconnexion</span>
                                 </button>
                             </form>
                         </li>
                     </div>
-                    
                 @else
+                    <!-- For any other user roles -->
                     <li>
-                        <a class="flex items-center px-3 py-2 text-white rounded-md hover:bg-[#1a2c4e]">
-                            <i class="fa-solid fa-user-plus text-[16px] w-6"></i>
-                            <span>Recrutement</span>
-                        </a>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?')"
+                                class="w-full flex cursor-pointer items-center px-3 py-2 text-white rounded-md hover:bg-[#1a2c4e]">
+                                <i class="fa-solid fa-arrow-right-from-bracket text-[16px] w-6"></i>
+                                <span>Déconnexion</span>
+                            </button>
+                        </form>
                     </li>
                 @endif
             @endauth

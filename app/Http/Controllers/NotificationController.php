@@ -10,8 +10,11 @@ use App\Models\Ordinateur;
 use App\Models\Telephone;
 use App\Models\Type;
 use App\Models\Utilisateur;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Recrutement;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
@@ -19,10 +22,34 @@ class NotificationController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Request $request)
     {
+        $query = Notification::with('recrutement');
 
-        $notifications = Notification::with('recrutement')->orderBy('is_read')->get();
+        // Recherche
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->whereHas('recrutement', function ($q) use ($search) {
+                $q->where('nom', 'LIKE', "%$search%")
+                    ->orWhere('email', 'LIKE', "%$search%")
+                    ->orWhere('fonction', 'LIKE', "%$search%")
+                    ->orWhere('departement', 'LIKE', "%$search%")
+                    ->orWhere('telephone', 'LIKE', "%$search%")
+                    ->orWhere('model', 'LIKE', "%$search%")
+                    ->orWhere('num_serie', 'LIKE', "%$search%")
+                    ->orWhere('date_affectation', 'LIKE', "%$search%")
+                    ->orWhere('type_contrat', 'LIKE', "%$search%")
+                    ->orWhere('puk', 'LIKE', "%$search%")
+                    ->orWhere('pin', 'LIKE', "%$search%")
+                    ->orWhere('status', 'LIKE', "%$search%");
+            });
+        }
+
+        // Ajouter pagination avec 20 éléments par page
+        $notifications = $query->orderBy('is_read')
+            ->paginate(20)
+            ->appends(['search' => $request->search]);
+
         return view('notifications.index', compact('notifications'));
     }
 
@@ -95,11 +122,11 @@ class NotificationController extends Controller
                 'puk' => $recrutement->puk,
                 'materiel_id' => $materiel->id,
             ]);
-        }elseif($notification->type == 'PC Portable' || $notification->type == 'PC Bureau'){
+        } elseif ($notification->type == 'PC Portable' || $notification->type == 'PC Bureau') {
             Ordinateur::create([
                 'materiel_id' => $materiel->id,
             ]);
-        }elseif($notification->type == 'Imprimante'){
+        } elseif ($notification->type == 'Imprimante') {
             Imprimante::create([
                 'materiel_id' => $materiel->id,
             ]);
@@ -166,7 +193,7 @@ class NotificationController extends Controller
             'puk' => $request->puk,
             'pin' => $request->pin,
         ]);
-       
+
 
         // Mise à jour des informations de la notification
         $notification->update([
@@ -184,6 +211,14 @@ class NotificationController extends Controller
      */
     public function destroy(Notification $notification)
     {
-        //
+        // Vérifier si le user est admin
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('notifications.index')->with('error', 'Vous n\'avez pas les permissions pour effectuer cette action.');
+        }
+
+        // Supprimer la notification
+        $notification->delete();
+
+        return redirect()->route('notifications.index')->with('success', 'Notification supprimée avec succès.');
     }
 }

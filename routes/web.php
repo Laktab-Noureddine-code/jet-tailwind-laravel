@@ -54,6 +54,8 @@ Route::middleware("auth")->group(function () {
     Route::post('/upload/{affectation}', [AffectationController::class, 'upload'])->middleware('is_admin:admin')->name('upload');
     // Alternative direct upload route for IIS server
     Route::post('/upload-direct/{affectation}', [AffectationController::class, 'uploadDirect'])->middleware('is_admin:admin')->name('upload.direct');
+    // Route to delete uploaded files
+    Route::delete('/delete-file/{affectation}', [AffectationController::class, 'deleteFile'])->middleware('is_admin:admin')->name('delete.file');
     // ajouter pour un utilisateur exist
     Route::get('/affectation/userExists/{user}', [AffectationController::class, 'userExists'])->middleware('is_admin:admin')->name('userExists');
 
@@ -85,7 +87,6 @@ Route::middleware("auth")->group(function () {
     // account management
     Route::resource('accounts', AccountController::class)->middleware('is_admin:admin');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::resource('recrutements', RecrutementController::class)->middleware('is_admin:user');
     Route::resource('notifications', NotificationController::class)->middleware('is_admin:admin');
     Route::post('/notifications/{notification}/valider', [NotificationController::class, 'valider'])->name('notifications.valider');
     Route::get('/telephones', [TelephoneController::class, 'index'])->name('telephones.index');
@@ -93,6 +94,7 @@ Route::middleware("auth")->group(function () {
     Route::put('/telephones/{telephone}', [TelephoneController::class, 'update'])->name('telephones.update');
     Route::delete('/telephones/{telephone}', [TelephoneController::class, 'destroy'])->name('telephones.destroy');
     Route::post('/affectation/{affectation}/send-email', [AffectationController::class, 'sendEmail'])->name('send.affectation.email');
+    Route::resource('recrutements', RecrutementController::class);
 });
 
 Route::middleware('guest')->group(function () {

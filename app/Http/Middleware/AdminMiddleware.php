@@ -19,6 +19,6 @@ class AdminMiddleware
         if (Auth::check() && Auth::user()->role === $role) {
             return $next($request);
         }
-        abort(401);
+        return redirect('/');
     }
 }

@@ -192,7 +192,7 @@
                                                     @method('POST')
                                                     <label for="fiche_{{ $affectation->id }}"
                                                         title="Ajouter une fiche d'affectation"
-                                                        class="cursor-pointer text-blue-500 hover:text-blue-700">
+                                                        class="cursor-pointer text-gray-500 hover:text-gray-700">
                                                         <i class="fa-solid fa-cloud-arrow-up"></i>
                                                     </label>
                                                     <input type="file" name="fiche_affectation"
@@ -217,6 +217,17 @@
                                                         class="text-gray-600 hover:text-gray-800">
                                                         <i class="fa-solid fa-file"></i>
                                                     </a>
+                                                    <form action="{{ route('delete.file', $affectation) }}"
+                                                        method="POST" class="inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce fichier ? Cette action est irréversible.')"
+                                                            title="Supprimer le fichier d'affectation"
+                                                            class="text-red-500 hover:text-red-700 cursor-pointer">
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button>
+                                                    </form>
                                                 @endif
                                             </div>
                                         </td>

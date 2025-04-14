@@ -411,4 +411,37 @@ class AffectationController extends Controller
         // Rediriger avec un message de succès
         return redirect()->route('affectation.index')->with('message', "L'affectation a été supprimée avec succès.");
     }
+
+    /**
+     * Delete an uploaded file associated with an affectation
+     */
+    public function deleteFile(Affectation $affectation)
+    {
+        try {
+            // Check if there's a file to delete
+            if (!$affectation->fiche_affectation) {
+                return back()->with('error', 'Aucun fichier à supprimer.');
+            }
+
+            // Determine the file path
+            if (str_starts_with($affectation->fiche_affectation, 'uploads/')) {
+                // Direct upload path
+                $filePath = public_path($affectation->fiche_affectation);
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            } else {
+                // Laravel storage path
+                Storage::disk('public')->delete($affectation->fiche_affectation);
+            }
+
+            // Clear the file path in the database
+            $affectation->update(['fiche_affectation' => null]);
+
+            return back()->with('success', 'Fichier supprimé avec succès.');
+        } catch (\Exception $e) {
+            error_log('Erreur lors de la suppression du fichier : ' . $e->getMessage());
+            return back()->with('error', 'Une erreur est survenue lors de la suppression du fichier: ' . $e->getMessage());
+        }
+    }
 }

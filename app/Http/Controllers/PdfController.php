@@ -13,12 +13,13 @@ class PdfController extends Controller
         // Récupérer l'utilisateur lié à l'affectation
         $utilisateur = $affectation->utilisateur;
         $materiel = $affectation->materiel;
+        $ordinateur = $affectation->materiel->ordinateur;
         $chantier = $affectation->chantier ? $affectation->chantier : "Siege";
         // Formater la date de l'affectation
         $dateAffectation = Carbon::parse($affectation->date_affectation)->format('d/m/Y');
 
         // Passer l'objet directement
-        $data = compact('affectation', 'utilisateur', 'materiel', 'chantier', 'dateAffectation');
+        $data = compact('affectation', 'utilisateur', 'materiel', 'chantier', 'dateAffectation', 'ordinateur');
         // Générer le PDF
         $pdf = Pdf::loadView('pdfs.generatePdf', $data);
 
