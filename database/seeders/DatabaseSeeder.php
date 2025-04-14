@@ -27,13 +27,9 @@ class DatabaseSeeder extends Seeder
             'PC Portable',
             'PC Bureau',
             'Imprimante',
-            'Téléphone',
+            'Telephone',
             'Clavier',
             'Souris',
-            'Écran',
-            'Dock Station',
-            'Webcam',
-            'Casque'
         ];
         foreach ($types as $type) {
             Type::create(['type' => $type]);
@@ -161,6 +157,7 @@ class DatabaseSeeder extends Seeder
                 'num_serie' => 'SN' . $faker->unique()->numberBetween(10000, 99999),
                 'puk' => $faker->numerify('########'),
                 'pin' => $faker->numerify('####'),
+                'date_affectation' => $faker->dateTimeBetween('-1 year', 'now'),
                 'status' => $faker->randomElement(['en attente', 'validé', 'refusé'])
             ]);
         }
@@ -171,7 +168,6 @@ class DatabaseSeeder extends Seeder
                 'recrutement_id' => $faker->numberBetween(1, 30),
                 'type' => $faker->randomElement(['telephone', 'ordinateur', 'imprimante']),
                 'etat' => $faker->randomElement(['Neuf', 'Bon état', 'À réparer']),
-                'date_affectation' => $faker->dateTimeBetween('-1 year', 'now'),
                 'chantier' => $faker->randomElement(['Chantier A', 'Chantier B', 'Chantier C', 'Bureau']),
                 'utilisateur' => $faker->name,
                 'is_read' => $faker->boolean

@@ -126,7 +126,9 @@ class NotificationController extends Controller
 
     public function edit(Notification $notification)
     {
-        $typesMateriel = Type::select('type')->pluck('type');
+        $typesMateriel = Type::select('type')
+            ->orderByRaw("CASE WHEN type = 'Telephone' THEN 0 ELSE 1 END")
+            ->pluck('type');
         return view('notifications.edit', compact('notification', 'typesMateriel'));
     }
 

@@ -27,7 +27,7 @@ class TelephoneController extends Controller
                         });
                 });
             })
-            ->paginate(15); // ou le nombre d'éléments par page que vous souhaitez
+            ->get();
 
         return view('tel.index', compact('telephones', 'search'));
     }

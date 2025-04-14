@@ -27,7 +27,6 @@
                     <thead class="text-xs uppercase text-white">
                         <tr class="bg-[#0A1C3E]">
                             <th scope="col" class="px-6 py-4">Modèle</th>
-                            <th scope="col" class="px-6 py-4">Type</th>
                             <th scope="col" class="px-6 py-4">Numéro de Série</th>
                             <th scope="col" class="px-6 py-4">État</th>
                             <th scope="col" class="px-6 py-4">Statut</th>
@@ -41,7 +40,6 @@
                             <tr class="border-b hover:bg-gray-50"
                                 data-statut="{{ $telephone->materiel->affectations->isNotEmpty() ? $telephone->materiel->affectations->first()->statut : 'NON AFFECTE' }}">
                                 <td class="px-6 py-4">{{ $telephone->materiel->fabricant }}</td>
-                                <td class="px-6 py-4">{{ $telephone->materiel->type }}</td>
                                 <td class="px-6 py-4">{{ $telephone->materiel->num_serie }}</td>
                                 <td class="px-6 py-4">{{ $telephone->materiel->etat }}</td>
                                 <td class="px-6 py-4">

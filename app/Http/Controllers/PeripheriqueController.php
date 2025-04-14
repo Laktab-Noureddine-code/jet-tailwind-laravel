@@ -33,7 +33,7 @@ class PeripheriqueController extends Controller
                         ->orWhere('type', 'like', "%$search%");
                 });
             })
-            ->paginate(25);
+            ->get();
 
         // Ajout du statut à chaque matériel
         $peripheriques->each(function ($materiel) {

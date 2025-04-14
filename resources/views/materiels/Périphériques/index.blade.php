@@ -57,11 +57,6 @@
                 </table>
             </div>
         </div>
-
-        {{-- Pagination --}}
-        <div class="mt-5">
-            {{ $peripheriques->links() }}
-        </div>
     </div>
 
     <script>

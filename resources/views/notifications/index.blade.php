@@ -37,7 +37,7 @@
                     <tbody>
                         @forelse ($notifications as $notification)
                             <tr class="border-b hover:bg-gray-50 text-sm">
-                                <td class="px-4 py-3 font-medium text-gray-900 uppercase text-nowrap">
+                                <td class="px-4 py-3 font-medium text-gray-900 uppercase ">
                                     {{ $notification->recrutement ? $notification->recrutement->nom : 'N/A' }}
                                 </td>
                                 <td class="px-4 py-3">
