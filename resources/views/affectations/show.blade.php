@@ -212,8 +212,8 @@
                                                             ? $affectation->fiche_affectation
                                                             : 'storage/' . $affectation->fiche_affectation;
                                                     @endphp
-                                                    <a href="{{ asset($filePath) }}"
-                                                        title="télécharger la fiche d'affectation" target="_blank"
+                                                    <a href="{{ route('download.file', $affectation) }}"
+                                                        title="télécharger la fiche d'affectation"
                                                         class="text-gray-600 hover:text-gray-800">
                                                         <i class="fa-solid fa-file"></i>
                                                     </a>

@@ -158,32 +158,38 @@ class OrdinateurController extends Controller
      */
     public function destroy(Ordinateur $ordinateur)
     {
-        // Vérifier si l'ordinateur a une affectation
-        $affectation = Affectation::where('materiel_id', $ordinateur->materiel_id)->first();
+        // Récupérer le matériel associé à l'ordinateur
+        $materiel = $ordinateur->materiel;
 
-        if ($affectation) {
-            // Si le statut est AFFECTE ou REAFFECTE
-            if (in_array($affectation->statut, ['AFFECTE', 'REAFFECTE'])) {
-                return redirect()->back()
-                    ->with('error', 'Ce matériel est actuellement affecté. Vous ne pouvez pas le supprimer.');
-            }
-
-            // Si le statut est NON AFFECTE
-            if ($affectation->statut === 'NON AFFECTE') {
-                // Supprimer l'affectation
-                $affectation->delete();
-                // Supprimer l'ordinateur
-                $ordinateur->delete();
-                // Supprimer le matériel associé
-                $ordinateur->materiel->delete();
-                return redirect()->route('ordinateurs.index')
-                    ->with('message', 'Ordinateur et l\'affectation associée supprimés avec succès.');
-            }
+        if (!$materiel) {
+            return redirect()->back()->with('error', 'Matériel introuvable.');
         }
 
-        // Si aucune affectation n'existe
+        // Vérification directe auprès de la table Materiel
+        // Dans l'index, vous mettez à jour le statut affiché, mais pas nécessairement 
+        // le champ statut du matériel lui-même
+
+        // Récupérons le statut courant basé sur la dernière affectation
+        $derniereAffectation = Affectation::where('materiel_id', $materiel->id)
+            ->orderByDesc('date_affectation')
+            ->orderByDesc('created_at')
+            ->first();
+
+        $statutCourant = $derniereAffectation ? $derniereAffectation->statut : 'NON AFFECTE';
+        // Valider selon le statut courant
+        if (in_array($statutCourant, ['AFFECTE', 'REAFFECTE'])) {
+            return redirect()->back()
+                ->with('error', 'Ce matériel est actuellement affecté (statut: ' . $statutCourant . '). Vous ne pouvez pas le supprimer.');
+        }
+
+        // Si le statut est NON AFFECTE, on peut supprimer
+        // Supprimer toutes les affectations associées
+        Affectation::where('materiel_id', $materiel->id)->delete();
+
+        // Supprimer l'ordinateur et le matériel
         $ordinateur->delete();
-        $ordinateur->materiel->delete();
+        $materiel->delete();
+
         return redirect()->route('ordinateurs.index')
             ->with('message', 'Ordinateur supprimé avec succès.');
     }

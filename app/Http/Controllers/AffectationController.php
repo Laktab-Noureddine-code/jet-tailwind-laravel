@@ -444,4 +444,57 @@ class AffectationController extends Controller
             return back()->with('error', 'Une erreur est survenue lors de la suppression du fichier: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Securely download a file associated with an affectation.
+     * This works on all devices by streaming the file directly from PHP.
+     */
+    public function downloadFile(Affectation $affectation)
+    {
+        try {
+            // Check if a file exists
+            if (!$affectation->fiche_affectation) {
+                return back()->with('error', 'Aucun fichier disponible pour téléchargement.');
+            }
+
+            // Determine the file path
+            if (str_starts_with($affectation->fiche_affectation, 'uploads/')) {
+                // Direct upload path
+                $filePath = public_path($affectation->fiche_affectation);
+            } else {
+                // Laravel storage path
+                $filePath = storage_path('app/public/' . $affectation->fiche_affectation);
+            }
+
+            // Verify the file exists
+            if (!file_exists($filePath)) {
+                return back()->with('error', 'Le fichier est introuvable.');
+            }
+
+            // Get the file info
+            $fileInfo = pathinfo($filePath);
+            $fileName = $fileInfo['basename'];
+            $extension = $fileInfo['extension'];
+
+            // Map file extension to MIME type
+            $mimeTypes = [
+                'pdf' => 'application/pdf',
+                'jpg' => 'image/jpeg',
+                'jpeg' => 'image/jpeg',
+                'png' => 'image/png',
+                // Add more as needed
+            ];
+
+            $contentType = $mimeTypes[$extension] ?? 'application/octet-stream';
+
+            // Stream the file directly from PHP
+            return response()->file($filePath, [
+                'Content-Type' => $contentType,
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            ]);
+        } catch (\Exception $e) {
+            error_log('Erreur lors du téléchargement du fichier : ' . $e->getMessage());
+            return back()->with('error', 'Une erreur est survenue lors du téléchargement du fichier: ' . $e->getMessage());
+        }
+    }
 }

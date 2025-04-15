@@ -70,7 +70,6 @@
     .submitBtn{
         @apply mt-4 bg-gray-500 w-full font-bold px-4 py-2 rounded-lg text-white cursor-pointer hover:bg-gray-600
     }
-
 }
 .drop-shadow-white {
     filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.7));
@@ -89,7 +88,9 @@ td{
 .hi{
     background-color: red;
 }
-
+button{
+    cursor: pointer;
+}
 
 /* radio statut */
 .radio-inputs {

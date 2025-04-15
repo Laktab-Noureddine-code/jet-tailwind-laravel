@@ -56,6 +56,8 @@ Route::middleware("auth")->group(function () {
     Route::post('/upload-direct/{affectation}', [AffectationController::class, 'uploadDirect'])->middleware('is_admin:admin')->name('upload.direct');
     // Route to delete uploaded files
     Route::delete('/delete-file/{affectation}', [AffectationController::class, 'deleteFile'])->middleware('is_admin:admin')->name('delete.file');
+    // Route pour télécharger les fichiers de manière sécurisée
+    Route::get('/download-file/{affectation}', [AffectationController::class, 'downloadFile'])->name('download.file');
     // ajouter pour un utilisateur exist
     Route::get('/affectation/userExists/{user}', [AffectationController::class, 'userExists'])->middleware('is_admin:admin')->name('userExists');
 
