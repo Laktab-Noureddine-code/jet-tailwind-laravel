@@ -15,17 +15,41 @@
             height: 100vh
         }
 
+        header,
+        footer {
+            width: 100%;
+            text-align: center;
+            position: fixed;
+        }
+
+        header {
+            top: 0;
+        }
+
+        footer {
+            bottom: 0;
+        }
+
         #ligne {
             margin-top: -15px;
             height: 5px;
             width: 85%;
             background-color: #f4d103;
         }
+
+        main {
+            margin-top: 190px;
+            min-height: 500px;
+        }
+
+        main table tr td {
+            height: 34px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="">
+    <header>
         <table width="100%">
             <tr>
                 <td style="text-align: left; vertical-align: text-top;">
@@ -41,24 +65,25 @@
                 </td>
             </tr>
         </table>
-
-        <div style="margin-top: 30px;">
-            <h3><strong>FICHE D'AFFECTATION DE MATÉRIEL INFORMATIQUE</strong></h3>
+        <div style="margin-top: 20px;">
+            <h3 style="text-align:left;"><strong>FICHE D'AFFECTATION DE MATÉRIEL INFORMATIQUE</strong></h3>
             <div id="ligne"></div>
         </div>
+    </header>
 
-        <table width="100%" style="margin-top: 40px;">
+    <main>
+        <table width="100%">
             <tr>
-                <td style="height:45px; width: 33%;">Nom & Prenom :
+                <td style="width: 33%;">Nom & Prenom :
                 </td>
                 <td>
                     <span>
-                        <strong>{{ $utilisateur->nom }}</strong>
+                        <strong style="text-transform: uppercase;">{{ $utilisateur->nom }}</strong>
                     </span>
                 </td>
             </tr>
             <tr>
-                <td style="height:45px; width: 33%;">Email :
+                <td style="width: 33%;">Email :
                 </td>
                 <td>
                     <span>
@@ -67,7 +92,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="height:45px; width: 33%;">Fonction :
+                <td style="width: 33%;">Fonction :
                 </td>
                 <td>
                     <span>
@@ -76,7 +101,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="height:45px; width: 33%;">Téléphone :
+                <td style="width: 33%;">Téléphone :
                 </td>
                 <td>
                     <span>
@@ -85,7 +110,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="height:45px; width: 33%;">Département :
+                <td style="width: 33%;">Département :
                 </td>
                 <td>
                     <span>
@@ -94,7 +119,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="height:45px; width: 33%;">Siege / Chantier :
+                <td style="width: 33%;">Siege / Chantier :
                 </td>
                 <td>
                     <span>
@@ -102,45 +127,35 @@
                     </span>
                 </td>
             </tr>
-            <tr>
-                <td style="height:45px; width: 33%;">Date affectation :
-                </td>
-                <td>
-                    <span>
-                        <strong>{{ $dateAffectation }}</strong>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td style="height:45px; width: 33%;">Modèle :
-                </td>
-                <td>
-                    <span>
-                        <strong>{{ $materiel->fabricant }} {{ $ordinateur->processeur }} {{ $ordinateur->ram }}
-                            {{ $ordinateur->stockage }}</strong>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td style="height:45px; width: 33%;">Type de matériel :
-                </td>
-                <td>
-                    <span>
-                        <strong>{{ $materiel->type }}</strong>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td style="height:45px; width: 33%;">Numéro de série :
-                </td>
-                <td>
-                    <span>
-                        <strong>{{ $materiel->num_serie }}</strong>
-                    </span>
-                </td>
-            </tr>
         </table>
-        <table width="100%" style="margin-top: 50px;">
+        <table width="100%" style="margin-top: 6px; border-collapse: collapse; border: 1px solid #000;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #000; padding: 2px; background-color: #dcc01f; color: #000;">Type de
+                        matériel</th>
+                    <th style="border: 1px solid #000; padding: 2px; background-color: #dcc01f; color: #000;">Modèle
+                    </th>
+                    <th style="border: 1px solid #000; padding: 2px; background-color: #dcc01f; color: #000;">Numéro de
+                        série</th>
+                    <th style="border: 1px solid #000; padding: 2px; background-color: #dcc01f; color: #000;">Date
+                        d'affectation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 2px;">{{ $materiel->type }}</td>
+                    <td style="border: 1px solid #000; padding: 2px;">{{ $materiel->fabricant }} @if ($is_Computer)
+                            {{ $ordinateur->processeur }} {{ $ordinateur->ram }} {{ $ordinateur->stockage }}
+                        @endif
+                    </td>
+                    <td style="border: 1px solid #000; padding: 2px;">{{ $materiel->num_serie }}</td>
+                    <td style="border: 1px solid #000; padding: 2px;">{{ $dateAffectation }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <footer class="footer">
+        <table width="100%">
             <tr>
                 <td width="33%">
                     <div style="text-align: center;">
@@ -162,13 +177,12 @@
                 </td>
             </tr>
         </table>
-        <table width="100%" style="font-size: 8px; margin-top: 160px;font-weight: 700;">
+        <table width="100%" style="font-size: 8px; margin-top: 120px;font-weight: 700;">
             <tr>
                 <td width="25%" style="text-align: left; vertical-align: middle;">
                     Quartier Industriel de Oued Yquem<br>
                     CP 12040 Skhinate - Maroc<br>
                 </td>
-
                 <!-- Pied de page avec les adresses -->
                 <td width="25%" style="vertical-align: middle; ">
                     Tél : (212) 537 74 92 92<br>
@@ -184,7 +198,7 @@
                 </td>
             </tr>
         </table>
-    </div>
+    </footer>
 </body>
 
 </html>

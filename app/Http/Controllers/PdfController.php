@@ -15,11 +15,12 @@ class PdfController extends Controller
         $materiel = $affectation->materiel;
         $ordinateur = $affectation->materiel->ordinateur;
         $chantier = $affectation->chantier ? $affectation->chantier : "Siege";
+        $is_Computer = $materiel->type === "PC Portable" || $materiel->type === "PC Bureau";
         // Formater la date de l'affectation
         $dateAffectation = Carbon::parse($affectation->date_affectation)->format('d/m/Y');
 
         // Passer l'objet directement
-        $data = compact('affectation', 'utilisateur', 'materiel', 'chantier', 'dateAffectation', 'ordinateur');
+        $data = compact('affectation', 'utilisateur', 'materiel', 'chantier', 'dateAffectation', 'ordinateur', 'is_Computer');
         // Générer le PDF
         $pdf = Pdf::loadView('pdfs.generatePdf', $data);
 
