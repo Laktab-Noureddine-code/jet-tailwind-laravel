@@ -9,6 +9,7 @@ use App\Models\Utilisateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Unique;
+use Illuminate\Support\Facades\Log;
 
 class BigAffectationController extends Controller
 {
@@ -71,6 +72,8 @@ class BigAffectationController extends Controller
     /**
      * Upload a file for the big affectation
      */
+    
+
     public function uploadFile(Request $request, BigAffectation $bigAffectation)
     {
         // Validation des données
@@ -92,23 +95,33 @@ class BigAffectationController extends Controller
                 Storage::disk('public')->delete($bigAffectation->fiche_affectations);
             }
 
-            // Générer un nom de fichier unique
+            // Récupérer le fichier téléchargé
             $file = $request->file('fiche_affectations');
+
+            // Générer un nom de fichier unique
             $extension = $file->getClientOriginalExtension();
-            $uniqueCode = uniqid();
-            $fileName = str_replace(' ', '_', $utilisateurNom) . '_' . $uniqueCode . '.' . $extension;
+            $uniqueCode = uniqid(true); // Use `true` for more randomness
+            $fileName = 'affectation_' . str_replace(' ', '_', $utilisateurNom) . '_' . $uniqueCode . '.' . $extension;
+
+            // Définir le chemin de stockage
+            $storagePath = storage_path('app/public/fiche_affectations');
 
             // Créer le répertoire s'il n'existe pas
-            $storagePath = storage_path('app/public/fiche_affectations');
             if (!file_exists($storagePath)) {
                 mkdir($storagePath, 0755, true);
             }
+
+            // Debugging: Log the file and path details
+            Log::info('File Info:', ['file' => $file, 'realPath' => $file->getRealPath()]);
+            Log::info('Generated File Name:', ['fileName' => $fileName]);
+            Log::info('Storage Path:', ['storagePath' => $storagePath]);
 
             // Stocker le fichier avec le nouveau nom
             $path = $file->storeAs('fiche_affectations', $fileName, 'public');
 
             // Vérifier si le chemin est vide
             if (empty($path)) {
+                Log::error('Empty path returned by storeAs():', ['fileName' => $fileName]);
                 return back()->with('error', 'Impossible de sauvegarder le fichier. Veuillez réessayer.');
             }
 
@@ -118,7 +131,7 @@ class BigAffectationController extends Controller
             return back()->with('success', 'Fichier téléversé avec succès.');
         } catch (\Exception $e) {
             // Log l'erreur
-            error_log('Erreur lors du téléchargement : ' . $e->getMessage());
+            Log::error('Erreur lors du téléchargement : ' . $e->getMessage());
             return back()->with('error', 'Une erreur est survenue lors du téléchargement : ' . $e->getMessage());
         }
     }
