@@ -162,7 +162,7 @@
                         <tr>
                             <!-- Access the 'type' property of the 'materiel' object -->
                             <td style="border: 1px solid #000; padding: 2px;">
-                                {{ $item['materiel']->type === 'Telephone' ? 'Téléphone' : $materiel->type }}</td>
+                                {{ $item['materiel']->type === 'Telephone' ? 'Téléphone' : $item['materiel']->type }}</td>
 
                             <!-- Access the 'fabricant' property of the 'materiel' object -->
                             <td style="border: 1px solid #000; padding: 2px;">{{ $item['materiel']->fabricant }}
