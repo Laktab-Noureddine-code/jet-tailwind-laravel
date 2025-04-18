@@ -162,8 +162,7 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($utilisateur->affectations as $affectation)
                                     <tr class="hover:bg-gray-50">
-                                        <td
-                                            class="px-6 py-4  text-sm text-gray-900 selection-checkbox hidden">
+                                        <td class="px-6 py-4  text-sm text-gray-900 selection-checkbox hidden">
                                             <input type="checkbox" name="selected_materiels[]" form="multi-materiel-form"
                                                 value="{{ $affectation->materiel_id }}"
                                                 class="materiel-checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
@@ -310,10 +309,23 @@
                                     </div>
                                     <div class="flex items-center justify-center">
                                         @if ($bigAffectation->fiche_affectations)
-                                            <a href="{{ Storage::url($bigAffectation->fiche_affectations) }}" download
+                                            @php
+                                                $filePath = str_starts_with(
+                                                    $bigAffectation->fiche_affectations,
+                                                    'uploads/',
+                                                )
+                                                    ? $bigAffectation->fiche_affectations
+                                                    : 'storage/' . $bigAffectation->fiche_affectations;
+                                            @endphp
+                                            {{-- <a href="{{ Storage::url($bigAffectation->fiche_affectations) }}" download
                                                 class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">
                                                 <i class="fas fa-download mr-2"></i>
                                                 Télécharger le fichier
+                                            </a> --}}
+                                            <a href="{{ route('download.big.file', $bigAffectation) }}"
+                                                title="télécharger la fiche d'affectations"
+                                                class=" inline-flex text-white items-center px-4 py-2 bg-gray-600  rounded-md hover:bg-gray-700 transition-colors duration-200">
+                                                Télécharger le fichier<i class="fas fa-download mr-2"></i>
                                             </a>
                                         @else
                                             <div class="text-center text-gray-500 py-4">

@@ -56,6 +56,7 @@ Route::middleware("auth")->group(function () {
     Route::delete('/delete-file/{affectation}', [AffectationController::class, 'deleteFile'])->middleware('is_admin:admin')->name('delete.file');
     // Route pour télécharger les fichiers de manière sécurisée
     Route::get('/download-file/{affectation}', [AffectationController::class, 'downloadFile'])->name('download.file');
+    Route::get('/download-big-file/{bigAffectation}', [AffectationController::class, 'downloadBigFile'])->name('download.big.file');
     // ajouter pour un utilisateur exist
     Route::get('/affectation/userExists/{user}', [AffectationController::class, 'userExists'])->middleware('is_admin:admin')->name('userExists');
 
