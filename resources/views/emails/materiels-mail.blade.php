@@ -86,7 +86,7 @@
                     <tbody>
                         @foreach ($materiels as $item)
                             <tr>
-                                <td>{{ $item['materiel']->type === 'Telephone' ? 'Téléphone' : $materiel->type  }}</td>
+                                <td>{{ $item['materiel']->type === 'Telephone' ? 'Téléphone' : $item['materiel']->type }}</td>
                                 <td>{{ $item['materiel']->fabricant }}</td>
                                 <td>{{ $item['materiel']->num_serie }}</td>
                                 <td>{{ date('d/m/Y', strtotime($item['date_affectation'])) }}</td>
