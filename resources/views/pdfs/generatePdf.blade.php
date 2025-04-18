@@ -144,7 +144,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td style="border: 1px solid #000; padding: 2px;">{{ $materiel->type }}</td>
+                    <td style="border: 1px solid #000; padding: 2px;">
+                        {{ $materiel->type === 'Telephone' ? 'Téléphone' : $materiel->type }}</td>
                     <td style="border: 1px solid #000; padding: 2px;">{{ $materiel->fabricant }} @if ($is_Computer)
                             {{ $ordinateur->processeur }} {{ $ordinateur->ram }} {{ $ordinateur->stockage }}
                         @endif

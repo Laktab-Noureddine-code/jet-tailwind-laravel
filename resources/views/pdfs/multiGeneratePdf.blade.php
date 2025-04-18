@@ -156,26 +156,13 @@
                             d'affectation</th>
                     </tr>
                 </thead>
-                {{-- <tbody>
-                    @foreach ($materiels as $materiel)
-                        <tr>
-                            <td style="border: 1px solid #000; padding: 2px;">{{ $materiel->type }}</td>
-                            <td style="border: 1px solid #000; padding: 2px;">{{ $materiel->fabricant }}
-                                @if ($materiel->type === 'PC Portable' || $materiel->type === 'PC Bureau')
-                                    {{ $materiel->ordinateur->processeur }} {{ $materiel->ordinateur->ram }}
-                                    {{ $materiel->ordinateur->stockage }}
-                                @endif
-                            </td>
-                            <td style="border: 1px solid #000; padding: 2px;">{{ $materiel->num_serie }}</td>
-                            <td style="border: 1px solid #000; padding: 2px;">{{ $materiel->date_affectation }}</td>
-                        </tr>
-                    @endforeach
-                </tbody> --}}
+
                 <tbody>
                     @foreach ($materiels as $item)
                         <tr>
                             <!-- Access the 'type' property of the 'materiel' object -->
-                            <td style="border: 1px solid #000; padding: 2px;">{{ $item['materiel']->type }}</td>
+                            <td style="border: 1px solid #000; padding: 2px;">
+                                {{ $item['materiel']->type === 'Telephone' ? 'Téléphone' : $materiel->type }}</td>
 
                             <!-- Access the 'fabricant' property of the 'materiel' object -->
                             <td style="border: 1px solid #000; padding: 2px;">{{ $item['materiel']->fabricant }}
