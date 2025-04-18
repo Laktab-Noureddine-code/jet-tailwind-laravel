@@ -73,20 +73,53 @@ class BigAffectationController extends Controller
      */
     public function uploadFile(Request $request, BigAffectation $bigAffectation)
     {
+        // Validation des données
         $request->validate([
-            'fiche_affectations' => 'required|max:10240',
+            'fiche_affectations' => 'required|mimes:jpeg,png,jpg,pdf|max:10240',
         ]);
-        $utilisateurNom = Utilisateur::findOrFail($bigAffectation->utilisateur_id)->nom;
-        // Delete old file if exists
-        if ($bigAffectation->fiche_affectations) {
-            Storage::disk('public')->delete($bigAffectation->fiche_affectations);
-        }
-        $file = $request->file('fiche_affectations');
-        $uniqueName = $utilisateurNom . '.' . uniqid(true) . '.' . $file->getClientOriginalExtension();
-        // Stocker le fichier avec le nouveau nom
-        $path = $file->storeAs('fiche_affectations', $uniqueName, 'public');
-        $bigAffectation->update(['fiche_affectations' => $path]);
 
-        return back()->with('success', 'Fichier téléversé avec succès.');
+        try {
+            // Vérifier si le fichier est bien téléchargé
+            if (!$request->hasFile('fiche_affectations') || !$request->file('fiche_affectations')->isValid()) {
+                return back()->with('error', 'Fichier invalide ou non téléchargé.');
+            }
+
+            // Récupérer le nom de l'utilisateur
+            $utilisateurNom = Utilisateur::findOrFail($bigAffectation->utilisateur_id)->nom;
+
+            // Supprimer l'ancien fichier s'il existe
+            if ($bigAffectation->fiche_affectations) {
+                Storage::disk('public')->delete($bigAffectation->fiche_affectations);
+            }
+
+            // Générer un nom de fichier unique
+            $file = $request->file('fiche_affectations');
+            $extension = $file->getClientOriginalExtension();
+            $uniqueCode = uniqid();
+            $fileName = str_replace(' ', '_', $utilisateurNom) . '_' . $uniqueCode . '.' . $extension;
+
+            // Créer le répertoire s'il n'existe pas
+            $storagePath = storage_path('app/public/fiche_affectations');
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath, 0755, true);
+            }
+
+            // Stocker le fichier avec le nouveau nom
+            $path = $file->storeAs('fiche_affectations', $fileName, 'public');
+
+            // Vérifier si le chemin est vide
+            if (empty($path)) {
+                return back()->with('error', 'Impossible de sauvegarder le fichier. Veuillez réessayer.');
+            }
+
+            // Mettre à jour la base de données
+            $bigAffectation->update(['fiche_affectations' => $path]);
+
+            return back()->with('success', 'Fichier téléversé avec succès.');
+        } catch (\Exception $e) {
+            // Log l'erreur
+            error_log('Erreur lors du téléchargement : ' . $e->getMessage());
+            return back()->with('error', 'Une erreur est survenue lors du téléchargement : ' . $e->getMessage());
+        }
     }
 }
