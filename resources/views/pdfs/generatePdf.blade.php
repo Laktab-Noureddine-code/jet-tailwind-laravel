@@ -74,7 +74,7 @@
     <main>
         <table width="100%">
             <tr>
-                <td style="width: 33%;">Nom & Prenom :
+                <td style="width: 33%;height: 40px;">Nom & Prenom :
                 </td>
                 <td>
                     <span>
@@ -83,7 +83,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 33%;">Email :
+                <td style="width: 33%;height: 40px;">Email :
                 </td>
                 <td>
                     <span>
@@ -92,7 +92,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 33%;">Fonction :
+                <td style="width: 33%;height: 40px;">Fonction :
                 </td>
                 <td>
                     <span>
@@ -101,7 +101,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 33%;">Téléphone :
+                <td style="width: 33%;height: 40px;">Téléphone :
                 </td>
                 <td>
                     <span>
@@ -110,7 +110,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 33%;">Département :
+                <td style="width: 33%;height: 40px;">Département :
                 </td>
                 <td>
                     <span>
@@ -119,7 +119,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 33%;">Siege / Chantier :
+                <td style="width: 33%;height: 40px;">Siege / Chantier :
                 </td>
                 <td>
                     <span>
@@ -128,7 +128,8 @@
                 </td>
             </tr>
         </table>
-        <table width="100%" style="margin-top: 6px; border-collapse: collapse; border: 1px solid #000;">
+
+        <table width="100%" style="margin-top: 120px; border-collapse: collapse; border: 1px solid #000;">
             <thead>
                 <tr>
                     <th style="border: 1px solid #000; padding: 2px; background-color: #dcc01f; color: #000;">Type de
@@ -159,7 +160,7 @@
             <tr>
                 <td width="33%">
                     <div style="text-align: center;">
-                        <div style="font-weight: bolder; display: inline-block;">bénéficiaire</div>
+                        <div style="font-weight: bolder; display: inline-block;">Bénéficiaire</div>
                         <div style="width: 100px; height: 5px; background-color: #f4d103; margin: 5px auto;"></div>
                     </div>
                 </td>
@@ -177,7 +178,7 @@
                 </td>
             </tr>
         </table>
-        <table width="100%" style="font-size: 8px; margin-top: 120px;font-weight: 700;">
+        <table width="100%" style="font-size: 8px; margin-top: 160px;font-weight: 700;">
             <tr>
                 <td width="25%" style="text-align: left; vertical-align: middle;">
                     Quartier Industriel de Oued Yquem<br>

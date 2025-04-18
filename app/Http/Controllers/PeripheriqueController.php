@@ -49,7 +49,7 @@ class PeripheriqueController extends Controller
      */
     public function create()
     {
-        $types = Type::all()->select('type')->pluck('type');
+        $types = Type::whereNotIn('type', ['PC Bureau', 'PC Portable', 'Imprimante', 'Telephone'])->pluck('type');
         return view('materiels.périphériques.create', compact('types'));
     }
 

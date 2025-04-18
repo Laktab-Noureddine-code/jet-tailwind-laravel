@@ -15,11 +15,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RecrutementController;
 use App\Http\Controllers\TelephoneController;
 use App\Http\Controllers\UtilisateurController;
-use App\Mail\TestMail;
-use App\Models\Affectation;
-use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\BigAffectationController;
 
 // Root route - redirect to dashboard if authenticated, or login if not
 Route::get('/', function () {
@@ -50,7 +47,8 @@ Route::middleware("auth")->group(function () {
     // ! affectations
     Route::resource('/affectation', AffectationController::class)->middleware('is_admin:admin');
     // Route::get('/affectation/getByNum', [AffectationController::class, 'getByNum'])->name('getByNum');
-    Route::post('/affectation/storeExists', [AffectationController::class, 'storeExists'])->middleware('is_admin:admin')->name('storeExists');
+    Route::post('/affectation/storeExists', [AffectationController::class, 'storeExists'])->middleware('is_admin:admin')->name('storeExists'); 
+    Route::delete('/affectationDel/{affectation}', [AffectationController::class, 'destroyInShow'])->middleware('is_admin:admin')->name('destroyInShow'); 
     Route::post('/upload/{affectation}', [AffectationController::class, 'upload'])->middleware('is_admin:admin')->name('upload');
     // Alternative direct upload route for IIS server
     Route::post('/upload-direct/{affectation}', [AffectationController::class, 'uploadDirect'])->middleware('is_admin:admin')->name('upload.direct');
@@ -66,17 +64,14 @@ Route::middleware("auth")->group(function () {
 
     // ! download pdf
     Route::get('/downloadPdf/{affectation}', [PdfController::class, 'generatePdf'])->name('generatePdf');
-
+    Route::post('/generateMultiPdf', [PdfController::class, 'generateMultiPdf'])->name('generateMultiPdf');
+    Route::post('/generateBigAffectation', [PdfController::class, 'generateBigAffectation'])->name('generateBigAffectation');
 
     // dashboard
     Route::get('/affectation/getByNum/{num_serie}', [AffectationController::class, 'getByNum'])->name('getByNum');
 
-
-
     // types
     Route::resource('/type', TypeController::class)->middleware('is_admin:admin');
-
-
 
     // settings
     Route::get('/settings', function () {
@@ -98,41 +93,15 @@ Route::middleware("auth")->group(function () {
     Route::put('/telephones/{telephone}', [TelephoneController::class, 'update'])->name('telephones.update');
     Route::delete('/telephones/{telephone}', [TelephoneController::class, 'destroy'])->name('telephones.destroy');
     Route::post('/affectation/{affectation}/send-email', [AffectationController::class, 'sendEmail'])->name('send.affectation.email');
+    Route::post('/affectationMateriels/{bigAffectation}/send-email', [AffectationController::class, 'sendEmailMateriels'])->name('send.affectations.email');
     Route::resource('recrutements', RecrutementController::class);
+    Route::post('/big-affectation/{bigAffectation}/upload', [BigAffectationController::class, 'uploadFile'])->name('upload.big.file');
+    // Route::get('/big-affectation/{bigAffectation}/download', [BigAffectationController::class, 'downloadFile'])->name('download.big.file');
+    // Route::delete('/big-affectation/{bigAffectation}/delete-file', [BigAffectationController::class, 'deleteFile'])->name('delete.big.file');
+    Route::delete('/big-affectation/{bigAffectation}', [PdfController::class, 'deleteBigAffectation'])->name('delete.big.affectation');
 });
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
-});
-
-// Diagnostic route for storage issues - Remove after troubleshooting
-Route::get('/storage-diagnostic', function () {
-    $data = [
-        'storage_path' => storage_path(),
-        'public_path' => public_path(),
-        'storage_link_exists' => file_exists(public_path('storage')),
-        'storage_directory_writable' => is_writable(storage_path('app/public')),
-        'affectations_directory_exists' => file_exists(storage_path('app/public/affectations')),
-        'affectations_directory_writable' => file_exists(storage_path('app/public/affectations')) ?
-            is_writable(storage_path('app/public/affectations')) : false,
-        'permissions' => [
-            'storage_app' => substr(sprintf('%o', fileperms(storage_path('app'))), -4),
-            'storage_app_public' => file_exists(storage_path('app/public')) ?
-                substr(sprintf('%o', fileperms(storage_path('app/public'))), -4) : 'not found',
-        ]
-    ];
-
-    // Create the directory if it doesn't exist
-    if (!file_exists(storage_path('app/public/affectations'))) {
-        try {
-            mkdir(storage_path('app/public/affectations'), 0755, true);
-            $data['affectations_directory_created'] = true;
-        } catch (\Exception $e) {
-            $data['affectations_directory_created'] = false;
-            $data['creation_error'] = $e->getMessage();
-        }
-    }
-
-    return response()->json($data);
 });

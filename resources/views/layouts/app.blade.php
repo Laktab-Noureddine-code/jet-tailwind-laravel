@@ -35,6 +35,7 @@
         iziToast.settings({
             timeout: 5000,
             resetOnHover: true,
+            
             transitionIn: 'fadeInRight',
             transitionOut: 'fadeOutRight',
             transitionInMobile: 'fadeInRight',

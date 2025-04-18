@@ -97,15 +97,45 @@
             <!-- Affectations List Card -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <!-- Header -->
-                <div class="bg-[#0A1C3E] px-6 py-4">
+                <div class="bg-[#0A1C3E] px-6 py-4 flex justify-between items-center">
                     <h2 class="text-xl font-semibold text-white">Liste des affectations</h2>
+                    <div>
+                        <button id="toggle-selection"
+                            class="px-3 py-1 text-sm font-medium text-white bg-gray-500 rounded hover:bg-gray-600">
+                            <i class="fa-solid fa-check-square mr-1"></i>Sélection multiple
+                        </button>
+                    </div>
                 </div>
 
                 <div class="p-6">
+                    <form id="multi-materiel-form" action="{{ route('generateBigAffectation') }}" method="POST"
+                        class="hidden mb-4">
+                        @csrf
+                        <input type="hidden" name="utilisateur_id" value="{{ $utilisateur->id }}">
+                        <div class="flex justify-end space-x-2">
+                            <button type="button" id="select-all"
+                                class="px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600">
+                                <i class="fa-solid fa-check-double mr-1"></i>Tout sélectionner
+                            </button>
+                            <button type="button" id="deselect-all"
+                                class="px-3 py-1 text-sm font-medium text-white bg-gray-500 rounded hover:bg-gray-600">
+                                <i class="fa-solid fa-ban mr-1"></i>Désélectionner tout
+                            </button>
+                            <button type="submit"
+                                class="px-3 py-1 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700">
+                                Générer
+                            </button>
+                        </div>
+                    </form>
+
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
+                                    <th id="selection-column"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden">
+                                        Sélection
+                                    </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Modèle</th>
@@ -132,38 +162,43 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($utilisateur->affectations as $affectation)
                                     <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <td
+                                            class="px-6 py-4  text-sm text-gray-900 selection-checkbox hidden">
+                                            <input type="checkbox" name="selected_materiels[]" form="multi-materiel-form"
+                                                value="{{ $affectation->materiel_id }}"
+                                                class="materiel-checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                        </td>
+                                        <td class="px-6 py-4  text-sm text-gray-900">
                                             @if ($affectation->materiel)
                                                 {{ $affectation->materiel->fabricant }}
                                             @else
                                                 N/A
                                             @endif
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <td class="px-6 py-4  text-sm text-gray-900">
                                             @if ($affectation->materiel)
                                                 {{ $affectation->materiel->type }}
                                             @else
                                                 N/A
                                             @endif
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <td class="px-6 py-4  text-sm text-gray-900">
                                             @if ($affectation->materiel)
                                                 {{ $affectation->materiel->num_serie }}
                                             @else
                                                 N/A
                                             @endif
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <td class="px-6 py-4  text-sm text-gray-900">
                                             {{ $affectation->date_affectation }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <td class="px-6 py-4  text-sm text-gray-900">
                                             {{ $affectation->utilisateur1 }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <td class="px-6 py-4  text-sm text-gray-900">
                                             {{ $affectation->statut }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <td class="px-6 py-4  text-sm text-gray-900">
                                             <div class="flex items-center space-x-4">
-                                                <form action="{{ route('affectation.destroy', $affectation) }}"
-                                                    method="post"
+                                                <form action="{{ route('destroyInShow', $affectation) }}" method="post"
                                                     onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette affectation')">
                                                     @csrf
                                                     @method('DELETE')
@@ -245,6 +280,117 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Big Affectations List Card -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mt-8">
+                <!-- Header -->
+                <div class="bg-[#0A1C3E] px-6 py-4">
+                    <h2 class="text-xl font-semibold text-white">Affectation matériel multiples</h2>
+                </div>
+
+                <div class="p-6">
+                    @if ($utilisateur->bigAffectations && $utilisateur->bigAffectations->count() > 0)
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            @foreach ($utilisateur->bigAffectations as $bigAffectation)
+                                <div
+                                    class="bg-gray-200 rounded-lg border border-gray-300 shadow-sm hover:shadow-md transition-shadow duration-300">
+                                    <!-- Header avec la liste des matériels -->
+                                    <div class="p-4 border-b border-gray-200 bg-gray-50">
+                                        <div class="space-y-2">
+                                            @foreach ($bigAffectation->bigAffectationRows as $row)
+                                                <div class="flex justify-between items-center text-sm">
+                                                    <span
+                                                        class="font-medium text-gray-700">{{ $row->materiel->fabricant }}</span>
+                                                    <span class="text-gray-500 bg-gray-100 px-2 py-1 rounded-full text-xs">
+                                                        {{ $row->materiel->num_serie }}
+                                                    </span>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-center">
+                                        @if ($bigAffectation->fiche_affectations)
+                                            <a href="{{ Storage::url($bigAffectation->fiche_affectations) }}" download
+                                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">
+                                                <i class="fas fa-download mr-2"></i>
+                                                Télécharger le fichier
+                                            </a>
+                                        @else
+                                            <div class="text-center text-gray-500 py-4">
+                                                Aucun fichier associé.
+                                            </div>
+                                        @endif
+                                    </div>
+
+
+                                    <!-- Footer avec les boutons -->
+                                    <div class="p-4 bg-gray-50">
+                                        <div class="flex space-x-2 items-center justify-between">
+                                            <!-- Bouton Upload -->
+                                            <div class="flex items-center gap-3">
+                                                <form action="{{ route('upload.big.file', $bigAffectation) }}"
+                                                    method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <label for="file_{{ $bigAffectation->id }}"
+                                                        class="text-gray-600 hover:bg-gray-100 rounded-full transition-colors duration-200 cursor-pointer"
+                                                        title="Téléverser un fichier">
+                                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                    </label>
+                                                    <input type="file" id="file_{{ $bigAffectation->id }}"
+                                                        name="fiche_affectations" class="hidden"
+                                                        onchange="this.form.submit()">
+                                                </form>
+                                                <form action="{{ route('generateMultiPdf') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" value="{{ $bigAffectation->id }}"
+                                                        name="bigAffectation">
+                                                    <button title="Voir la fiche d'affectations"
+                                                        class="text-red-700 hover:text-red-900">
+                                                        <i class="fa-solid fa-file-pdf"></i>
+                                                    </button>
+                                                </form>
+                                                <form action="{{ route('send.affectations.email', $bigAffectation) }}"
+                                                    method="POST" class="inline">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        onclick="return confirm('Êtes-vous sûr de vouloir envoyer un email de confirmation ?')"
+                                                        title="Envoyer email de confirmation"
+                                                        class="text-blue-500 hover:text-blue-700 cursor-pointer">
+                                                        <i class="fa-solid fa-envelope"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+
+
+                                            <!-- Bouton Supprimer -->
+                                            <form action="{{ route('delete.big.affectation', $bigAffectation) }}"
+                                                method="POST" class="inline"
+                                                onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette affectation multiple ? Cette action supprimera également toutes les données associées.')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors duration-200"
+                                                    title="Supprimer l'affectation multiple">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-12">
+                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
+                                <i class="fas fa-box-open text-3xl text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-600">Aucune affectation multiple</h3>
+                            <p class="text-gray-500 mt-2">Sélectionnez plusieurs matériels et cliquez sur "Générer"
+                                pour créer une affectation multiple</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 
@@ -273,6 +419,85 @@
                 // Réafficher Modifier et cacher Enregistrer + Annuler
                 $("#edit-btn").show();
                 $("#save-btn, #cancel-btn").addClass("hidden");
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleSelectionBtn = document.getElementById('toggle-selection');
+            const multiMaterielForm = document.getElementById('multi-materiel-form');
+            const selectionCheckboxes = document.querySelectorAll('.selection-checkbox');
+            const selectionColumn = document.getElementById('selection-column');
+            const selectAllBtn = document.getElementById('select-all');
+            const materielCheckboxes = document.querySelectorAll('.materiel-checkbox');
+
+            // Toggle selection mode
+            toggleSelectionBtn.addEventListener('click', function() {
+                multiMaterielForm.classList.toggle('hidden');
+                selectionColumn.classList.toggle('hidden');
+
+                selectionCheckboxes.forEach(checkbox => {
+                    checkbox.classList.toggle('hidden');
+                });
+
+                if (multiMaterielForm.classList.contains('hidden')) {
+                    toggleSelectionBtn.innerHTML =
+                        '<i class="fa-solid fa-check-square mr-1"></i>Sélection multiple';
+                    toggleSelectionBtn.classList.remove('bg-gray-500');
+                    toggleSelectionBtn.classList.add('bg-gray-500');
+                } else {
+                    toggleSelectionBtn.innerHTML =
+                        '<i class="fa-solid fa-xmark mr-1"></i>Annuler la sélection';
+                    toggleSelectionBtn.classList.remove('bg-gray-500');
+                    toggleSelectionBtn.classList.add('bg-gray-500');
+                }
+            });
+
+            // Submit form validation
+            document.getElementById('multi-materiel-form').addEventListener('submit', function(e) {
+                const checkedBoxes = document.querySelectorAll('.materiel-checkbox:checked');
+                const count = checkedBoxes.length;
+
+                if (count <= 1) {
+                    e.preventDefault();
+                    iziToast.warning({
+                        title: 'Sélection insuffisante',
+                        message: 'Veuillez sélectionner au moins deux matériels.'
+                    });
+                } else if (count > 8) {
+                    e.preventDefault();
+                    iziToast.warning({
+                        title: 'Trop de matériels sélectionnés',
+                        message: 'Veuillez sélectionner 8 matériels maximum.'
+                    });
+                }
+            });
+
+            // Update select all button to only handle selection
+            selectAllBtn.addEventListener('click', function() {
+                // Select up to 8 items
+                materielCheckboxes.forEach((checkbox, index) => {
+                    checkbox.checked = index < 8;
+                });
+            });
+
+            // Add deselect all button functionality
+            const deselectAllBtn = document.getElementById('deselect-all');
+            deselectAllBtn.addEventListener('click', function() {
+                materielCheckboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+            });
+
+            // Add live checkbox monitoring
+            $(document).on('change', '.materiel-checkbox', function() {
+                const checkedCount = $('.materiel-checkbox:checked').length;
+                if (checkedCount > 8) {
+                    $(this).prop('checked', false);
+                    iziToast.warning({
+                        title: 'Limite atteinte',
+                        message: 'Vous ne pouvez pas sélectionner plus de 8 matériels.'
+                    });
+                }
             });
         });
     </script>

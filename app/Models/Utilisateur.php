@@ -21,4 +21,9 @@ class Utilisateur extends Model
     {
         return $this->hasMany(Affectation::class);
     }
+
+    public function bigAffectations()
+    {
+        return $this->hasMany(BigAffectation::class);
+    }
 }

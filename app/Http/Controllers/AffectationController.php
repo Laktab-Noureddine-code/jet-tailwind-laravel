@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MaterielsMail;
 use App\Models\Affectation;
 use App\Models\Materiel;
 use App\Models\Ordinateur;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
+use App\Models\BigAffectation;
 
 class AffectationController extends Controller
 {
@@ -290,15 +292,20 @@ class AffectationController extends Controller
 
     public function show($id)
     {
-        // Récupérer l'utilisateur avec ses affectations
-        $utilisateur = Utilisateur::with('affectations.materiel')->find($id);
+        // Retrieve the utilisateur with eager-loaded relationships
+        $utilisateur = Utilisateur::with(['affectations.materiel', 'bigAffectations.bigAffectationRows.materiel'])->find($id);
 
-        // Vérifier si l'utilisateur existe
+        // Check if the utilisateur exists
         if (!$utilisateur) {
-            return redirect()->route('affectation.index')->with('error', 'Utilisateur introuvable.');
+            return redirect()->route('affectation.index')->with('error', 'Utilisateur non trouvé.');
         }
 
-        // Passer les données à la vue
+        // Check if the utilisateur has no affectations or bigAffectations
+        if ($utilisateur->affectations->isEmpty() && $utilisateur->bigAffectations->isEmpty()) {
+            return redirect()->route('affectation.index')->with('error', 'Cet utilisateur n\'a aucune affectation.');
+        }
+
+        // If everything is fine, proceed to show the view
         return view('affectations.show', compact('utilisateur'));
     }
 
@@ -392,6 +399,54 @@ class AffectationController extends Controller
         }
     }
 
+
+    public function sendEmailMateriels(BigAffectation $bigAffectation)
+    {
+        try {
+            // Load relationships
+            $bigAffectation->load(['utilisateur', 'bigAffectationRows.materiel.affectations']);
+
+            // Check if utilisateur exists
+            if (!$bigAffectation->utilisateur) {
+                return back()->with('error', 'Aucun utilisateur associé à cette affectation.');
+            }
+
+            // Check if there are any materiels
+            if ($bigAffectation->bigAffectationRows->isEmpty()) {
+                return back()->with('error', 'Aucun matériel associé à cette affectation.');
+            }
+
+            // Determine the chantier once (default to "Siege" if not available)
+            $chantier = $bigAffectation->bigAffectationRows
+                ->flatMap(function ($row) {
+                    return $row->materiel->affectations;
+                })
+                ->first()?->chantier ?? "Siege";
+
+            // Extract data for each material
+            $data = [
+                'utilisateur' => $bigAffectation->utilisateur,
+                'chantier' => $chantier, // Single chantier for all materials
+                'materiels' => $bigAffectation->bigAffectationRows->map(function ($row) use ($chantier) {
+                    $materiel = $row->materiel;
+
+                    return [
+                        'materiel' => $materiel,
+                        'date_affectation' => $materiel->affectations->first()?->date_affectation ?? now(),
+                    ];
+                }),
+            ];
+
+            // Debug the data (optional)
+            // Send the email with the data
+            Mail::to("nourd2008in@gmail.com")->send(new MaterielsMail($data));
+
+            return back()->with('success', 'Email de confirmation envoyé avec succès !');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erreur lors de l\'envoi de l\'email : ' . $e->getMessage());
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -407,9 +462,23 @@ class AffectationController extends Controller
         if ($utilisateur && $utilisateur->affectations()->count() === 0) {
             $utilisateur->delete();
         }
-
         // Rediriger avec un message de succès
         return redirect()->route('affectation.index')->with('message', "L'affectation a été supprimée avec succès.");
+    }
+    public function destroyInShow(Affectation $affectation)
+    {
+        // Récupérer l'utilisateur associé à l'affectation
+        $utilisateur = $affectation->utilisateur;
+
+        // Supprimer l'affectation
+        $affectation->delete();
+
+        // Vérifier si l'utilisateur a encore d'autres affectations
+        if ($utilisateur && $utilisateur->affectations()->count() === 0) {
+            $utilisateur->delete();
+        }
+        // Rediriger avec un message de succès
+        return redirect()->back()->with('message', "L'affectation a été supprimée avec succès.");
     }
 
     /**
