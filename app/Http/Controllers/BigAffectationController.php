@@ -104,24 +104,18 @@ class BigAffectationController extends Controller
             $fileName = 'affectation_' . str_replace(' ', '_', $utilisateurNom) . '_' . $uniqueCode . '.' . $extension;
 
             // Définir le chemin de stockage
-            $storagePath = storage_path('app/public/fiche_affectations');
+            $storagePath = storage_path('app/public/affectations');
 
             // Créer le répertoire s'il n'existe pas
             if (!file_exists($storagePath)) {
                 mkdir($storagePath, 0755, true);
             }
 
-            // Debugging: Log the file and path details
-            Log::info('File Info:', ['file' => $file, 'realPath' => $file->getRealPath()]);
-            Log::info('Generated File Name:', ['fileName' => $fileName]);
-            Log::info('Storage Path:', ['storagePath' => $storagePath]);
-
             // Stocker le fichier avec le nouveau nom
-            $path = $file->storeAs('fiche_affectations', $fileName, 'public');
+            $path = $file->storeAs('affectations', $fileName, 'public');
 
             // Vérifier si le chemin est vide
             if (empty($path)) {
-                Log::error('Empty path returned by storeAs():', ['fileName' => $fileName]);
                 return back()->with('error', 'Impossible de sauvegarder le fichier. Veuillez réessayer.');
             }
 
@@ -131,7 +125,7 @@ class BigAffectationController extends Controller
             return back()->with('success', 'Fichier téléversé avec succès.');
         } catch (\Exception $e) {
             // Log l'erreur
-            Log::error('Erreur lors du téléchargement : ' . $e->getMessage());
+          
             return back()->with('error', 'Une erreur est survenue lors du téléchargement : ' . $e->getMessage());
         }
     }
