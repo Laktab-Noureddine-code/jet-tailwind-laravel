@@ -112,7 +112,7 @@
                         class="hidden mb-4">
                         @csrf
                         <input type="hidden" name="utilisateur_id" value="{{ $utilisateur->id }}">
-                        <div class="flex justify-end space-x-2">
+                        <div class="flex justify-end gap-3">
                             <button type="button" id="select-all"
                                 class="px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600">
                                 <i class="fa-solid fa-check-double mr-1"></i>Tout sélectionner
@@ -122,8 +122,8 @@
                                 <i class="fa-solid fa-ban mr-1"></i>Désélectionner tout
                             </button>
                             <button type="submit"
-                                class="px-3 py-1 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700">
-                                Générer
+                                class="px-3 py-1 text-sm font-medium text-black border-gray-200 bg-green-600 rounded hover:bg-green-700">
+                                Générer <i class="fas fa-save"></i>
                             </button>
                         </div>
                     </form>
@@ -317,14 +317,9 @@
                                                     ? $bigAffectation->fiche_affectations
                                                     : 'storage/' . $bigAffectation->fiche_affectations;
                                             @endphp
-                                            {{-- <a href="{{ Storage::url($bigAffectation->fiche_affectations) }}" download
-                                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">
-                                                <i class="fas fa-download mr-2"></i>
-                                                Télécharger le fichier
-                                            </a> --}}
                                             <a href="{{ route('download.big.file', $bigAffectation) }}"
                                                 title="télécharger la fiche d'affectations"
-                                                class=" inline-flex text-white items-center px-4 py-2 bg-gray-600  rounded-md hover:bg-gray-700 transition-colors duration-200">
+                                                class=" inline-flex text-white items-center px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors duration-200">
                                                 Télécharger le fichier<i class="fas fa-download mr-2"></i>
                                             </a>
                                         @else
@@ -333,8 +328,6 @@
                                             </div>
                                         @endif
                                     </div>
-
-
                                     <!-- Footer avec les boutons -->
                                     <div class="p-4 bg-gray-50">
                                         <div class="flex space-x-2 items-center justify-between">
