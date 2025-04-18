@@ -101,7 +101,7 @@
                     <h2 class="text-xl font-semibold text-white">Liste des affectations</h2>
                     <div>
                         <button id="toggle-selection"
-                            class="px-3 py-1 text-sm font-medium text-white bg-gray-500 rounded hover:bg-gray-600">
+                            class="px-3 py-1 cursor-pointer text-sm font-medium text-white bg-gray-500 rounded hover:bg-gray-600">
                             <i class="fa-solid fa-check-square mr-1"></i>Sélection multiple
                         </button>
                     </div>
@@ -114,15 +114,15 @@
                         <input type="hidden" name="utilisateur_id" value="{{ $utilisateur->id }}">
                         <div class="flex justify-end gap-3">
                             <button type="button" id="select-all"
-                                class="px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600">
+                                class="px-3 py-1 text-sm cursor-pointer font-medium text-white bg-blue-500 rounded hover:bg-blue-600">
                                 <i class="fa-solid fa-check-double mr-1"></i>Tout sélectionner
                             </button>
                             <button type="button" id="deselect-all"
-                                class="px-3 py-1 text-sm font-medium text-white bg-gray-500 rounded hover:bg-gray-600">
+                                class="px-3 py-1 text-sm cursor-pointer font-medium text-white bg-gray-500 rounded hover:bg-gray-600">
                                 <i class="fa-solid fa-ban mr-1"></i>Désélectionner tout
                             </button>
                             <button type="submit"
-                                class="px-3 py-1 text-sm font-medium text-black border-gray-200 bg-green-600 rounded hover:bg-green-700">
+                                class="px-3 py-1 text-sm cursor-pointer font-medium text-black border-gray-200 bg-green-600 rounded hover:bg-green-700">
                                 Générer <i class="fas fa-save"></i>
                             </button>
                         </div>
@@ -201,7 +201,7 @@
                                                     onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette affectation')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="text-red-500 hover:text-red-700">
+                                                    <button type="submit" class="text-red-500 hover:text-red-700 cursor-pointer">
                                                         <i class="fa-solid fa-trash"></i>
                                                     </button>
                                                 </form>
