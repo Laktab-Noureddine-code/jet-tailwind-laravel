@@ -121,7 +121,7 @@ class DatabaseSeeder extends Seeder
             $materiel = Materiel::create([
                 'num_serie' => 'TEL' . $faker->unique()->numberBetween(10000, 99999),
                 'fabricant' => $faker->randomElement(['Apple', 'Samsung', 'Google', 'Xiaomi']),
-                'type' => 'Téléphone',
+                'type' => 'Telephone',
                 'etat' => $faker->randomElement(['Neuf', 'Bon état', 'À réparer', 'Hors service'])
             ]);
 

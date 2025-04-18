@@ -57,7 +57,7 @@
             <p>Je vous écris pour vous confirmer l'affectation du matériel IT suivant :</p>
 
             <div class="details">
-                <p><strong>Matériel :</strong> {{ $materiel->type }}</p>
+                <p><strong>Matériel :</strong> {{ $materiel->type === 'Telephone' ? 'Téléphone' : $materiel->type  }}</p>
                 <p><strong>Modèle :</strong> {{ $materiel->fabricant }}</p>
                 <p><strong>Numéro de série :</strong> {{ $materiel->num_serie }}</p>
                 <p><strong>Date d'affectation :</strong> {{ date('d/m/Y', strtotime($affectation->date_affectation)) }}
