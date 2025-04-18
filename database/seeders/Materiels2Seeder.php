@@ -6,6 +6,7 @@ use App\Models\Affectation;
 use App\Models\Imprimante;
 use App\Models\Materiel;
 use App\Models\Ordinateur;
+use App\Models\Telephone;
 use App\Models\Type;
 use App\Models\User;
 use App\Models\Utilisateur;
@@ -73,6 +74,10 @@ class Materiels2Seeder extends Seeder
                 } elseif ($materiel2->type == 'Imprimante') {
                     Imprimante::create([
                         'materiel_id' => $materiel->id,
+                    ]);
+                }elseif($materiel2->type == 'Telephone'){
+                    Telephone::create([
+                        'materiel_id'=> $materiel->id,
                     ]);
                 }
             }
