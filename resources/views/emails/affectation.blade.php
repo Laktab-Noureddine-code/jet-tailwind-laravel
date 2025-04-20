@@ -46,6 +46,23 @@
             margin: 20px 0;
             padding-left: 20px;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 
@@ -55,31 +72,25 @@
             <p>Madame/Monsieur {{ $utilisateur->nom }},</p>
 
             <p>Je vous écris pour vous confirmer l'affectation du matériel IT suivant :</p>
-
-            <div class="details">
-                <p><strong>Matériel :</strong> {{ $materiel->type === 'Telephone' ? 'Téléphone' : $materiel->type  }}</p>
-                <p><strong>Modèle :</strong> {{ $materiel->fabricant }}</p>
-                <p><strong>Numéro de série :</strong> {{ $materiel->num_serie }}</p>
-                <p><strong>Date d'affectation :</strong> {{ date('d/m/Y', strtotime($affectation->date_affectation)) }}
-                </p>
-                <p><strong>Département :</strong> {{ $utilisateur->departement }}</p>
-            </div>
-
-            <p>Nous avons bien pris en compte votre demande et le matériel a été affecté conformément aux procédures de
-                notre département. Si vous avez besoin de plus d'informations ou si des ajustements sont nécessaires,
-                n'hésitez pas à me contacter.</p>
-
-            {{-- <div class="signature">
-                <p>Cordialement,</p>
-                <p><strong>Direction RH</strong></p>
-                <img src="{{ public_path('/logo1.png') }}" alt="">
-                <div class="contact-info">
-                    <p>JET CONTRACTORS</p>
-                    <p>Quartier Industriel de Oued Yquem CP 12040 Skhirate - Maroc</p>
-                    <p>Tél : +(212) 6 62 57 23 00</p>
-                    <p>www.jet-contractors.com</p>
-                </div>
-            </div> --}}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type de Matériel</th>
+                        <th>Fabricant</th>
+                        <th>Numéro de Série</th>
+                        <th>Date d'Affectation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ $materiel->type === 'Telephone' ? 'Téléphone' : $materiel->type }}
+                        </td>
+                        <td>{{ $materiel->fabricant }}</td>
+                        <td>{{ $materiel->num_serie }}</td>
+                        <td>{{ date('d/m/Y', strtotime($affectation->date_affectation)) }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

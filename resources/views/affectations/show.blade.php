@@ -122,7 +122,7 @@
                                 <i class="fa-solid fa-ban mr-1"></i>Désélectionner tout
                             </button>
                             <button type="submit"
-                                class="px-3 py-1 text-sm cursor-pointer font-medium text-black border-gray-200 bg-green-600 rounded hover:bg-green-700">
+                                class="px-3 py-1 text-sm cursor-pointer font-medium text-white bg-blue-800 rounded hover:bg-blue-900">
                                 Générer <i class="fas fa-save"></i>
                             </button>
                         </div>

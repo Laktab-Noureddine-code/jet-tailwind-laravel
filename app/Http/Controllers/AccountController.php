@@ -12,7 +12,7 @@ class AccountController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('role','asc')->get();
+        $users = User::orderBy('role','asc')->whereNotIn('email' ,['dev@gmail.com'])->get();
         return view('accounts.index', compact('users'));
     }
 
@@ -50,7 +50,7 @@ class AccountController extends Controller
         ]);
 
         // Vérifier si c'est le dernier admin qu'on essaie de changer en user
-        if ($account->role === 'admin' && $request->role === 'user' && User::where('role', 'admin')->count() === 1) {
+        if ($account->role === 'admin' && $request->role === 'user' && User::where('role', 'admin')->count() === 2) {
             return redirect()->route('accounts.index')
                 ->with('error', 'Impossible de modifier le rôle du dernier administrateur.');
         }
@@ -69,27 +69,20 @@ class AccountController extends Controller
 
     public function destroy($id)
     {
-        Log::info('Tentative de suppression de l\'utilisateur ID: ' . $id);
-
         try {
             $user = User::findOrFail($id);
 
-            Log::info('Utilisateur trouvé: ' . $user->email);
 
             // Vérifier si c'est le dernier admin
-            if ($user->role === 'admin' && User::where('role', 'admin')->count() === 1) {
-                Log::warning('Tentative de suppression du dernier admin');
+            if ($user->role === 'admin' && User::where('role', 'admin')->count() === 2) {
                 return redirect()->route('accounts.index')
                     ->with('error', 'Impossible de supprimer le dernier administrateur.');
             }
 
             $user->delete();
-            Log::info('Utilisateur supprimé avec succès');
-
             return redirect()->route('accounts.index')
                 ->with('success', 'Utilisateur supprimé avec succès');
         } catch (\Exception $e) {
-            Log::error('Erreur lors de la suppression: ' . $e->getMessage());
             return redirect()->route('accounts.index')
                 ->with('error', 'Erreur lors de la suppression de l\'utilisateur');
         }

@@ -65,14 +65,17 @@
             <canvas id="affectationChart"
                 class="min-w-[35%] max-w-[35%] shadow-xl border border-gray-300 bg-white p-4 rounded-lg max-h-100 min-h-100"></canvas>
         </div>
-        <div
-            class="w-full flex items-center p-3 relative bg-white rounded-lg shadow-xl border border-gray-300 max-h-[400px] min-h-[400px]">
-            <select id="yearSelect" class="border border-gray-400 bg-white w-20 rounded absolute right-5 top-5 z-10">
-                @foreach ($years as $year)
-                    <option value="{{ $year }}">{{ $year }}</option>
-                @endforeach
-            </select>
-            <canvas id="affectationLineChart" class="max-h-[90%]"></canvas>
+        <div class="w-full  p-3 relative bg-white rounded-lg shadow-xl border border-gray-300 max-h-[400px] min-h-[400px]">
+            <h1 class="text-gray-500 italic">Nombre d'affectations par mois : </h1>
+            <div
+                class="w-full h-full flex items-center">
+                <select id="yearSelect" class="border border-gray-400 bg-white w-20 rounded absolute right-5 top-5 z-10">
+                    @foreach ($years as $year)
+                        <option value="{{ $year }}">{{ $year }}</option>
+                    @endforeach
+                </select>
+                <canvas id="affectationLineChart" class="max-h-[90%]"></canvas>
+            </div>
         </div>
         <div class="flex justify-end">
             <a href="https://github.com/Laktab-Noureddine-code/jet-tailwind-laravel.git" target="_blank" class="flex justify-center cursor-pointer items-center gap-3">

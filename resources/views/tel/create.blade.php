@@ -38,7 +38,19 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div>
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Caractéristiques</h2>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">État</label>
+                            <select name="etat" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('etat') outline-2 outline-red-500 @enderror">
+                                <option value="Neuf" {{ old('etat') == 'Neuf' ? 'selected' : '' }}>Neuf</option>
+                                <option value="Occasion" {{ old('etat') == 'Occasion' ? 'selected' : '' }}>Occasion
+                                </option>
+                            </select>
+                            @error('etat')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
                         <!-- Section 2: Informations téléphoniques -->
                         <div class="space-y-4">
                             <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations téléphoniques</h2>

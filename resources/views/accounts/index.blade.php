@@ -96,7 +96,7 @@
                                             title="Modifier">
                                             <i class="fa-solid fa-user-pen"></i>
                                         </a>
-                                        @if (!($user->role === 'admin' && \App\Models\User::where('role', 'admin')->count() === 1))
+                                        @if (!($user->role === 'admin' && \App\Models\User::where('role', 'admin')->count() === 2))
                                             <button onclick="deleteUser({{ $user->id }})"
                                                 class="text-red-600 hover:text-red-900 transition-colors duration-150"
                                                 title="Supprimer">

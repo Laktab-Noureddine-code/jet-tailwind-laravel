@@ -390,7 +390,7 @@ class AffectationController extends Controller
     public function sendEmail(Affectation $affectation)
     {
         try {
-            Mail::to("nourd2008in@gmail.com")
+            Mail::to("noureddine.laktab04@gmail.com")
                 ->send(new TestMail($affectation));
 
             return back()->with('success', 'Email de confirmation envoyé avec succès !');
@@ -439,7 +439,7 @@ class AffectationController extends Controller
 
             // Debug the data (optional)
             // Send the email with the data
-            Mail::to("nourd2008in@gmail.com")->send(new MaterielsMail($data));
+            Mail::to("noureddine.laktab04@gmail.com")->send(new MaterielsMail($data));
 
             return back()->with('success', 'Email de confirmation envoyé avec succès !');
         } catch (\Exception $e) {

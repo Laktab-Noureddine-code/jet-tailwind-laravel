@@ -129,7 +129,20 @@ class DashboardController extends Controller
             ->get();
 
         // Créer un tableau avec 12 mois initialisés à 0
-        $moisNoms = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+        $moisNoms = [
+            'Janvier',
+            'Février',
+            'Mars',
+            'Avril',
+            'Mai',
+            'Juin',
+            'Juillet',
+            'Août',
+            'Septembre',
+            'Octobre',
+            'Novembre',
+            'Décembre'
+        ];
         $affectationsParMoisData = array_fill(0, 12, 0);
 
         foreach ($affectationsParMois as $affectation) {

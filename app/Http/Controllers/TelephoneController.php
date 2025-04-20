@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Affectation;
+use App\Models\Materiel;
 use App\Models\Telephone;
 use Illuminate\Http\Request;
 
@@ -51,8 +52,9 @@ class TelephoneController extends Controller
         ]);
 
         // Créer un nouveau matériel
-        $materiel = \App\Models\Materiel::create([
+        $materiel = Materiel::create([
             'fabricant' => $request->fabricant,
+            'etat'=> $request->etat,
             'type' => 'Telephone',
             'num_serie' => $request->num_serie,
         ]);
@@ -75,8 +77,8 @@ class TelephoneController extends Controller
     public function update(Request $request, Telephone $telephone)
     {
         $request->validate([
-            'pin' => 'string|max:255',
-            'puk' => 'string|max:255',
+            'pin' => 'nullable|string|max:255',
+            'puk' => 'nullable|string|max:255',
             'fabricant' => 'required|string|max:255',
             'num_serie' => 'required|string|max:255|unique:materiels,num_serie,' . $telephone->materiel->id,
         ]);
@@ -91,6 +93,7 @@ class TelephoneController extends Controller
             $telephone->materiel->update([
                 'fabricant' => $request->fabricant,
                 'num_serie' => $request->num_serie,
+                'etat' => $request->etat,
             ]);
         }
 
