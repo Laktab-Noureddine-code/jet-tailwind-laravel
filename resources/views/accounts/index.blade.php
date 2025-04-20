@@ -63,7 +63,7 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-white mt-10 rounded-lg shadow-lg overflow-hidden">
             <div class="bg-[#0A1C3E] px-6 py-4">
                 <h2 class="text-xl font-semibold text-white">Liste des Utilisateurs</h2>
             </div>
@@ -97,16 +97,15 @@
                                             <i class="fa-solid fa-user-pen"></i>
                                         </a>
                                         @if (!($user->role === 'admin' && \App\Models\User::where('role', 'admin')->count() === 2))
-                                            <button onclick="deleteUser({{ $user->id }})"
-                                                class="text-red-600 hover:text-red-900 transition-colors duration-150"
-                                                title="Supprimer">
-                                                <i class="fa-solid fa-user-minus"></i>
-                                            </button>
-                                            <form id="delete-form-{{ $user->id }}"
-                                                action="{{ route('accounts.destroy', $user->id) }}" method="POST"
-                                                style="display: none;">
+                                            <form 
+                                                action="{{ route('accounts.destroy', $user->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
+                                                <button onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
+                                                    class="text-red-600 hover:text-red-900 transition-colors duration-150"
+                                                    title="Supprimer">
+                                                    <i class="fa-solid fa-user-minus"></i>
+                                                </button>
                                             </form>
                                         @endif
                                     </div>
@@ -122,9 +121,11 @@
     <script>
         function deleteUser(userId) {
             iziToast.question({
-                timeout: 20000,
+                timeout: 200000,
                 close: false,
                 overlay: true,
+                drag: true,
+                color: "#fff",
                 displayMode: 'once',
                 id: 'question',
                 zindex: 999,

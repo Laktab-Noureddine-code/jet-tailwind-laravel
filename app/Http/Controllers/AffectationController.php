@@ -47,6 +47,7 @@ class AffectationController extends Controller
         // Récupérer les résultats paginés
         $affectations = $query->orderBy('created_at', 'desc')
             ->orderBy('statut')
+            ->orderBy('date_affectation')
             ->paginate(50)
             ->appends(["search" => $search]);
 

@@ -292,9 +292,9 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             @foreach ($utilisateur->bigAffectations as $bigAffectation)
                                 <div
-                                    class="bg-gray-200 rounded-lg border border-gray-300 shadow-sm hover:shadow-md transition-shadow duration-300">
+                                    class="bg-white rounded-lg overflow-hidden border border-gray-500 shadow-lg hover:shadow-md transition-shadow duration-300">
                                     <!-- Header avec la liste des matériels -->
-                                    <div class="p-4 border-b border-gray-200 bg-gray-50">
+                                    <div class="p-4 border-b border-gray-200">
                                         <div class="space-y-2">
                                             @foreach ($bigAffectation->bigAffectationRows as $row)
                                                 <div class="flex justify-between items-center text-sm">
@@ -323,7 +323,7 @@
                                                 Télécharger le fichier<i class="fas fa-download mr-2"></i>
                                             </a>
                                         @else
-                                            <div class="text-center text-gray-500 py-4">
+                                            <div class="text-center text-gray-500 py-4 bg-gray-200 w-full">
                                                 Aucun fichier associé.
                                             </div>
                                         @endif
