@@ -143,7 +143,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr style="text-align:center;">
                     <td style="border: 1px solid #000; padding: 2px;">
                         {{ $materiel->type === 'Telephone' ? 'Téléphone' : $materiel->type }}</td>
                     <td style="border: 1px solid #000; padding: 2px;">{{ $materiel->fabricant }} @if ($is_Computer)

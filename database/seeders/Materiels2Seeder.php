@@ -135,6 +135,7 @@ class Materiels2Seeder extends Seeder
                     } else {
                         // La dernière affectation devient "REAFFECTE"
                         $affectation->statut = "REAFFECTE";
+                        $affectation->etat = "Occasion" ;
                         $affectation->save();
                     }
                 }
