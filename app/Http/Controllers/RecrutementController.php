@@ -48,12 +48,12 @@ class RecrutementController extends Controller
     {
         $fields = $request->validate([
             'nom' => 'required|string|max:255',
-            'email' => 'max:40',
+            'email' => 'required|max:40',
             'fonction' => 'required',
             'departement' => 'required',
             'date_affectation' => 'required',
             'type_contrat' => 'required',
-            'telephone' => 'max:20',
+            'telephone' => 'required|max:20',
             'model' => 'max:255',
             'num_serie' => 'unique:materiels,num_serie',
             'puk' => 'max:255',
@@ -80,10 +80,10 @@ class RecrutementController extends Controller
     {
         // dd($request);
         $fields = $request->validate([
-            'nom' => 'max:255',
-            'email' => 'max:50',
-            'type_contrat' => 'required',
-            'telephone' => 'max:20',
+            'nom' => 'required|max:255',
+            'email' => 'required|max:50',
+            'type_contrat' => 'required|required',
+            'telephone' => 'required|max:20',
             'model' => 'max:255',
             'date_affectation' => 'required',
             'num_serie' => 'max:255',
@@ -98,23 +98,6 @@ class RecrutementController extends Controller
 
     public function destroy(Recrutement $recrutement)
     {
-        // Vérifie si l'utilisateur est admin
-        if (Auth::user()->role === 'admin') {
-            // Supprimer la notification associée
-            if ($recrutement->notification) {
-                $recrutement->notification->delete();
-            }
-            // Supprimer le recrutement
-            $recrutement->delete();
-
-            return redirect()->route('recrutements.index')->with('success', 'Recrutement supprimé avec succès.');
-        }
-
-        // Si ce n'est pas un admin et que le recrutement est validé, empêcher la suppression
-        if ($recrutement->status === 'validé') {
-            return redirect()->route('recrutements.index')->with('error', 'Impossible de supprimer un recrutement validé.');
-        }
-
         // Cas standard pour non-admin avec recrutement non validé
         $recrutement->delete();
 

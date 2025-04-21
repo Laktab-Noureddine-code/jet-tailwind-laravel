@@ -12,4 +12,13 @@ class MaterielController extends Controller
     public function index(){
         return view('dashboard.index');
     }
+    public function checkSerie($num_serie)
+    {
+        $materiel = Materiel::where('num_serie', $num_serie)->first();
+
+        return response()->json([
+            'exists' => $materiel ? true : false,
+            'materiel' => $materiel
+        ]);
+    }
 }

@@ -32,6 +32,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                                     <input type="email" name="email" value="{{ old('email', $recrutement->email) }}"
+                                        required
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('email') outline-2 outline-red-500 @enderror">
                                     @error('email')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -75,89 +76,91 @@
                                 </div>
                             </div>
 
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Type de Contrat</label>
-                                <div class="flex flex-wrap gap-4 mt-2">
-                                    <label class="relative">
-                                        <input type="radio" name="type_contrat" value="cdi"
-                                            class="peer absolute opacity-0 w-0 h-0"
-                                            {{ old('type_contrat', $recrutement->type_contrat) == 'cdi' ? 'checked' : '' }}>
-                                        <span
-                                            class="px-4 py-2 rounded-lg cursor-pointer block uppercase font-medium transition-all duration-200
-                                            peer-checked:bg-[#0A1C3E] peer-checked:text-white
-                                            bg-gray-100 text-gray-700 hover:bg-gray-200">
-                                            CDI
-                                        </span>
-                                    </label>
-                                    <label class="relative">
-                                        <input type="radio" name="type_contrat" value="cdd"
-                                            class="peer absolute opacity-0 w-0 h-0"
-                                            {{ old('type_contrat', $recrutement->type_contrat) == 'cdd' ? 'checked' : '' }}>
-                                        <span
-                                            class="px-4 py-2 rounded-lg cursor-pointer block uppercase font-medium transition-all duration-200
-                                            peer-checked:bg-[#0A1C3E] peer-checked:text-white
-                                            bg-gray-100 text-gray-700 hover:bg-gray-200">
-                                            CDD
-                                        </span>
-                                    </label>
-                                    <label class="relative">
-                                        <input type="radio" name="type_contrat" value="cp"
-                                            class="peer absolute opacity-0 w-0 h-0"
-                                            {{ old('type_contrat', $recrutement->type_contrat) == 'cp' ? 'checked' : '' }}>
-                                        <span
-                                            class="px-4 py-2 rounded-lg cursor-pointer block uppercase font-medium transition-all duration-200
-                                            peer-checked:bg-[#0A1C3E] peer-checked:text-white
-                                            bg-gray-100 text-gray-700 hover:bg-gray-200">
-                                            CP
-                                        </span>
-                                    </label>
-                                    <label class="relative">
-                                        <input type="radio" name="type_contrat" value="interim"
-                                            class="peer absolute opacity-0 w-0 h-0"
-                                            {{ old('type_contrat', $recrutement->type_contrat) == 'interim' ? 'checked' : '' }}>
-                                        <span
-                                            class="px-4 py-2 rounded-lg cursor-pointer block font-medium transition-all duration-200
-                                            peer-checked:bg-[#0A1C3E] peer-checked:text-white
-                                            bg-gray-100 text-gray-700 hover:bg-gray-200">
-                                            Interim
-                                        </span>
-                                    </label>
-                                    <label class="relative">
-                                        <input type="radio" name="type_contrat" value="autre"
-                                            class="peer absolute opacity-0 w-0 h-0"
-                                            {{ old('type_contrat', $recrutement->type_contrat) == 'autre' ? 'checked' : '' }}>
-                                        <span
-                                            class="px-4 py-2 rounded-lg cursor-pointer block font-medium transition-all duration-200
-                                            peer-checked:bg-[#0A1C3E] peer-checked:text-white
-                                            bg-gray-100 text-gray-700 hover:bg-gray-200">
-                                            Autre
-                                        </span>
-                                    </label>
-                                </div>
-                                @error('type_contrat')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <!-- Section 3: Informations techniques -->
-                        <div class="space-y-4">
-                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations téléphoniques</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="grid grid-cols-2 gap-2">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Modèle</label>
-                                    <input type="text" name="model" value="{{ old('model', $recrutement->model) }}"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('model') outline-2 outline-red-500 @enderror">
-                                    @error('model')
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Type de Contrat</label>
+                                    <div class="flex flex-wrap gap-4 mt-2">
+                                        <label class="relative">
+                                            <input type="radio" name="type_contrat" value="cdi"
+                                                class="peer absolute opacity-0 w-0 h-0"
+                                                {{ old('type_contrat', $recrutement->type_contrat) == 'cdi' ? 'checked' : '' }}>
+                                            <span
+                                                class="px-2 py-1 rounded-lg cursor-pointer block uppercase font-medium transition-all duration-200
+                                                peer-checked:bg-[#0A1C3E] peer-checked:text-white
+                                                bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                                CDI
+                                            </span>
+                                        </label>
+                                        <label class="relative">
+                                            <input type="radio" name="type_contrat" value="cdd"
+                                                class="peer absolute opacity-0 w-0 h-0"
+                                                {{ old('type_contrat', $recrutement->type_contrat) == 'cdd' ? 'checked' : '' }}>
+                                            <span
+                                                class="px-2 py-1 rounded-lg cursor-pointer block uppercase font-medium transition-all duration-200
+                                                peer-checked:bg-[#0A1C3E] peer-checked:text-white
+                                                bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                                CDD
+                                            </span>
+                                        </label>
+                                        <label class="relative">
+                                            <input type="radio" name="type_contrat" value="cp"
+                                                class="peer absolute opacity-0 w-0 h-0"
+                                                {{ old('type_contrat', $recrutement->type_contrat) == 'cp' ? 'checked' : '' }}>
+                                            <span
+                                                class="px-2 py-1 rounded-lg cursor-pointer block uppercase font-medium transition-all duration-200
+                                                peer-checked:bg-[#0A1C3E] peer-checked:text-white
+                                                bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                                CP
+                                            </span>
+                                        </label>
+                                        <label class="relative">
+                                            <input type="radio" name="type_contrat" value="interim"
+                                                class="peer absolute opacity-0 w-0 h-0"
+                                                {{ old('type_contrat', $recrutement->type_contrat) == 'interim' ? 'checked' : '' }}>
+                                            <span
+                                                class="px-2 py-1 rounded-lg cursor-pointer block font-medium transition-all duration-200
+                                                peer-checked:bg-[#0A1C3E] peer-checked:text-white
+                                                bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                                Interim
+                                            </span>
+                                        </label>
+                                        <label class="relative">
+                                            <input type="radio" name="type_contrat" value="autre"
+                                                class="peer absolute opacity-0 w-0 h-0"
+                                                {{ old('type_contrat', $recrutement->type_contrat) == 'autre' ? 'checked' : '' }}>
+                                            <span
+                                                class="px-2 py-1 rounded-lg cursor-pointer block font-medium transition-all duration-200
+                                                peer-checked:bg-[#0A1C3E] peer-checked:text-white
+                                                bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                                Autre
+                                            </span>
+                                        </label>
+                                    </div>
+                                    @error('type_contrat')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
-                                    <input type="text" name="telephone"
+                                    <input type="text" name="telephone" required
                                         value="{{ old('telephone', $recrutement->telephone) }}"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('telephone') outline-2 outline-red-500 @enderror">
                                     @error('telephone')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>  
+                        </div>
+
+                        <!-- Section 3: Informations techniques -->
+                        <div class="space-y-4">
+                            <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations téléphoniques</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Modèle</label>
+                                    <input type="text" name="model" value="{{ old('model', $recrutement->model) }}"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('model') outline-2 outline-red-500 @enderror">
+                                    @error('model')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>

@@ -23,6 +23,7 @@
                             <th scope="col" class="px-4 py-3">Date d'affectation</th>
                             <th scope="col" class="px-4 py-3">Téléphone</th>
                             <th scope="col" class="px-4 py-3">Modèle</th>
+                            <th scope="col" class="px-4 py-3">Type</th>
                             <th scope="col" class="px-4 py-3">N° Série</th>
                             <th scope="col" class="px-4 py-3">Type de Contrat</th>
                             <th scope="col" class="px-4 py-3">Statut</th>
@@ -35,28 +36,34 @@
                                 <td class="px-4 py-3 font-medium text-gray-900 uppercase ">
                                     {{ $notification->recrutement ? $notification->recrutement->nom : 'N/A' }}
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1">
                                     {{ $notification->recrutement ? $notification->recrutement->fonction : 'N/A' }}
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1">
                                     {{ $notification->recrutement ? $notification->recrutement->departement : 'N/A' }}
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1">
                                     {{ $notification->recrutement ? $notification->recrutement->email : 'N/A' }}
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1">
                                     {{ $notification->recrutement ? $notification->recrutement->date_affectation : 'N/A' }}
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1">
                                     {{ $notification->recrutement ? $notification->recrutement->telephone : 'N/A' }}
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1">
                                     {{ $notification->recrutement ? $notification->recrutement->model : 'N/A' }}
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="inline-flex text-nowrap rounded-full bg-blue-100 px-2 text-xs font-semibold leading-5 text-blue-800">
+                                        {{ $notification->type }}
+                                    </span>
+                                </td>
+                                <td class="px-2 py-1">
                                     {{ $notification->recrutement ? $notification->recrutement->num_serie : 'N/A' }}
                                 </td>
-                                <td class="px-4 py-3 text-center">
+                                <td class="px-2 py-1 text-center">
                                     @if ($notification->recrutement)
                                         <span
                                             class="inline-flex items-center text-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800">
@@ -66,17 +73,17 @@
                                         <span class="px-2 py-1 text-xs">N/A</span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3 text-center">
+                                <td class="px-2 py-1 text-center">
                                     @if ($notification->recrutement)
                                         <span
-                                            class="inline-flex items-center text-nowrap rounded-full px-2.5 py-1 text-xs font-medium {{ $notification->recrutement->status === 'validé' ? 'bg-green-100 text-green-800' : 'bg-red-400 text-black' }}">
+                                            class="inline-flex items-center  rounded-full px-2.5 py-1 text-xs font-medium {{ $notification->recrutement->status === 'validé' ? 'bg-green-100 text-green-800' : 'bg-red-400 text-black' }}">
                                             {{ $notification->recrutement->status }}
                                         </span>
                                     @else
                                         <span class="px-2 py-1 text-xs">N/A</span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3 text-center">
+                                <td class="px-2 py-1 text-center">
                                     @if ($notification->recrutement && $notification->recrutement->status !== 'validé')
                                         <div class="flex items-center justify-center space-x-3">
                                             <a href="{{ route('notifications.edit', $notification->id) }}"

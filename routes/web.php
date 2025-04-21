@@ -17,6 +17,7 @@ use App\Http\Controllers\TelephoneController;
 use App\Http\Controllers\UtilisateurController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BigAffectationController;
+use App\Http\Controllers\MaterielController;
 
 // Root route - redirect to dashboard if authenticated, or login if not
 Route::get('/', function () {
@@ -39,7 +40,7 @@ Route::middleware("auth")->group(function () {
 
     // ? imprimantes
     Route::resource('/imprimantes', ImprimanteController::class)->middleware('is_admin:admin');
-
+    
     // ? Périphériques
     Route::get('/materiel/{num_serie}', [AffectationController::class, 'getMaterielInfo'])->middleware('is_admin:admin')->name('materiel.info');
     Route::resource('/peripheriques', PeripheriqueController::class)->middleware('is_admin:admin');
@@ -75,9 +76,7 @@ Route::middleware("auth")->group(function () {
     Route::resource('/type', TypeController::class)->middleware('is_admin:admin');
 
     // settings
-    Route::get('/settings', function () {
-        return view('settings.index');
-    })->middleware('is_admin:admin')->name('settings');
+
 
     // trash
     Route::get('/trash', [trashController::class, 'index'])->name('trash.index');

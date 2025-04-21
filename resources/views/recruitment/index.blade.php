@@ -71,22 +71,16 @@
                                     </td>
                                 @else
                                     <td class="px-2 py-2 text-center">
-                                        @if (auth()->user()->role === 'admin')
-                                            <form action="{{ route('recrutements.destroy', $recrutement) }}" method="POST"
-                                                class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600"
-                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce recrutement validé ?')">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        @else
-                                            <span
-                                                class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
-                                                Validé
-                                            </span>
-                                        @endif
+
+                                        <form action="{{ route('recrutements.destroy', $recrutement) }}" method="POST"
+                                            class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600"
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce recrutement validé ?')">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 @endif
                             </tr>

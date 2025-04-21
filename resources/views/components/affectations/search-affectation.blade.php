@@ -22,7 +22,7 @@
         </form>
     </div>
 
-    <div class="flex space-x-2">
+    <div class="flex space-x-2 gap-2">
 
         <a href="{{ route('affectation.index', ['search' => $search]) }}"
             class=" inline-flex items-center px-3 py-2 rounded-md cursor-pointer transition-colors duration-200
