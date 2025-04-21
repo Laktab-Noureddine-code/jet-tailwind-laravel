@@ -8,7 +8,6 @@ use App\Models\Materiel;
 use App\Models\Ordinateur;
 use App\Models\Utilisateur;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
@@ -391,7 +390,7 @@ class AffectationController extends Controller
     public function sendEmail(Affectation $affectation)
     {
         try {
-            Mail::to("noureddine.laktab04@gmail.com")
+            Mail::to("sisupport@jet-contractors.com")
                 ->send(new TestMail($affectation));
 
             return back()->with('success', 'Email de confirmation envoyé avec succès !');
@@ -440,7 +439,7 @@ class AffectationController extends Controller
 
             // Debug the data (optional)
             // Send the email with the data
-            Mail::to("noureddine.laktab04@gmail.com")->send(new MaterielsMail($data));
+            Mail::to("sisupport@jet-contractors.com")->send(new MaterielsMail($data));
 
             return back()->with('success', 'Email de confirmation envoyé avec succès !');
         } catch (\Exception $e) {
