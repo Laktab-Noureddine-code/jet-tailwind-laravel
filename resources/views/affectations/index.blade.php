@@ -7,7 +7,7 @@
         </div>
 
         {{-- search & add component --}}
-        <x-affectations.search-affectation search="{{ $search }}" />
+        <x-affectations.search-affectation search="{{ $search }}" statut="{{ $statut }}" />
 
         <div class="mt-6 bg-white rounded-lg shadow">
             <div class="overflow-x-auto">

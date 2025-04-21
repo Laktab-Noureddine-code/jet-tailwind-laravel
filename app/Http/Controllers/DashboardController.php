@@ -76,36 +76,41 @@ class DashboardController extends Controller
 
     public function getAffectationStats()
     {
-        // Récupérer la dernière affectation (par date ou ID) de chaque matériel
+        // Récupérer la dernière affectation de chaque matériel
         $latestAffectations = Affectation::select(DB::raw('MAX(id) as latest_id'))
             ->groupBy('materiel_id');
 
-        // Affectations avec statut "AFFECTE" ou "REAFFECTE"
-        $materielsAffectes = Affectation::whereIn('id', $latestAffectations)
-            ->whereIn('statut', ['AFFECTE', 'REAFFECTE'])
+        // Affectations "AFFECTE"
+        $affectes = Affectation::whereIn('id', $latestAffectations)
+            ->where('statut', 'AFFECTE')
             ->count();
 
-        // Affectations dont le dernier statut n'est PAS "AFFECTE" ou "REAFFECTE"
-        $materielsNonAffectesViaAffectation = Affectation::whereIn('id', $latestAffectations)
+        // Affectations "REAFFECTE"
+        $reaffectes = Affectation::whereIn('id', $latestAffectations)
+            ->where('statut', 'REAFFECTE')
+            ->count();
+
+        // Matériels avec une affectation mais pas "AFFECTE" ni "REAFFECTE"
+        $autresStatuts = Affectation::whereIn('id', $latestAffectations)
             ->whereNotIn('statut', ['AFFECTE', 'REAFFECTE'])
             ->count();
 
-        // Matériels qui n'ont JAMAIS été affectés
-        $materielsJamaisAffectes = Materiel::whereDoesntHave('affectations')->count();
+        // Matériels jamais affectés
+        $jamaisAffectes = Materiel::whereDoesntHave('affectations')->count();
 
-        // Total non affecté = matériels non affectés (statut autre) + jamais affectés
-        $materielsNonAffectes = $materielsNonAffectesViaAffectation + $materielsJamaisAffectes;
+        // Total non affectés
+        $nonAffectes = $autresStatuts + $jamaisAffectes;
 
-        $labels = ['Non Affecté', 'Affecté ou Réaffecté'];
-        $backgroundColors = ['rgba(43,88,112 ,0.6)', '#f5d004'];
-        $hoverBackgroundColors = ['rgb(43,88,112)', '#f5d004'];
+        $labels = ['Non Affecté', 'Affecté', 'Réaffecté'];
+        $backgroundColors = ['rgba(43,88,112,0.6)', '#4CAF50', '#FFC107'];
+        $hoverBackgroundColors = ['rgb(43,88,112)', '#45A049', '#FFB300'];
 
         $data = [
             'labels' => $labels,
             'datasets' => [
                 [
                     'label' => 'Nombre de matériels',
-                    'data' => [$materielsNonAffectes, $materielsAffectes],
+                    'data' => [$nonAffectes, $affectes, $reaffectes],
                     'backgroundColor' => $backgroundColors,
                     'borderColor' => '#fff',
                     'borderWidth' => 2,
@@ -118,17 +123,23 @@ class DashboardController extends Controller
         return response()->json($data);
     }
 
+
     public function getAffectationByMonth(Request $request)
     {
-        $year = $request->input('year', now()->year); // Récupérer l'année, sinon année actuelle
+        $year = $request->input('year', now()->year);
 
+        // Get assignments per month
         $affectationsParMois = Affectation::selectRaw('MONTH(date_affectation) as mois, COUNT(*) as total')
             ->whereYear('date_affectation', $year)
             ->groupBy('mois')
             ->orderBy('mois')
             ->get();
 
-        // Créer un tableau avec 12 mois initialisés à 0
+        // Get total assignments for the selected year
+        $totalAffectationsParAnnee = Affectation::whereYear('date_affectation', $year)
+            ->count();
+
+        // Create data array with months initialized to 0
         $moisNoms = [
             'Janvier',
             'Février',
@@ -161,7 +172,8 @@ class DashboardController extends Controller
                     'pointBackgroundColor' => 'rgba(75, 192, 192, 1)',
                     'tension' => 0.4
                 ]
-            ]
+            ],
+            'totalParAnnee' => $totalAffectationsParAnnee
         ];
 
         return response()->json($data);

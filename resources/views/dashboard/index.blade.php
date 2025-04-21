@@ -65,20 +65,28 @@
             <canvas id="affectationChart"
                 class="min-w-[35%] max-w-[35%] shadow-xl border border-gray-300 bg-white p-4 rounded-lg max-h-100 min-h-100"></canvas>
         </div>
-        <div class="w-full  p-3 relative bg-white rounded-lg shadow-xl border border-gray-300 max-h-[400px] min-h-[400px]">
-            <h1 class="text-gray-500 italic">Nombre d'affectations par mois : </h1>
-            <div
-                class="w-full h-full flex items-center">
-                <select id="yearSelect" class="border border-gray-400 bg-white w-20 rounded absolute right-5 top-5 z-10">
-                    @foreach ($years as $year)
-                        <option value="{{ $year }}">{{ $year }}</option>
-                    @endforeach
-                </select>
-                <canvas id="affectationLineChart" class="max-h-[90%]"></canvas>
+        <div class="w-full p-3  bg-white rounded-lg shadow-xl border border-gray-300 max-h-[400px] min-h-[400px]">
+            <div class="w-full flex items-center justify-between">
+                <div class="">
+                    <h1 class="text-gray-500 italic underline">Nombre d'affectations par mois & année</h1>
+                </div>
+                <div class="text-gray-700 font-semibold ">
+                    Total :
+                    <span id="totalParAnnee" class="font-bold text-[#0A1C3E]">0</span>
+                </div>
+                <div>
+                    <select id="yearSelect" class="border border-gray-400 bg-white w-20 rounded">
+                        @foreach ($years as $year)
+                            <option value="{{ $year }}">{{ $year }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
+            <canvas id="affectationLineChart" class="max-h-[90%]"></canvas>
         </div>
         <div class="flex justify-end">
-            <a href="https://github.com/Laktab-Noureddine-code/jet-tailwind-laravel.git" target="_blank" class="flex justify-center cursor-pointer items-center gap-3">
+            <a href="https://github.com/Laktab-Noureddine-code/jet-tailwind-laravel.git" target="_blank"
+                class="flex justify-center cursor-pointer items-center gap-3">
                 <button href="#"
                     class="flex overflow-hidden items-center text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-black text-white shadow hover:bg-black/90 h-9 px-4 py-2 max-w-52 whitespace-pre md:flex group relative w-full justify-center gap-2 rounded-md transition-all duration-300 ease-out hover:ring-2 hover:ring-black hover:ring-offset-2">
                     <span
@@ -171,8 +179,19 @@
                     },
                     dataType: 'json',
                     success: function(data) {
-                        console.log(data)
+                        // For debugging - check if data contains totalParAnnee
+                        console.log("Data received:", data);
+
+                        // Update the chart
                         initLineChart(data);
+
+                        // Update the total display
+                        if (data.hasOwnProperty('totalParAnnee')) {
+                            console.log("Setting totalParAnnee to:", data.totalParAnnee);
+                            $('#totalParAnnee').text(data.totalParAnnee);
+                        } else {
+                            console.error("totalParAnnee not found in response data");
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error('Erreur lors de la récupération des données:', error);

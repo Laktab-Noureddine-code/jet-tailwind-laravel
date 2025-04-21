@@ -75,9 +75,9 @@ class Materiels2Seeder extends Seeder
                     Imprimante::create([
                         'materiel_id' => $materiel->id,
                     ]);
-                }elseif($materiel2->type == 'Telephone'){
+                } elseif ($materiel2->type == 'Telephone') {
                     Telephone::create([
-                        'materiel_id'=> $materiel->id,
+                        'materiel_id' => $materiel->id,
                     ]);
                 }
             }
@@ -139,6 +139,21 @@ class Materiels2Seeder extends Seeder
                     }
                 }
             }
+        }
+
+        // Cinquième étape : Mettre à jour l'état des matériels selon le nombre d'affectations
+        $materiels = Materiel::all();
+        foreach ($materiels as $materiel) {
+            // Compter le nombre d'affectations pour ce matériel
+            $affectationsCount = Affectation::where('materiel_id', $materiel->id)->count();
+
+            // Si le matériel a été affecté plus d'une fois, mettre à jour son état à 'occasion'
+            // Sinon, garder sa valeur originale
+            if ($affectationsCount > 1) {
+                $materiel->etat = 'occasion';
+                $materiel->save();
+            }
+            // Si affecté une seule fois ou jamais, on garde la valeur originale
         }
 
         $this->command->info('Données de materiels2 importées avec succès dans les autres tables.');

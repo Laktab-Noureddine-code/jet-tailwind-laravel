@@ -22,37 +22,47 @@ class AffectationController extends Controller
     {
         $query = Affectation::with(['utilisateur', 'materiel']);
 
-        // Vérifier si une recherche est effectuée
-        $search = $request->search;
-        if ($request->has('search') && !empty($request->search)) {
-            $search = $request->search;
+        // Initialize variables with default values
+        $search = $request->input('search', '');
+        $statut = $request->input('statut', '');
 
-            $query->whereHas('utilisateur', function ($q) use ($search) {
-                $q->where('nom', 'LIKE', "%$search%")
-                    ->orWhere('email', 'LIKE', "%$search%")
-                    ->orWhere('departement', 'LIKE', "%$search%")
-                    ->orWhere('telephone', 'LIKE', "%$search%");
-            })
-                ->orWhereHas('materiel', function ($q) use ($search) {
-                    $q->where('fabricant', 'LIKE', "%$search%")
-                        ->orWhere('num_serie', 'LIKE', "%$search%")
-                        ->orWhere('type', 'LIKE', "%$search%")
-                        ->orWhere('etat', 'LIKE', "%$search%");
+        // Apply search filter if present
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('utilisateur', function ($subq) use ($search) {
+                    $subq->where('nom', 'LIKE', "%$search%")
+                        ->orWhere('email', 'LIKE', "%$search%")
+                        ->orWhere('departement', 'LIKE', "%$search%")
+                        ->orWhere('telephone', 'LIKE', "%$search%");
                 })
-                ->orWhere('date_affectation', 'LIKE', "%$search%")
-                ->orWhere('statut', 'LIKE', "%$search%");
+                    ->orWhereHas('materiel', function ($subq) use ($search) {
+                        $subq->where('fabricant', 'LIKE', "%$search%")
+                            ->orWhere('num_serie', 'LIKE', "%$search%")
+                            ->orWhere('type', 'LIKE', "%$search%")
+                            ->orWhere('etat', 'LIKE', "%$search%");
+                    })
+                    ->orWhere('date_affectation', 'LIKE', "%$search%")
+                    ->orWhere('statut', 'LIKE', "%$search%");
+            });
         }
 
-        // Récupérer les résultats paginés
+        // Apply status filter if present
+        if (!empty($statut)) {
+            $query->where('statut', $statut);
+        }
+
+        // Retrieve paginated results
         $affectations = $query->orderBy('created_at', 'desc')
             ->orderBy('statut')
             ->orderBy('date_affectation')
             ->paginate(50)
-            ->appends(["search" => $search]);
+            ->appends([
+                'search' => $search,
+                'statut' => $statut
+            ]);
 
-        return view('affectations.index', compact('affectations', 'search'));
+        return view('affectations.index', compact('affectations', 'search', 'statut'));
     }
-
     public function userExists($utilisateur)
     {
         $utilisateur = Utilisateur::find($utilisateur);

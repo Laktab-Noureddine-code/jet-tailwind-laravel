@@ -24,7 +24,12 @@
     </td>
     <td class="px-6 py-4">
         <span
-            class="inline-flex rounded-full px-2 text-nowrap text-xs font-semibold leading-5 {{ $affectation->statut === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+            class="inline-flex rounded-full text-nowrap px-2 text-xs font-semibold leading-5 
+            {{ $affectation->statut === 'AFFECTE'
+                ? 'bg-green-100 text-green-800'
+                : ($affectation->statut === 'REAFFECTE'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : 'bg-gray-100 text-gray-800') }}">
             {{ $affectation->statut }}
         </span>
     </td>
