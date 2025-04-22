@@ -52,9 +52,9 @@ class AffectationController extends Controller
         }
 
         // Retrieve paginated results
-        $affectations = $query->orderBy('created_at', 'desc')
+        $affectations = $query
             ->orderBy('statut')
-            ->orderBy('date_affectation')
+            ->orderBy('date_affectation' ,'desc')
             ->paginate(50)
             ->appends([
                 'search' => $search,
