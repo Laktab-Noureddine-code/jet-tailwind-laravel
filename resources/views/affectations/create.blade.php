@@ -195,67 +195,79 @@
 
     <script>
         $(document).ready(function() {
-    // Détection automatique lors de la saisie
-    $("#num_serie").on('input', function() {
-        let numSerie = $(this).val();
-        
-        if (numSerie.length >= 3) {
-            $.ajax({
-                url: '/materiels/check/' + numSerie,
-                method: 'GET',
-                success: function(data) {
-                    if (data.exists) {
-                        // Cas 1: Matériel existe → remplissage + lecture seule
-                        $("#fabricant").val(data.materiel.fabricant).prop('readonly', true);
-                        $("#type").val(data.materiel.type).prop('disabled', true);
-                        $("#etat").val(data.materiel.etat).prop('disabled', true);
-                        
-                        // Gestion des sous-types
-                        if (data.materiel.type === 'Telephone') {
-                            $("#phone-fields").show();
-                            $("#pin").val(data.materiel.pin).prop('readonly', true);
-                            $("#puk").val(data.materiel.puk).prop('readonly', true);
-                        } else if (data.materiel.type.includes('PC')) {
-                            $("#pc-fields").show();
-                            $("#processeur").val(data.materiel.processeur).prop('readonly', true);
-                            // ... autres champs PC
+            // Initially disable the button
+            $("#submitBtn").prop('disabled', true).addClass('opacity-50 cursor-not-allowed');
+            $('#submitBtn').attr('type', 'button');
+
+            $("#num_serie").on('keyup', function() {
+                let numSerie = $(this).val();
+
+                if (numSerie.length >= 3) {
+                    $.ajax({
+                        url: '/affectation/getByNum/' + numSerie,
+                        method: 'GET',
+                        dataType: "json",
+                        success: function(data) {
+                            console.log('Success:', data);
+                            // Enable the button and change styles
+                            $("#submitBtn").prop('disabled', false)
+                                .removeClass('opacity-50 cursor-not-allowed');
+                            $('#submitBtn').attr('type', 'submit');
+
+                            // Fill the fields with the fetched data
+                            $("#fabricant").val(data.fabricant);
+                            $("#type").val(data.type);
+                            $("#etat").val(data.etat);
+                            $("#id_materiel").val(data.id);
+
+                            if (data.processeur && data.ram && data.stockage) {
+                                $("#ordinateur").slideDown("slow");
+                                $("#processeur").val(data.processeur);
+                                $("#ram").val(data.ram);
+                                $("#stockage").val(data.stockage);
+                                $("#id_materiel").val(data.id);
+                            } else {
+                                $("#ordinateur").slideUp();
+                                $("#processeur").val('');
+                                $("#ram").val('');
+                                $("#stockage").val('');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log('Error:', xhr, status, error);
+                            // Disable the button and reset styles
+                            $("#submitBtn").prop('disabled', true)
+                                .addClass('opacity-50 cursor-not-allowed');
+                            $('#submitBtn').attr('type', 'button');
+
+                            // Reset all fields
+                            $("#ordinateur").slideUp();
+                            $("#fabricant").val('');
+                            $("#type").val('');
+                            $("#etat").val('');
+                            $("#processeur").val('');
+                            $("#ram").val('');
+                            $("#stockage").val('');
+                            $("#id_materiel").val('');
                         }
-                        
-                        // Ajout ID matériel caché
-                        $("<input>").attr({
-                            type: "hidden",
-                            name: "materiel_id",
-                            value: data.materiel.id
-                        }).appendTo("form");
-                        
-                    } else {
-                        // Cas 2: Nouveau matériel → réinitialisation
-                        $("#fabricant, #pin, #puk, #processeur").val('').prop('readonly', false);
-                        $("#type, #etat").prop('disabled', false);
-                        $("input[name='materiel_id']").remove();
-                        
-                        // Cacher tous les sous-groupes
-                        $("#phone-fields, #pc-fields").hide();
-                    }
+                    });
+                } else {
+                    // If the serial number is too short, disable the button and reset styles
+                    $("#submitBtn").prop('disabled', true)
+                        .addClass('opacity-50 cursor-not-allowed');
+                    $('#submitBtn').attr('type', 'button');
+
+                    // Reset all fields
+                    $("#ordinateur").slideUp();
+                    $("#fabricant").val('');
+                    $("#type").val('');
+                    $("#etat").val('');
+                    $("#processeur").val('');
+                    $("#ram").val('');
+                    $("#stockage").val('');
+                    $("#id_materiel").val('');
                 }
             });
-        } else {
-            // Réinitialiser si numéro trop court
-            $("#fabricant, #pin, #puk").val('').prop('readonly', false);
-            $("#type, #etat").prop('disabled', false);
-            $("input[name='materiel_id']").remove();
-        }
-    });
-    
-    // Gestion dynamique du type de matériel
-    $("#type").change(function() {
-        $("#phone-fields, #pc-fields").hide();
-        if ($(this).val() === 'Telephone') {
-            $("#phone-fields").show();
-        } else if ($(this).val().includes('PC')) {
-            $("#pc-fields").show();
-        }
-    });
-});
+        });
     </script>
 @endsection
