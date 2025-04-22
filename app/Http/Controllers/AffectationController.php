@@ -194,6 +194,7 @@ class AffectationController extends Controller
             return back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
         }
     }
+    
 
     /**
      * Show the form for creating a new resource.
