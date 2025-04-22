@@ -60,7 +60,10 @@ class OrdinateurController extends Controller
             $last = $lastAffectations->get($ordinateur->materiel_id)?->first();
             $ordinateur->statut = $last ? $last->statut : 'NON AFFECTE';
         }
-
+        $ordinateurs = $ordinateurs->sortBy(function ($item) {
+            // "NON AFFECTE" vient en premier (0), les autres ensuite (1)
+            return $item->statut === 'NON AFFECTE' ? 0 : 1;
+        })->values();
         // Retour à la vue
         return view('materiels.ordinateurs.index', compact('ordinateurs', 'search'));
     }

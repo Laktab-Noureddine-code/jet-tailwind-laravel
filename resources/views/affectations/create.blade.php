@@ -220,7 +220,7 @@
                             $("#etat").val(data.etat);
                             $("#id_materiel").val(data.id);
 
-                            if (data.processeur && data.ram && data.stockage) {
+                            if (data.processeur || data.ram || data.stockage) {
                                 $("#ordinateur").slideDown("slow");
                                 $("#processeur").val(data.processeur);
                                 $("#ram").val(data.ram);

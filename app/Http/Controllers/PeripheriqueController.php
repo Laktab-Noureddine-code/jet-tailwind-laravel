@@ -39,6 +39,10 @@ class PeripheriqueController extends Controller
         $peripheriques->each(function ($materiel) {
             $materiel->statut = $materiel->affectations->first()->statut ?? 'NON AFFECTE';
         });
+        $peripheriques = $peripheriques->sortBy(function ($item) {
+            // "NON AFFECTE" vient en premier (0), les autres ensuite (1)
+            return $item->statut === 'NON AFFECTE' ? 0 : 1;
+        })->values();
 
         return view('materiels.périphériques.index', compact('peripheriques', 'search'));
     }

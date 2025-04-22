@@ -70,6 +70,10 @@ class ImprimanteController extends Controller
             $last = $lastAffectations->get($imprimante->materiel_id)?->first();
             $imprimante->statut = $last ? $last->statut : 'NON AFFECTE';
         }
+        $imprimantes = $imprimantes->sortBy(function ($item) {
+            // "NON AFFECTE" vient en premier (0), les autres ensuite (1)
+            return $item->statut === 'NON AFFECTE' ? 0 : 1;
+        })->values();
         return view('materiels.imprimantes.index', compact('imprimantes', 'search'));
     }
 
