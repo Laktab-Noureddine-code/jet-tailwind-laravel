@@ -10,7 +10,6 @@ use App\Models\Telephone;
 use App\Models\Type;
 use App\Models\User;
 use App\Models\Utilisateur;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

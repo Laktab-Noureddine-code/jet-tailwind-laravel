@@ -16,12 +16,11 @@ class DashboardController extends Controller
     public function index()
     {
         if(Auth::user()->role === 'admin'){
-            $notifications = Notification::where('is_read' ,false)->count();
             $totalMateriels = Materiel::count();
             $totalUtilisateurs = Utilisateur::count();
             $years = Affectation::selectRaw('year(date_affectation) as year')->distinct()->orderBy('year' ,'desc')->pluck('year');
             $types = Type::all()->select('type')->pluck('type');
-            return view('dashboard.index' ,compact('totalMateriels' , 'totalUtilisateurs' ,'years' , 'types' , 'notifications'));
+            return view('dashboard.index' ,compact('totalMateriels' , 'totalUtilisateurs' ,'years' , 'types'));
         }else{
             return redirect()->route('recrutements.index');
         }

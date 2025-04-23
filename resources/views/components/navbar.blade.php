@@ -48,7 +48,7 @@
                         </a>
                     </li>
 
-                    
+
 
                     <div class="mt-6">
                         <p class="text-xs font-medium text-gray-400 px-3 mb-2">SETTINGS</p>
@@ -63,7 +63,7 @@
                             <a href="{{ route('notifications.index') }}"
                                 class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('notifications*') ? 'bg-[#2a3955]' : 'hover:bg-[#1a2c4e]' }}">
                                 <i class="fa-solid fa-bell text-[16px] w-6"></i>
-                                <span>Notifications</span>
+                                <span class="flex items-center gap-3">Notifications <span id="notifications"></span></span>
                             </a>
                         </li>
                         <li>
@@ -101,3 +101,23 @@
         </ul>
     </div>
 </nav>
+<script>
+    $(document).ready(function() {
+        function getData() {
+            $.ajax({
+                url: '/not_read',
+                method: 'GET',
+                success: function(data) {
+                    if(data.notifications > 0){
+                        $('#notifications').empty()
+                        $('#notifications').append(
+                            `<span class='flex items-center justify-center text-black size-5 text-lg bg-red-500 rounded-full'>${data.notifications}</span>`
+                        )
+                    }
+                }
+            })
+        }
+        setInterval(getData,1000);
+        getData()
+    })
+</script>

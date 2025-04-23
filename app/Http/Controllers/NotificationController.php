@@ -54,6 +54,10 @@ class NotificationController extends Controller
         // dd($notifications);
         return view('notifications.index', compact('notifications'));
     }
+    public function not_read(){
+        $notifications = Notification::where('is_read', false)->count();
+        return response()->json(['notifications' => $notifications]);
+    }
 
 
     /**

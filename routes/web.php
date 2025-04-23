@@ -77,7 +77,6 @@ Route::middleware("auth")->group(function () {
 
     // settings
 
-
     // trash
     Route::get('/trash', [trashController::class, 'index'])->name('trash.index');
     Route::delete('/trash/{type}/{id}', [trashController::class, 'forceDelete'])->name('trash.forceDelete');
@@ -99,6 +98,8 @@ Route::middleware("auth")->group(function () {
     // Route::get('/big-affectation/{bigAffectation}/download', [BigAffectationController::class, 'downloadFile'])->name('download.big.file');
     // Route::delete('/big-affectation/{bigAffectation}/delete-file', [BigAffectationController::class, 'deleteFile'])->name('delete.big.file');
     Route::delete('/big-affectation/{bigAffectation}', [PdfController::class, 'deleteBigAffectation'])->name('delete.big.affectation');
+
+    Route::get('/not_read' ,[NotificationController::class ,'not_read'])->name('notifications.not_read');
 });
 
 Route::middleware('guest')->group(function () {
