@@ -64,8 +64,8 @@
                                 class="flex items-center px-3 py-2 text-white rounded-md {{ request()->routeIs('notifications*') ? 'bg-[#2a3955]' : 'hover:bg-[#1a2c4e]' }}">
                                 <i class="fa-solid fa-bell text-[16px] w-6"></i>
                                 <span class="flex items-center gap-3">Notifications
-                                     <span id="notifications" class="flex items-center justify-center text-white max-w-5 min-w-5 max-h-5 min-h-5 text-lg bg-red-700 rounded-full"></span>
-                                    </span>
+                                    <span id="notifications"></span>
+                                </span>
                             </a>
                         </li>
                         <li>
@@ -110,16 +110,16 @@
                 url: '/not_read',
                 method: 'GET',
                 success: function(data) {
-                    if(data.notifications > 0){
+                    if (data.notifications > 0) {
                         $('#notifications').empty()
                         $('#notifications').append(
-                            `<span>${data.notifications}</span>`
+                            `<span class='flex items-center justify-center text-white max-w-5 min-w-5 max-h-5 min-h-5 text-lg bg-red-700 rounded-full'><p>${data.notifications}</p></span>`
                         )
                     }
                 }
             })
         }
-        setInterval(getData,5000);
+        setInterval(getData, 10000);
         getData()
     })
 </script>

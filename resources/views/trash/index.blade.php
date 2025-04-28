@@ -110,7 +110,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form
-                                                action="{{ route('trash.forceDelete', ['type' => 'ordinateur', 'id' => $ordinateur->id]) }}"
+                                                action="{{ route('trash.forceDelete', ['type' => $ordinateur->materiel->type , 'id' => $ordinateur->id]) }}"
                                                 method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
@@ -209,7 +209,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form
-                                                action="{{ route('trash.forceDelete', ['type' => 'imprimante', 'id' => $imprimante->id]) }}"
+                                                action="{{ route('trash.forceDelete', ['type' => $imprimante->materiel->type, 'id' => $imprimante->id]) }}"
                                                 method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
@@ -264,7 +264,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form
-                                                action="{{ route('trash.forceDelete', ['type' => 'telephone', 'id' => $telephone->id]) }}"
+                                                action="{{ route('trash.forceDelete', ['type' => 'Telephone', 'id' => $telephone->id]) }}"
                                                 method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
@@ -313,7 +313,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form
-                                                action="{{ route('trash.forceDelete', ['type' => 'peripherique', 'id' => $peripherique->id]) }}"
+                                                action="{{ route('trash.forceDelete', ['type' => 'Peripherique', 'id' => $peripherique->id]) }}"
                                                 method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')

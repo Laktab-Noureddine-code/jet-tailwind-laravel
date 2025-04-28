@@ -11,6 +11,7 @@ use App\Models\Telephone;
 use App\Models\Recrutement;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class trashController extends Controller
 {
@@ -94,36 +95,71 @@ class trashController extends Controller
 
     public function forceDelete($type, $id)
     {
-        switch ($type) {
-            case 'affectation':
-                $item = Affectation::onlyTrashed()->findOrFail($id);
-                break;
-            case 'ordinateur':
-                $item = Ordinateur::onlyTrashed()->findOrFail($id);
-                break;
-            case 'imprimante':
-                $item = Imprimante::onlyTrashed()->findOrFail($id);
-                break;
-            case 'telephone':
-                $item = Telephone::onlyTrashed()->findOrFail($id);
-                break;
-            case 'peripherique':
-                $item = Materiel::onlyTrashed()->findOrFail($id);
-                break;
-            case 'recrutement':
-                $item = Recrutement::onlyTrashed()->findOrFail($id);
-                break;
-            case 'notification':
-                $item = Notification::onlyTrashed()->findOrFail($id);
-                break;
-            default:
-                return redirect()->route('trash.index')
-                    ->with('error', 'Type d\'élément invalide.');
+        DB::beginTransaction();
+        try {
+            switch ($type) {
+                case 'affectation':
+                    $item = Affectation::onlyTrashed()->findOrFail($id);
+                    break;
+
+                case 'Pc Portable':
+                case 'PC Portable':
+                case 'Pc Bureau':
+                case 'PC Bureau':
+                    $item = Ordinateur::onlyTrashed()->findOrFail($id);
+                    $materiel = Materiel::withTrashed()->where('id', $item->materiel_id)->first();
+                    if ($materiel) {
+                        $materiel->forceDelete();
+                    }
+                    break;
+
+                case 'Imprimante':
+                    $item = Imprimante::onlyTrashed()->findOrFail($id);
+                    // Delete associated materiel using direct query
+                    $materiel = Materiel::withTrashed()->where('id', $item->materiel_id)->first();
+                    if ($materiel) {
+                        $materiel->forceDelete();
+                    }
+                    break;
+
+                case 'Telephone':
+                    $item = Telephone::onlyTrashed()->findOrFail($id);
+                    // Delete associated materiel using direct query
+                    $materiel = Materiel::withTrashed()->where('id', $item->materiel_id)->first();
+                    if ($materiel) {
+                        $materiel->forceDelete();
+                    }
+                    break;
+
+                case 'Peripherique':
+                    $item = Materiel::onlyTrashed()->findOrFail($id);
+                    break;
+
+                case 'recrutement':
+                    $item = Recrutement::onlyTrashed()->findOrFail($id);
+                    break;
+
+                case 'notification':
+                    $item = Notification::onlyTrashed()->findOrFail($id);
+                    break;
+
+                default:
+                    DB::rollBack();
+                    return redirect()->route('trash.index')
+                        ->with('error', 'Type d\'élément invalide.');
+            }
+
+            // Perform the main deletion
+            $item->forceDelete();
+
+            DB::commit();
+
+            return redirect()->route('trash.index')
+                ->with('success', 'L\'élément a été supprimé définitivement.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('trash.index')
+                ->with('error', 'Erreur lors de la suppression: ' . $e->getMessage());
         }
-
-        $item->forceDelete();
-
-        return redirect()->route('trash.index')
-            ->with('success', 'L\'élément a été supprimé définitivement.');
     }
 }
