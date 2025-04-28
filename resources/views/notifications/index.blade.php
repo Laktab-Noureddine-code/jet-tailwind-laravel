@@ -91,6 +91,15 @@
                                                 title="Modifier">
                                                 <i class="fa-regular fa-pen-to-square"></i>
                                             </a>
+                                            <form action="{{ route('recrutements.destroy', $notification->recrutement) }}" method="POST"
+                                                class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600"
+                                                    onclick="return confirm('Êtes-vous sûr ?')">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
                                             <form action="{{ route('notifications.valider', $notification->id) }}"
                                                 method="POST" class="inline">
                                                 @csrf
