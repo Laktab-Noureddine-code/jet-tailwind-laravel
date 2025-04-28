@@ -19,7 +19,6 @@
                             <th class="px-2 py-2">Date d'Affectation</th>
                             <th class="px-8 py-2">Modèle</th>
                             <th class="px-2 py-2">Type</th>
-                            <th class="px-2 py-2">Chantier</th>
                             <th class="px-2 py-2">Statut</th>
                             <th class="px-2 py-2">Numéro de Série</th>
                             <th class="px-2 py-2">État</th>
