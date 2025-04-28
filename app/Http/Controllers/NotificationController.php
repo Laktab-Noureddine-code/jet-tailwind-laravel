@@ -255,4 +255,20 @@ class NotificationController extends Controller
 
         return redirect()->route('notifications.index')->with('success', 'Notification supprimée avec succès.');
     }
+
+    public function checkNumSerie(Request $request)
+    {
+        $material = Materiel::where('num_serie', $request->num_serie)->first();
+
+        if ($material) {
+            return response()->json([
+                'exists' => true,
+                'model' => $material->fabricant,
+                'type' => $material->type,
+                'etat' => $material->etat
+            ]);
+        }
+
+        return response()->json(['exists' => false]);
+    }
 }
