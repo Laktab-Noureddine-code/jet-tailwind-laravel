@@ -17,6 +17,7 @@
                     <thead class="text-xs uppercase text-white">
                         <tr class="bg-[#0A1C3E]">
                             <th scope="col" class="px-6 py-4">Numéro de Série</th>
+                            <th scope="col" class="px-6 py-4">Numéro de Commande</th>
                             <th scope="col" class="px-6 py-4">Modèle</th>
                             <th scope="col" class="px-6 py-4">Type</th>
                             <th scope="col" class="px-6 py-4">Statut</th>

@@ -32,6 +32,7 @@ class ImprimanteController extends Controller
                     // Recherche par mot-clé dans les champs des matériels, imprimantes et utilisateurs
                     $q->where('materiels.fabricant', 'like', "%{$search}%")
                         ->orWhere('materiels.num_serie', 'like', "%{$search}%")
+                        ->orWhere('materiels.num_commande', 'like', "%{$search}%")
                         ->orWhere('imprimantes.identifiant_noir', 'like', "%{$search}%")
                         ->orWhere('imprimantes.identifiant_bleu', 'like', "%{$search}%")
                         ->orWhere('imprimantes.identifiant_magenta', 'like', "%{$search}%")
@@ -46,6 +47,7 @@ class ImprimanteController extends Controller
                 'materiels.fabricant',
                 'materiels.type',
                 'materiels.num_serie',
+                'materiels.num_commande',
                 'materiels.etat',
                 'imprimantes.identifiant_noir',
                 'imprimantes.toner_noir',
@@ -91,6 +93,7 @@ class ImprimanteController extends Controller
         $request->validate([
             'fabricant' => 'required|string|max:255',
             'num_serie' => 'required|string|max:255|unique:materiels,num_serie',
+            'num_commande' => 'required|string',
             'etat' => 'required|string|max:50',
             'identifiant_noir' => 'nullable|string|max:100',
             'toner_noir' => 'nullable|integer|min:0',
@@ -107,6 +110,7 @@ class ImprimanteController extends Controller
         $materiel = Materiel::create([
             'fabricant' => $request->fabricant,
             'num_serie' => $request->num_serie,
+            'num_commande' => $request->num_commande,
             'etat' => $request->etat,
             'type' => 'Imprimante', // Le type est toujours "IMPRIMANTE"
         ]);
@@ -151,6 +155,7 @@ class ImprimanteController extends Controller
                 'materiels.fabricant',
                 'materiels.type',
                 'materiels.num_serie',
+                'materiels.num_commande',
                 'materiels.etat',
                 'imprimantes.identifiant_noir',
                 'imprimantes.toner_noir',
@@ -177,6 +182,7 @@ class ImprimanteController extends Controller
         $request->validate([
             'fabricant' => 'required|string|max:255',
             'num_serie' => 'required|string|max:255|unique:materiels,num_serie,' . $imprimante,
+            'num_commande' => 'required|string|max:255',
             'etat' => 'required|string|max:50',
             'identifiant_noir' => 'nullable|string|max:100',
             'toner_noir' => 'nullable|integer|min:0',
@@ -197,6 +203,7 @@ class ImprimanteController extends Controller
         $materiel->update([
             'fabricant' => $request->fabricant,
             'num_serie' => $request->num_serie,
+            'num_commande' => $request->num_commande,
             'etat' => $request->etat,
         ]);
 

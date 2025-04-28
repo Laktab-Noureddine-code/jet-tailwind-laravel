@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
                 'num_serie' => 'PC' . $faker->unique()->numberBetween(10000, 99999),
                 'fabricant' => $faker->randomElement(['HP', 'Dell', 'Lenovo', 'Apple', 'Samsung']),
                 'type' => $type,
-                'etat' => $faker->randomElement(['Neuf', 'Bon état', 'À réparer', 'Hors service'])
+                'etat' => $faker->randomElement(['Neuf', 'Occasion'])
             ]);
 
             Ordinateur::create([
@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
                     'num_serie' => substr($type, 0, 2) . $faker->unique()->numberBetween(10000, 99999),
                     'fabricant' => $faker->randomElement(['Logitech', 'Microsoft', 'Dell', 'HP', 'Corsair']),
                     'type' => $type,
-                    'etat' => $faker->randomElement(['Neuf', 'Bon état', 'À réparer', 'Hors service'])
+                    'etat' => $faker->randomElement(['Neuf', 'Occasion'])
                 ]);
             }
         }
@@ -100,7 +100,7 @@ class DatabaseSeeder extends Seeder
                 'num_serie' => 'IMP' . $faker->unique()->numberBetween(10000, 99999),
                 'fabricant' => $faker->randomElement(['HP', 'Canon', 'Epson', 'Brother']),
                 'type' => 'Imprimante',
-                'etat' => $faker->randomElement(['Neuf', 'Bon état', 'À réparer', 'Hors service'])
+                'etat' => $faker->randomElement(['Neuf', 'Occasion'])
             ]);
 
             Imprimante::create([
@@ -122,7 +122,7 @@ class DatabaseSeeder extends Seeder
                 'num_serie' => 'TEL' . $faker->unique()->numberBetween(10000, 99999),
                 'fabricant' => $faker->randomElement(['Apple', 'Samsung', 'Google', 'Xiaomi']),
                 'type' => 'Telephone',
-                'etat' => $faker->randomElement(['Neuf', 'Bon état', 'À réparer', 'Hors service'])
+                'etat' => $faker->randomElement(['Neuf', 'Occasion'])
             ]);
 
             Telephone::create([
@@ -133,11 +133,11 @@ class DatabaseSeeder extends Seeder
         }
 
         // Création des affectations (120 - pour avoir une bonne distribution)
-        for ($i = 0; $i < 120; $i++) {
+        for ($i = 0; $i < 190; $i++) {
             Affectation::create([
                 'materiel_id' => $faker->numberBetween(1, Materiel::count()),
                 'utilisateur_id' => $faker->numberBetween(1, 30),
-                'date_affectation' => $faker->dateTimeBetween('-1 year', 'now'),
+                'date_affectation' => $faker->dateTimeBetween('-10 year', 'now'),
                 'statut' => $faker->randomElement(['AFFECTE', 'RENDU', 'EN PANNE']),
                 'chantier' => $faker->randomElement(['Chantier A', 'Chantier B', 'Chantier C', 'Bureau']),
                 'utilisateur1' => $faker->name

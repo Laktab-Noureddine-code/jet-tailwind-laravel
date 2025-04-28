@@ -19,13 +19,23 @@
                         <!-- Section 1: Informations de base -->
                         <div class="space-y-4">
                             <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations de base</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Modèle</label>
                                     <input type="text" name="fabricant"
                                         value="{{ old('fabricant', $peripherique->fabricant) }}" required
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('fabricant') outline-red-500 @enderror">
                                     @error('fabricant')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de commande</label>
+                                    <input type="text" name="num_commande"
+                                        value="{{ old('num_commande', $peripherique->num_commande) }}" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('num_commande') outline-red-500 @enderror">
+                                    @error('num_commande')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>

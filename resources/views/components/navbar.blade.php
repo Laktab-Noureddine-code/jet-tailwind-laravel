@@ -102,22 +102,22 @@
     </div>
 </nav>
 <script>
-    $(document).ready(function() {
-        function getData() {
-            $.ajax({
-                url: '/not_read',
-                method: 'GET',
-                success: function(data) {
-                    if(data.notifications > 0){
-                        $('#notifications').empty()
-                        $('#notifications').append(
-                            `<span class='flex items-center justify-center text-black size-5 text-lg bg-red-500 rounded-full'>${data.notifications}</span>`
-                        )
-                    }
-                }
-            })
-        }
-        setInterval(getData,1000);
-        getData()
-    })
+    // $(document).ready(function() {
+    //     function getData() {
+    //         $.ajax({
+    //             url: '/not_read',
+    //             method: 'GET',
+    //             success: function(data) {
+    //                 if(data.notifications > 0){
+    //                     $('#notifications').empty()
+    //                     $('#notifications').append(
+    //                         `<span class='flex items-center justify-center text-black size-5 text-lg bg-red-500 rounded-full'>${data.notifications}</span>`
+    //                     )
+    //                 }
+    //             }
+    //         })
+    //     }
+    //     setInterval(getData,1000);
+    //     getData()
+    // })
 </script>

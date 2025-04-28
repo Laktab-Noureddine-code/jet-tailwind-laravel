@@ -1,6 +1,7 @@
 @props(['ordinateur'])
 <tr class="border-b bg-white hover:bg-gray-50" data-statut="{{ $ordinateur->statut }}">
     <td class="px-6 py-4 font-medium text-gray-900">{{ $ordinateur->num_serie }}</td>
+    <td class="px-6 py-4 font-medium text-gray-900">{{ $ordinateur->num_commande }}</td>
     <td class="px-6 py-4">{{ $ordinateur->fabricant }}</td>
     <td class="px-6 py-4">
         <span class="inline-flex text-nowrap rounded-full bg-blue-100 px-2 text-xs font-semibold leading-5 text-blue-800">

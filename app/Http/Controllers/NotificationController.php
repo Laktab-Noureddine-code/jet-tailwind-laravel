@@ -36,6 +36,7 @@ class NotificationController extends Controller
                     ->orWhere('departement', 'LIKE', "%$search%")
                     ->orWhere('telephone', 'LIKE', "%$search%")
                     ->orWhere('model', 'LIKE', "%$search%")
+                    ->orWhere('chantier', 'LIKE', "%$search%")
                     ->orWhere('type', 'LIKE', "%$search%")
                     ->orWhere('num_serie', 'LIKE', "%$search%")
                     ->orWhere('date_affectation', 'LIKE', "%$search%")
@@ -60,99 +61,6 @@ class NotificationController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    // public function valider(Notification $notification)
-    // {
-    //     // Récupérer le recrutement lié à cette notification
-    //     $recrutement = $notification->recrutement;
-
-    //     // Vérifier si le recrutement existe
-    //     if (!$recrutement) {
-    //         return redirect()->route('notifications.index')->with('error', 'Recrutement introuvable.');
-    //     }
-    //     $requiredFields = [
-    //         'nom' => $recrutement->nom,
-    //         'email' => $recrutement->email,
-    //         'fonction' => $recrutement->fonction,
-    //         'telephone' => $recrutement->telephone,
-    //         'date_affectation' => $recrutement->date_affectation,
-    //         'model' => $recrutement->model,
-    //         'num_serie' => $recrutement->num_serie,
-    //     ];
-
-    //     foreach ($requiredFields as $field => $value) {
-    //         if (empty($value)) {
-    //             return redirect()->route('notifications.index')
-    //                 ->with('error', "Le champ {$field} du recrutement est manquant.");
-    //         }
-    //     }
-    //     $validator = Validator::make([
-    //         'num_serie' => $recrutement->num_serie,
-    //     ], [
-    //         'num_serie' => 'required|unique:materiels,num_serie',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return redirect()->route('notifications.index')
-    //             ->with('error', 'Le numéro de série est déjà utilisé.');
-    //     }
-
-    //     // Mettre à jour le statut du recrutement à "validé"
-    //     $recrutement->update(['status' => 'validé']);
-
-    //     // Créer ou récupérer l'utilisateur
-    //     $utilisateur = Utilisateur::firstOrCreate(
-    //         ['email' => $recrutement->email],
-    //         [
-    //             'nom' => $recrutement->nom,
-    //             'fonction' => $recrutement->fonction,
-    //             'telephone' => $recrutement->telephone,
-    //             'departement' => $recrutement->departement,
-    //         ]
-    //     );
-
-    //     // Créer le matériel
-    //     $materiel = Materiel::create([
-    //         'fabricant' => $recrutement->model,
-    //         'type' => $notification->type,
-    //         'num_serie' => $recrutement->num_serie,
-    //         'etat' => $notification->etat,
-    //     ]);
-
-    //     // Si le matériel est un téléphone, créer une entrée dans la table "telephones"
-    //     if ($notification->type == 'Telephone') {
-    //         Telephone::create([
-    //             'pin' => $recrutement->pin,
-    //             'puk' => $recrutement->puk,
-    //             'materiel_id' => $materiel->id,
-    //         ]);
-    //     } elseif ($notification->type == 'PC Portable' || $notification->type == 'PC Bureau') {
-    //         Ordinateur::create([
-    //             'materiel_id' => $materiel->id,
-    //         ]);
-    //     } elseif ($notification->type == 'Imprimante') {
-    //         Imprimante::create([
-    //             'materiel_id' => $materiel->id,
-    //         ]);
-    //     }
-
-    //     // Créer l'affectation
-    //     Affectation::create([
-    //         'materiel_id' => $materiel->id,
-    //         'utilisateur_id' => $utilisateur->id,
-    //         'date_affectation' => $recrutement->date_affectation,
-    //         'chantier' => $notification->chantier,
-    //         'statut' => 'AFFECTE',
-    //         'utilisateur1' => $notification->utilisateur
-    //     ]);
-
-    //     // Marquer la notification comme lue
-    //     $notification->update(['is_read' => true]);
-
-    //     return redirect()->route('notifications.index')->with('success', 'Recrutement validé et matériel affecté.');
-    // }
 
     public function valider(Notification $notification)
     {
@@ -255,7 +163,7 @@ class NotificationController extends Controller
             'materiel_id' => $materiel->id,
             'utilisateur_id' => $utilisateur->id,
             'date_affectation' => $recrutement->date_affectation,
-            'chantier' => $notification->chantier,
+            'chantier' => $recrutement->chantier,
             'statut' => $statut,
             'utilisateur1' => $notification->utilisateur
         ]);
@@ -289,7 +197,7 @@ class NotificationController extends Controller
             'fonction' => 'required|string|max:255',
             'type_contrat' => 'required',
             'date_affectation' => 'required',
-            'telephone' => 'nullable|string',
+            'telephone' => 'nullable|string|max:15',
             'fabricant' => 'nullable|string|max:255',
             'num_serie' => 'required',
             'type' => 'nullable|string',
@@ -319,6 +227,7 @@ class NotificationController extends Controller
             'date_affectation' => $request->date_affectation,
             'puk' => $request->puk,
             'pin' => $request->pin,
+            'chantier' => $request->chantier,
         ]);
 
 
@@ -326,9 +235,7 @@ class NotificationController extends Controller
         $notification->update([
             'type' => $request->type,
             'etat' => $request->etat,
-            'chantier' => $request->chantier,
         ]);
-
         return redirect()->route('notifications.index')->with('success', 'Notification et recrutement mis à jour avec succès.');
     }
 

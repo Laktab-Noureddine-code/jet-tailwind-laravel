@@ -27,6 +27,7 @@ class OrdinateurController extends Controller
                 return $query->where(function ($q) use ($search) {
                     $q->where('materiels.fabricant', 'like', "%{$search}%")
                         ->orWhere('materiels.num_serie', 'like', "%{$search}%")
+                        ->orWhere('materiels.num_commande', 'like', "%{$search}%")
                         ->orWhere('materiels.etat', 'like', "%{$search}%")
                         ->orWhere('materiels.type', 'like', "%{$search}%")
                         ->orWhere('ordinateurs.ram', 'like', "%{$search}%")
@@ -40,6 +41,7 @@ class OrdinateurController extends Controller
                 'materiels.fabricant',
                 'materiels.type',
                 'materiels.num_serie',
+                'materiels.num_commande',
                 'materiels.etat',
                 'ordinateurs.ram',
                 'ordinateurs.stockage',
@@ -84,6 +86,7 @@ class OrdinateurController extends Controller
             'fabricant' => 'required|string',
             'type' => 'required|string',
             'num_serie' => 'required|unique:materiels,num_serie',
+            'num_commande' => 'required',
             'etat' => 'required|string',
         ]);
 
@@ -92,6 +95,7 @@ class OrdinateurController extends Controller
             'fabricant' => $request->fabricant,
             'type' => $request->type,
             'num_serie' => $request->num_serie,
+            'num_commande' => $request->num_commande,
             'etat' => $request->etat,
         ]);
 
@@ -134,6 +138,7 @@ class OrdinateurController extends Controller
             'fabricant' => 'required|string',
             'type' => 'required|string',
             'num_serie' => 'required|unique:materiels,num_serie,' . $ordinateur->materiel->id,
+            'num_commande' => 'required',
             'etat' => 'required|string',
         ]);
 
@@ -142,6 +147,7 @@ class OrdinateurController extends Controller
             'fabricant' => $request->fabricant,
             'type' => $request->type,
             'num_serie' => $request->num_serie,
+            'num_commande' => $request->num_commande,
             'etat' => $request->etat,
         ]);
 

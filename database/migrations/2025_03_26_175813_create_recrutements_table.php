@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('fonction');
-            $table->string('departement')->nullable();
-            $table->string('date_affectation')->nullable();
-            $table->string('email')->nullable();
-            $table->string('type_contrat')->nullable();
-            $table->string('telephone')->nullable();
+            $table->string('departement');
+            $table->string('date_affectation');
+            $table->string('email');
+            $table->string('type_contrat');
+            $table->string('telephone');
             $table->string('model')->nullable();
             $table->string('num_serie')->unique()->nullable();
             $table->string('puk')->nullable();

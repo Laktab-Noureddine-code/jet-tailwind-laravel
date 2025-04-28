@@ -29,6 +29,7 @@ class PeripheriqueController extends Controller
                 return $query->where(function ($q) use ($search) {
                     $q->where('fabricant', 'like', "%$search%")
                         ->orWhere('num_serie', 'like', "%$search%")
+                        ->orWhere('num_commande', 'like', "%$search%")
                         ->orWhere('etat', 'like', "%$search%")
                         ->orWhere('type', 'like', "%$search%");
                 });
@@ -67,6 +68,7 @@ class PeripheriqueController extends Controller
             'fabricant' => 'required|string|max:255',
             'type' => 'required|string',
             'num_serie' => 'required|string|max:255|unique:materiels,num_serie',
+            'num_commande' => 'required|string|max:255',
             'etat' => 'required|string|max:50',
         ]);
 
@@ -75,6 +77,7 @@ class PeripheriqueController extends Controller
             'fabricant' => $request->fabricant,
             'type' => $request->type,
             'num_serie' => $request->num_serie,
+            'num_commande' => $request->num_commande,
             'etat' => $request->etat,
         ]);
 
@@ -117,6 +120,7 @@ class PeripheriqueController extends Controller
             'fabricant' => 'required|string|max:255',
             'type' => 'required|string',
             'num_serie' => 'required|string|max:255|unique:materiels,num_serie,' . $id,
+            'num_commande' => 'required|string|max:255',
             'etat' => 'required|string|max:50',
         ]);
 
@@ -128,6 +132,7 @@ class PeripheriqueController extends Controller
             'fabricant' => $request->fabricant,
             'type' => $request->type,
             'num_serie' => $request->num_serie,
+            'num_commande' => $request->num_commande,
             'etat' => $request->etat,
         ]);
 

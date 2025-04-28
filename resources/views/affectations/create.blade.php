@@ -195,13 +195,10 @@
 
     <script>
         $(document).ready(function() {
-            // Initially disable the button
             $("#submitBtn").prop('disabled', true).addClass('opacity-50 cursor-not-allowed');
             $('#submitBtn').attr('type', 'button');
-
             $("#num_serie").on('keyup', function() {
                 let numSerie = $(this).val();
-
                 if (numSerie.length >= 3) {
                     $.ajax({
                         url: '/affectation/getByNum/' + numSerie,

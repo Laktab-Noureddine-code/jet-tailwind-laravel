@@ -1,6 +1,7 @@
 @props(['imprimante'])
 <tr class="border-b text-sm bg-white hover:bg-gray-50" data-statut="{{ $imprimante->statut }}">
     <td class="px-2 py-2 font-medium text-gray-900">{{ $imprimante->num_serie }}</td>
+    <td class="px-2 py-2 font-medium text-gray-900">{{ $imprimante->num_commande }}</td>
     <td class="px-2 py-2">{{ $imprimante->fabricant }}</td>
     <td class="px-2 py-2">{{ $imprimante->utilisateur_nom }}</td>
     <td class="px-2 py-2">

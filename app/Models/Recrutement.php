@@ -23,6 +23,7 @@ class Recrutement extends Model
         'puk',
         'pin',
         'status',
+        'chantier',
     ];
 
     public function notification()

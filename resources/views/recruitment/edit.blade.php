@@ -8,10 +8,10 @@
             <div class="bg-white shadow">
                 <!-- Header -->
                 <div class="bg-[#0A1C3E] px-6 py-4">
-                    <h1 class="text-xl font-semibold text-white">Modifier le Recrutement</h1>
+                    <h1 class="text-xl font-semibold text-white">Modifier le recrutement</h1>
                 </div>
 
-                <form action="{{ route('recrutements.update', $recrutement) }}" method="POST" class="p-6">
+                <form action="{{ route('recrutements.update', $recrutement) }}" method="post" class="p-6">
                     @csrf
                     @method('PUT')
 
@@ -22,18 +22,18 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
-                                    <input type="text" name="nom" value="{{ old('nom', $recrutement->nom) }}"
-                                        required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('nom') outline-2 outline-red-500 @enderror">
+                                    <input type="text" name="nom"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('nom') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('nom', $recrutement->nom) }}" required>
                                     @error('nom')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                                    <input type="email" name="email" value="{{ old('email', $recrutement->email) }}"
-                                        required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('email') outline-2 outline-red-500 @enderror">
+                                    <input type="email" name="email"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('email') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('email', $recrutement->email) }}" required>
                                     @error('email')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -45,12 +45,32 @@
                         <div class="space-y-4">
                             <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations professionnelles
                             </h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Chantier</label>
+                                    <input type="text" name="chantier"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('chantier') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('chantier', $recrutement->chantier) }}" required>
+                                    @error('chantier')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                 <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+                                    <input type="text" name="telephone"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('telephone') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('telephone', $recrutement->telephone) }}" required>
+                                    @error('telephone')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Fonction</label>
                                     <input type="text" name="fonction"
-                                        value="{{ old('fonction', $recrutement->fonction) }}" required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('fonction') outline-2 outline-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('fonction') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('fonction', $recrutement->fonction) }}" required>
                                     @error('fonction')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -58,8 +78,8 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Departement</label>
                                     <input type="text" name="departement"
-                                        value="{{ old('departement', $recrutement->departement) }}" required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('departement') outline-2 outline-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('departement') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('departement', $recrutement->departement) }}" required>
                                     @error('departement')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -67,9 +87,9 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Date
                                         d'affectation</label>
-                                    <input type="date" name="date_affectation"
-                                        value="{{ old('date_affectation', $recrutement->date_affectation) }}"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('date_affectation') outline-2 outline-red-500 @enderror">
+                                    <input type="date" name="date_affectation" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('date_affectation') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('date_affectation', $recrutement->date_affectation) }}">
                                     @error('date_affectation')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -140,26 +160,18 @@
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
-                                    <input type="text" name="telephone" required
-                                        value="{{ old('telephone', $recrutement->telephone) }}"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('telephone') outline-2 outline-red-500 @enderror">
-                                    @error('telephone')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>  
+                            </div>
                         </div>
 
-                        <!-- Section 3: Informations techniques -->
+                        <!-- Section 3: Informations téléphoniques -->
                         <div class="space-y-4">
                             <h2 class="text-lg font-medium text-gray-900 border-b pb-2">Informations téléphoniques</h2>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Modèle</label>
-                                    <input type="text" name="model" value="{{ old('model', $recrutement->model) }}"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('model') outline-2 outline-red-500 @enderror">
+                                    <input type="text" name="model"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('model') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('model', $recrutement->model) }}">
                                     @error('model')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -167,8 +179,8 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de Série</label>
                                     <input type="text" name="num_serie"
-                                        value="{{ old('num_serie', $recrutement->num_serie) }}"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('num_serie') outline-2 outline-red-500 @enderror">
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('num_serie') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('num_serie', $recrutement->num_serie) }}">
                                     @error('num_serie')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -182,16 +194,18 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Puk</label>
-                                    <input type="text" name="puk" value="{{ old('puk', $recrutement->puk) }}"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('puk') outline-2 outline-red-500 @enderror">
+                                    <input type="text" name="puk"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('puk') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('puk', $recrutement->puk) }}">
                                     @error('puk')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Pin</label>
-                                    <input type="text" name="pin" value="{{ old('pin', $recrutement->pin) }}"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('pin') outline-2 outline-red-500 @enderror">
+                                    <input type="text" name="pin"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0A1C3E] focus:border-[#0A1C3E] @error('pin') outline-2 outline-red-500 @enderror"
+                                        value="{{ old('pin', $recrutement->pin) }}">
                                     @error('pin')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror

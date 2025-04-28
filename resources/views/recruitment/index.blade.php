@@ -18,6 +18,7 @@
                             <th scope="col" class="px-2 py-2">Email</th>
                             <th scope="col" class="px-2 py-2">Fonction</th>
                             <th scope="col" class="px-2 py-2">Type de Contrat</th>
+                            <th scope="col" class="px-2 py-2">Chantier</th>
                             <th scope="col" class="px-2 py-2">Téléphone</th>
                             <th scope="col" class="px-2 py-2">Modèle</th>
                             <th scope="col" class="px-2 py-2">Numéro de Série</th>
@@ -28,16 +29,22 @@
                             <th scope="col" class="px-2 py-2 text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-[14px]">
                         @forelse ($recrutements as $recrutement)
                             <tr class="border-b hover:bg-gray-50">
                                 <td class="px-2 py-2 uppercase font-semibold">{{ $recrutement->nom }}</td>
-                                <td class="px-2 py-2">{{ $recrutement->email }}</td>
+                                <td class="px-2 py-2 text-wrap">{{ $recrutement->email }}</td>
                                 <td class="px-2 py-2">{{ $recrutement->fonction }}</td>
                                 <td class="px-2 py-2">
                                     <span
                                         class="inline-flex items-center text-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800">
                                         {{ $recrutement->type_contrat }}
+                                    </span>
+                                </td>
+                                <td class="px-2 py-2">
+                                    <span
+                                        class="inline-flex items-center text-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800">
+                                        {{ $recrutement->chantier }}
                                     </span>
                                 </td>
                                 <td class="px-2 py-2">{{ $recrutement->telephone }}</td>

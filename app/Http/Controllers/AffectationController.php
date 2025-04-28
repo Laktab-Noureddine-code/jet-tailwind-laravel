@@ -179,7 +179,6 @@ class AffectationController extends Controller
             // Déplacer directement le fichier
             $uploadedFile = $request->file('fiche_affectation');
             $filePath = $uploadDirectory . '/' . $fileName;
-
             if ($uploadedFile->move($uploadDirectory, $fileName)) {
                 // Enregistrer le chemin relatif dans la base de données
                 $relativePath = 'uploads/affectations/' . $fileName;
@@ -401,7 +400,7 @@ class AffectationController extends Controller
     public function sendEmail(Affectation $affectation)
     {
         try {
-            Mail::to("sisupport@jet-contractors.com")
+            Mail::to("noureddine.laktab15@gmail.com")
                 ->send(new TestMail($affectation));
 
             return back()->with('success', 'Email de confirmation envoyé avec succès !');
@@ -450,7 +449,7 @@ class AffectationController extends Controller
 
             // Debug the data (optional)
             // Send the email with the data
-            Mail::to("sisupport@jet-contractors.com")->send(new MaterielsMail($data));
+            Mail::to("noureddine.laktab15@gmail.com")->send(new MaterielsMail($data));
 
             return back()->with('success', 'Email de confirmation envoyé avec succès !');
         } catch (\Exception $e) {

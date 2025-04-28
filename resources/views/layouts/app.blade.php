@@ -13,7 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
     <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -35,7 +34,6 @@
         iziToast.settings({
             timeout: 5000,
             resetOnHover: true,
-            
             transitionIn: 'fadeInRight',
             transitionOut: 'fadeOutRight',
             transitionInMobile: 'fadeInRight',
@@ -49,11 +47,11 @@
             iziToast.success({
                 title: 'Success',
                 message: "{{ session('success') }}",
-                backgroundColor: '#0A5C2E',
-                titleColor: '#ffffff',
-                messageColor: '#ffffff',
-                iconColor: '#ffffff',
-                progressBarColor: '#59D969',
+                backgroundColor: '#ffffff',
+                titleColor: '#069401',
+                messageColor: '#069401',
+                iconColor: '#069401',
+                progressBarColor: '#069401',
                 cssClass: 'toast-ease-out'
             });
         @endif
@@ -62,11 +60,11 @@
             iziToast.success({
                 title: 'Success',
                 message: "{{ session('message') }}",
-                backgroundColor: '#0A5C2E',
-                titleColor: '#ffffff',
-                messageColor: '#ffffff',
-                iconColor: '#ffffff',
-                progressBarColor: '#59D969',
+                backgroundColor: '#ffffff',
+                titleColor: '#069401',
+                messageColor: '#069401',
+                iconColor: '#069401',
+                progressBarColor: '#069401',
                 cssClass: 'toast-ease-out'
             });
         @endif
@@ -75,11 +73,11 @@
             iziToast.error({
                 title: 'Error',
                 message: "{{ session('error') }}",
-                backgroundColor: '#8B0000',
-                titleColor: '#ffffff',
-                messageColor: '#ffffff',
-                iconColor: '#ffffff',
-                progressBarColor: '#E57373',
+                backgroundColor: '#ffffff',
+                titleColor: '#c40000',
+                messageColor: '#c40000',
+                iconColor: '#c40000',
+                progressBarColor: '#c40000',
                 cssClass: 'toast-ease-out'
             });
         @endif
@@ -88,11 +86,11 @@
             iziToast.info({
                 title: 'Info',
                 message: "{{ session('info') }}",
-                backgroundColor: '#0A1C3E',
-                titleColor: '#ffffff',
-                messageColor: '#ffffff',
-                iconColor: '#ffffff',
-                progressBarColor: '#64B5F6',
+                backgroundColor: '#ffffff',
+                titleColor: '#f99d25',
+                messageColor: '#000000',
+                iconColor: '#f99d25',
+                progressBarColor: '#f99d25',
                 cssClass: 'toast-ease-out'
             });
         @endif
@@ -101,11 +99,11 @@
             iziToast.warning({
                 title: 'Warning',
                 message: "{{ session('warning') }}",
-                backgroundColor: '#F9A825',
-                titleColor: '#ffffff',
-                messageColor: '#ffffff',
-                iconColor: '#ffffff',
-                progressBarColor: '#FFD54F',
+                backgroundColor: '#ffffff',
+                titleColor: '#f99d25',
+                messageColor: '#000000',
+                iconColor: '#f99d25',
+                progressBarColor: '#f99d25',
                 cssClass: 'toast-ease-out'
             });
         @endif

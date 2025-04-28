@@ -14,7 +14,6 @@ class Notification extends Model
         'is_read',
         'type', //materiel
         'etat', //materiel
-        'chantier', //affectation   
         'utilisateur', //affectation   
     ];
     public function recrutement()

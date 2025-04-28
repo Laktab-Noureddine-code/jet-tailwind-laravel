@@ -17,6 +17,7 @@ class Materiel extends Model
         'type',
         'num_serie',
         'etat',
+        'num_commande'
     ];
     public function affectations()
     {

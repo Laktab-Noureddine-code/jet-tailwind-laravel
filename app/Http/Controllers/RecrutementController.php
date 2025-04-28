@@ -21,6 +21,7 @@ class RecrutementController extends Controller
                     ->orWhere('fonction', 'LIKE', "%$search%")
                     ->orWhere('departement', 'LIKE', "%$search%")
                     ->orWhere('telephone', 'LIKE', "%$search%")
+                    ->orWhere('chantier', 'LIKE', "%$search%")
                     ->orWhere('model', 'LIKE', "%$search%")
                     ->orWhere('num_serie', 'LIKE', "%$search%")
                     ->orWhere('date_affectation', 'LIKE', "%$search%")
@@ -46,6 +47,7 @@ class RecrutementController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $fields = $request->validate([
             'nom' => 'required|string|max:255',
             'email' => 'required|max:40',
@@ -53,12 +55,14 @@ class RecrutementController extends Controller
             'departement' => 'required',
             'date_affectation' => 'required',
             'type_contrat' => 'required',
-            'telephone' => 'required|max:20',
+            'telephone' => 'required|max:15',
             'model' => 'max:255',
             'num_serie' => 'unique:materiels,num_serie',
             'puk' => 'max:255',
             'pin' => 'max:255',
+            'chantier' => 'required',
         ]);
+        // dd($fields);
         $recrutement = Recrutement::create($fields);
         Notification::create([
             'recrutement_id' => $recrutement->id,
@@ -83,7 +87,8 @@ class RecrutementController extends Controller
             'nom' => 'required|max:255',
             'email' => 'required|max:50',
             'type_contrat' => 'required|required',
-            'telephone' => 'required|max:20',
+            'chantier' => 'required|required',
+            'telephone' => 'required|max:15',
             'model' => 'max:255',
             'date_affectation' => 'required',
             'num_serie' => 'max:255',
