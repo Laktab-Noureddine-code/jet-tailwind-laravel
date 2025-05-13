@@ -29,12 +29,12 @@
                     <tbody>
                         @forelse ($telephones as $telephone)
                             <tr class="border-b hover:bg-gray-50"
-                                data-statut="{{ $telephone->materiel->affectations->isNotEmpty() ? $telephone->materiel->affectations->first()->statut : 'NON AFFECTE' }}">
-                                <td class="px-6 py-4">{{ $telephone->materiel->fabricant }}</td>
-                                <td class="px-6 py-4">{{ $telephone->materiel->num_serie }}</td>
-                                <td class="px-6 py-4">{{ $telephone->materiel->etat }}</td>
+                                data-statut="{{ $telephone->materiel && $telephone->materiel->affectations && $telephone->materiel->affectations->isNotEmpty() ? $telephone->materiel->affectations->first()->statut : 'NON AFFECTE' }}">
+                                <td class="px-6 py-4">{{ $telephone->materiel ? $telephone->materiel->fabricant : 'N/A' }}</td>
+                                <td class="px-6 py-4">{{ $telephone->materiel ? $telephone->materiel->num_serie : 'N/A' }}</td>
+                                <td class="px-6 py-4">{{ $telephone->materiel ? $telephone->materiel->etat : 'N/A' }}</td>
                                 <td class="px-6 py-4">
-                                    @if ($telephone->materiel->affectations->isNotEmpty())
+                                    @if ($telephone->materiel && $telephone->materiel->affectations && $telephone->materiel->affectations->isNotEmpty())
                                         <span
                                             class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
                                             {{ $telephone->materiel->affectations->first()->statut }}
@@ -47,7 +47,7 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4">
-                                    @if ($telephone->materiel->affectations->isNotEmpty() && $telephone->materiel->affectations->first()->utilisateur)
+                                    @if ($telephone->materiel && $telephone->materiel->affectations && $telephone->materiel->affectations->isNotEmpty() && $telephone->materiel->affectations->first()->utilisateur)
                                         {{ $telephone->materiel->affectations->first()->utilisateur->nom }}
                                     @endif
                                 </td>
